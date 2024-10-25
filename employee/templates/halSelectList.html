@@ -1,0 +1,39 @@
+<script>
+function tipeDoc()
+{
+	var halaman = parent.document.getElementById('jenisDoc').value;
+	if(halaman == "PO")
+	{
+		var jenis = "POLICY ";
+	}
+	if(halaman == "PR")
+	{
+		var jenis = "PROCEDURE ";
+	}
+	if(halaman == "FO")
+	{
+		var jenis = "FORM ";
+	}
+	if(halaman == "0")
+	{
+		var jenis = "";
+	}
+	
+	document.getElementById('teksDoc').innerHTML = jenis;
+}
+</script>
+<body onload="tipeDoc();">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr><td>&nbsp;</td></tr>
+<tr>
+    <td align="center">
+    
+        <table cellpadding="0" cellspacing="0" width="99%">
+        <tr align="center">
+            <td height="423" style="font-family:sans-serif;font-weight:bold;font-size:30px;color:#CCC;">PLEASE SELECT <span id="teksDoc"></span>LIST</td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+</body>

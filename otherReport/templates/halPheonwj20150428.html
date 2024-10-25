@@ -1,0 +1,207 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="../../css/otherReport.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen"></LINK>
+<SCRIPT type="text/javascript" src="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+<script>
+function frameSize(status)
+{	
+	var heightFrame = $('#iframeHalReportList').height();
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	if(status == "down")
+	{
+		$("#iframeHalReportList").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeHalReportList').height = heightFramePlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 345)
+		{
+			$("#iframeHalReportList").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeHalReportList').height = heightFrameMin;
+			
+			if(heightFrameMin == 345)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function bukaReport()
+{
+	var linkFrame = "";
+	var data = $('#data').val();
+	var fromDate = $('#fromDate').val();
+	var toDate = $('#toDate').val();
+	
+	var fromThn = fromDate.substr(6,4);
+	var fromBln = fromDate.substr(3,2);
+	var fromTgl = fromDate.substr(0,2);
+	var fromDateUbah = fromThn+fromBln+fromTgl;
+	
+	var toThn = toDate.substr(6,4);
+	var toBln = toDate.substr(3,2);
+	var toTgl = toDate.substr(0,2);
+	var toDateUbah = toThn+toBln+toTgl;
+	
+	if(fromDate == "" || toDate == "")
+	{
+		alert('Choose from & to date, please');
+		return false;
+	}
+	else
+	{
+		if(toDateUbah < fromDateUbah)
+		{
+			alert('"To" date must after "From" date');
+			return false;
+		}
+		else
+		{
+			dispJml();
+			if(data == "all")
+			{
+				linkFrame = "halPheonwjReport";
+			}
+			if(data == "detail")
+			{
+				linkFrame = "halPheonwjReportDetil";
+			}
+			if(data == "divisi")
+			{
+				linkFrame = "halPheonwjReportDiv";
+			}
+			$('#iframeHalReportList').attr('src',"templates/"+linkFrame+".php?fromDate="+fromThn+"/"+fromBln+"/"+fromTgl+"&toDate="+toThn+"/"+toBln+"/"+toTgl);
+		}
+	}
+	
+	$('#hal').val(data);
+}
+
+function printReport()
+{
+	if($('#hal').val() == "")
+	{
+		alert('There are no data to print');
+		return false;
+	}
+	else
+	{
+		$('#submitPrintReport').click();
+	}
+}
+
+function dispJml()
+{
+	var id = $('#data').val();
+	if(id == "detail")
+	{
+		$('#spanJml').html('<input type="text" class="elementSearch" id="jmlPrint" name="jmlPrint" style="width:20px;height:16px;font-size:14px;" value="30"/> line');
+		//document.getElementById('jmlPrint').style.display = "block";
+	}
+	else
+	{
+		$('#spanJml').html('');
+	}
+}
+</script>
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+        <tr valign="middle">
+        <form method="post" action="halPrint.php" name="formPrintAct" id="formPrintAct" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=yes');" style="width:100px;position:absolute;">
+        	<td height="40"colspan="2" style="font-family:Tahoma;font-size:13px;color:#333;">
+            	&nbsp;From
+            	<input type="text" class="elementSearch" id="fromDate" name="fromDate" size="6" style="height:17px;color:#333;font-weight:bold;font-size:14px;background-color:#FFF;text-align:center;" readonly>
+                <button type="button" class="btnStandar" id="btnNewFolder" onClick="displayCalendar(document.getElementById('fromDate'),'dd/mm/yyyy',this, '', '', '193', '191');" style="width:30px;height:28px;" title="Calendar Activity Quick Action">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                        <td align="center"><img src="../../picture/calendar.gif" width="23"/> </td>
+                    </tr>
+                    </table>
+                </button>
+                
+                &nbsp;To
+            	<input type="text" class="elementSearch" id="toDate" name="toDate" size="6" style="height:17px;color:#333;font-weight:bold;font-size:14px;background-color:#FFF;text-align:center;" readonly>
+                <button type="button" class="btnStandar" id="btnNewFolder"  onClick="displayCalendar(document.getElementById('toDate'),'dd/mm/yyyy',this, '', '', '193', '191');" style="width:30px;height:28px;" title="Calendar Activity Quick Action">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                        <td align="center"><img src="../../picture/calendar.gif" width="23"/> </td>
+                    </tr>
+                    </table>
+                </button>
+				<select id="data" name="data" class="elementMenu" style="width:88px;">
+                	<option value="all">ALL</option>
+                    <option value="detail">DETAIL</option>
+                    <option value="divisi">DIVISION</option>
+                </select>
+            	<button type="button" class="btnStandar" title="Display Report" onclick="bukaReport();dispJml();" style="width:75px;">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center" width="25"><img src="../picture/Arrow-Right-blue-32.png" height="20"/> </td>
+                        <td align="left">Display</td>
+                      </tr>
+                    </table>
+                </button>
+                <button type="button" class="btnStandar" onclick="printReport();" title="Display Report" style="width:58px;">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center" width="25"><img src="../picture/Printer-blue-32.png" height="20"/> </td>
+                        <td align="left">Print</td>
+                      </tr>
+                    </table>
+                </button>
+                <span id="spanJml"></span>
+                <input type="hidden" id="hal" name="hal" value=""/>
+                <input type="submit" id="submitPrintReport" style="display:none;"/>
+                <span class="errorMsg" id="errorMsg"></span>
+            </td>
+            <td>
+            
+            </td>
+        </form>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <!-- <tr align="center" style="background-color:#4880FF;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">-->
+        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">
+        	<td width="25%" align="left">&nbsp;</td>
+        	<td width="50%" height="40" id="tdJudulTitle">:: REPORT PHE ONWJ::</td>
+            <td width="25%" align="right" id="tdBtnBack">
+            	<!--<button type="button" class="btnStandar" onclick="printReport();" title="Display Report" style="width:58px;">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center" width="25"><img src="../picture/Printer-blue-32.png" height="20"/> </td>
+                        <td align="left">Print</td>
+                      </tr>
+                    </table>
+                </button>&nbsp;-->
+            </td>
+        </tr>
+        <tr>
+        	<td colspan="3">
+                <iframe width="100%" height="345" target="iframeHalReportList" name="iframeHalReportList" id="iframeHalReportList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

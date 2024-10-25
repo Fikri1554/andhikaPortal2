@@ -1,0 +1,81 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#namaKapal').change(function () {
+            //$("#aksiVessel").val($(this).val());
+            //alert("nama kvl");
+        });
+    });
+</script>
+
+<div class="archivesContainer">
+
+    <table cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td height="35">
+                <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT -->
+                <table cellpadding="0" cellspacing="0" width="100%" border="0">
+                    <tr>
+                        <td>&nbsp;&nbsp;<span class="teksMyFolder" style="color:#369;font-size: 14px;">SHIP
+                                MANAGEMENT</span>&nbsp;&nbsp;{halaman2}&nbsp;{halaman3}&nbsp;</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form name="formPlannMaintenance" method="post" action="../shipManagement/">
+                    <div style="text-align: right;padding:5px 10px 5px 10px;">
+                        {selectedNamaKapal}
+                    </div>
+                    {btnPlannMaintenance}
+                    &nbsp;
+                    <input type="hidden" id="aksi" name="aksi" value="halamanPlannMaintenance" />
+                </form>
+                <form name="formAllCompJob" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanAllCompJob" />
+                </form>
+                <form name="formUpdateJobDone" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanUpdateJob" />
+                </form>
+                <form name="formmonthCompRunningHours" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanMonthCompRunningHours" />
+                    <input type="hidden" id="searchDate" name="searchDate" value="" />
+                </form>
+                <form name="formMasterCompJob" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanMasterCompList" />
+                </form>
+                <form name="formMasterJobDesc" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanMasterJobDesc" />
+                </form>
+                <form name="formMasterWorkClass" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanMasterWorkClass" />
+                </form>
+                <form name="formRoutinJob" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanRoutinJob" />
+                </form>
+                <form name="formMaintenanceReport" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanMaintenanceReport" />
+                </form>
+                <form name="formWorkListReport" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanWorkListReport" />
+                </form>
+                <form name="formMaintenanceForecastReport" method="post" action="../shipManagement/">
+                    <input type="hidden" id="aksi" name="aksi" value="halamanMaintenanceForecastReport" />
+                </form>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+            </td>
+        </tr>
+
+    </table>
+
+</div>

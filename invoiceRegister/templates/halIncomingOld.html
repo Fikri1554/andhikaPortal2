@@ -1,0 +1,177 @@
+<script language="javascript">
+function ajaxGetIncoming(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "pilihMenuThnBln")
+	{
+		var thnBln = id;
+		var parameters="halaman="+aksi+"&thnBln="+thnBln;
+	}
+	
+	mypostrequest.open("POST", "halPostMailInv.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function klikBtnDisplay()
+{
+	var thnBln = document.getElementById('menuBatchnoThnBln').value;
+	var tgl = document.getElementById('menuBatchnoTgl').value; 
+	document.getElementById('iframeMailInvList').src = "";
+	document.getElementById('iframeMailInvList').src = "templates/halIncomingList.php?aksi=display&thnBln="+thnBln+"&tgl="+tgl;
+}
+
+function openThickboxWindow(aksi)
+{	
+	if(aksi == "klikBtnNew")
+	{
+		document.getElementById('hrefThickbox').href = "templates/halTambahMailInv.php?aksi=tambahMailInv&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=530&width=550&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<input type="hidden" id="btnYgDipilih">
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr valign="top">
+	<td>
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td class="batasTitik" height="10"></td>
+        </tr>
+        
+    	</table>
+  </td>
+</tr>
+
+<tr>
+	<td height="35">
+    	<table cellpadding="0" cellspacing="0">
+        <tr>
+        	<td>&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" height="25" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#FFF';" style="cursor: pointer;" onclick="refreshPage();" title="Refresh Page"/></td>
+        	<td>&nbsp;<span class="teksLvlFolder">BATCHNO</span>&nbsp;</td>
+            <td>
+                <select class="elementMenu" id="menuBatchnoThnBln" name="menuBatchnoThnBln" style="width:80px;" title="Choose Name" onchange="ajaxGetIncoming(this.value, 'pilihMenuThnBln', 'idTdMenuTgl');klikBtnDisplay();">
+                {menuBatchnoThnBln}
+                </select>&nbsp;
+            </td>
+            <td id="idTdMenuTgl">
+                <select class="elementMenu" id="menuBatchnoTgl" name="menuBatchnoTgl" style="width:50px;" title="Choose Name" onchange="klikBtnDisplay();">
+                {menuBatchnoTgl}
+                </select>&nbsp;
+            </td>
+            <td>
+            	<button class="btnStandar" onclick="klikBtnDisplay();" style="width:70px;height:26px;" title="Display Incoming Data">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center"><img src="../picture/Arrow-Right-blue-32.png" height="17"/> </td>
+                        <td align="center">Display</td>
+                      </tr>
+                    </table>
+                </button>
+                &nbsp;
+            </td>
+            <td>&nbsp;|&nbsp;</td>
+            <td>&nbsp;
+            	<button class="btnStandar" onclick="openThickboxWindow('klikBtnNew');" style="width:55px;height:26px;" title="Display Incoming Data">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center"><img src="../picture/Invoice_Add_32.png" height="17"/> </td>
+                        <td align="center">New</td>
+                      </tr>
+                    </table>
+                </button>
+                &nbsp;
+            	<button class="btnStandar" onclick="" style="width:53px;height:26px;" title="Display Incoming Data" disabled>
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center"><img src="../picture/Invoice_Edit_32.png" height="17"/> </td>
+                        <td align="center">Edit</td>
+                      </tr>
+                    </table>
+                </button>
+                &nbsp;
+            	<button class="btnStandar" onclick="" style="width:63px;height:26px;" title="Display Incoming Data" disabled>
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center"><img src="../picture/Invoice_Delete_32.png" height="17"/> </td>
+                        <td align="center">Delete</td>
+                      </tr>
+                    </table>
+                </button>
+                &nbsp;
+            	<button class="btnStandar" onclick="" style="width:65px;height:26px;" title="Display Incoming Data">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="center"><img src="../picture/Search-blue-32.png" height="17"/> </td>
+                        <td align="center">Search</td>
+                      </tr>
+                    </table>
+                </button>
+            </td>
+            <td>
+            	&nbsp;<span id="errorMsg" class="errorMsg">&nbsp;</span>	
+            </td>
+        </tr>
+        </table>   
+    </td>
+</tr>
+<tr>
+    <td align="center">
+    
+        <table cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td valign="top" align="center" colspan="3">
+                <div style="width:100%;overflow:auto;top: expression(offsetParent.scrollTop);" class="">
+                <table border="0" width="170%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" width="100%" border="0" style="font-size:14px;font-family:sans-serif;font-weight:bold;background-color:#666;color:#EFEFEF;">
+                            <tr align="center">
+                                <td width="24" rowspan="2" height="40" class="">NO</td>
+                                <td width="195" rowspan="2" class="">SENDER / VENDOR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td colspan="2" class="tabelBorderBottomJust" style="border-color:#b8cbec;border-bottom-width:thin;">ADRESSEE</td>
+                                <td width="64" rowspan="2" class="">BARCODE</td>
+                                <td colspan="2" class="tabelBorderBottomJust" style="border-color:#b8cbec;border-bottom-width:thin;">MAIL / INVOICE</td>
+                                <td width="90" rowspan="2" class="">NUMBER</td>
+                                <td width="81" rowspan="2" class="">AMOUNT</td>
+                                <td width="252" rowspan="2" class="">REMARK</td>
+                            </tr>
+                            <tr align="center">
+                                <td width="108" class="">COMPANY</td>
+                                <td width="100" class="">UNIT</td>
+                                <td width="50" class="">DATE</td>
+                                <td width="50" class="">DUE DATE</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="362" bgcolor="#FFFFFF" style="color:#FFF" align="center" id="tdFrameMailInvList">
+                        <iframe width="100%" height="100%" src="templates/halIncomingList.php" target="iframeMailInvList" name="iframeMailInvList" id="iframeMailInvList" frameborder="0" marginwidth="0" marginheight="0"  scrolling="yes"></iframe></td>
+                </tr>
+                </table>
+                </div>
+            </td>
+        </tr>
+        </table>
+    </td>
+    
+</tr>
+</table>

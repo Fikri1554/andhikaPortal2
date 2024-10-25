@@ -1,0 +1,730 @@
+<script type="text/javascript" src="../js/animatedcollapse.js"></script>
+<script type="text/javascript" src="../../js/animatedcollapse.js"></script>
+<script language="javascript">
+function openThickboxWindow(id, aksi)
+{	
+	var foldSub = document.getElementById('foldSub').value;
+	var idFoldRef = document.getElementById('idFoldDipilih').value;
+		
+	if(aksi == "newFolder")
+	{
+		document.getElementById('hrefThickbox').href="templates/halTambahFolder.php?halaman="+aksi+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(aksi == "editFolder")  
+	{
+		document.getElementById('hrefThickbox').href="templates/halTambahFolder.php?halaman="+aksi+"&ide="+id+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(aksi == "newFile")
+	{
+		document.getElementById('hrefThickbox').href="templates/halTambahFile.php?halaman="+aksi+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(aksi == "editFile")
+	{
+		document.getElementById('hrefThickbox').href="templates/halTambahFile.php?halaman="+aksi+"&ide="+id+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(aksi == "detailFolder")
+	{
+		document.getElementById('hrefThickbox').href="templates/halDetailFolder.php?halaman="+aksi+"&foldSub="+foldSub+"&ide="+id+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(aksi == "detailFile")
+	{
+		document.getElementById('hrefThickbox').href="templates/halDetailFile.php?foldSub="+foldSub+"&ide="+id+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+
+function deleteFile(id)
+{
+	var answer  = confirm("Are you sure want to delete?");
+	if(answer)
+	{
+		document.getElementById('iframeHalFolder').src = "";
+		
+		var idFoldRef = document.getElementById('idFoldDipilih').value;
+		var appView = document.getElementById('appView').value;
+		var paramCari = document.getElementById('paramText').value;
+		//var wktTungguBukFolder = Math.round(parseInt("{wktTungguBukFolder}") / 80)*1000;
+		var wktTungguBukFolder = Math.round(parseInt("{wktTungguBukFolder}"));
+		var wktTunggu = (wktTungguBukFolder / 80)*1000;
+		if(wktTungguBukFolder <= 100)
+		{
+			wktTunggu = 1000;
+		}
+		
+		if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+		{
+			if(paramCari.replace(/ /g,"") != "")
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFileList.php?aksi=deleteCariFile&idFold="+idFoldRef+"&ide="+id+"&paramCari="+paramCari;
+			}
+			else
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFileList.php?aksi=deleteFile&idFold="+idFoldRef+"&ide="+id;
+			}
+		}
+		if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFileIconList.php?aksi=deleteFile&idFold="+idFoldRef+"&ide="+id;
+		}
+		if(appView == "sideList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFolderSideList.php";
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halFolderSide1.php?idFold="+idFoldRef;
+				window.frames['iframeHalFolder'].window.frames['halFolderSide2'].frameElement.src = "halFolderSide2.php?aksi=deleteFile&ideFile="+id+"&idFold="+idFoldRef;
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},wktTunggu);
+				
+			},250);
+		}
+	}
+	else
+	{	return false;	}
+}
+
+function deleteFolder(id, foldSub)
+{
+	var answer  = confirm('Are you sure want to delete?');
+	if(answer)
+	{
+		var idFoldRef = document.getElementById('idFoldDipilih').value;
+		document.getElementById('iframeHalFolder').src = "";
+		var appView = document.getElementById('appView').value;
+		if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?aksi=deleteFolder&ide="+id+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		}
+		if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?aksi=deleteFolder&ide="+id+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		} 
+	}
+	else
+	{	return false;	}
+}
+
+function exit(yesNo, ide, foldSub, nmFold, descFold, contentType, aksi)
+{
+	var paramCari = document.getElementById('paramText').value;
+	if(paramCari.replace(/ /g,"") == "")
+	{
+		document.getElementById('halaman').value = "";
+	}
+	else
+	{
+		document.getElementById('halaman').value = "cari";
+	}
+	
+	var halaman = document.getElementById('halaman').value;
+	
+	if(yesNo == "no")
+	{
+		tb_remove(false);
+		
+		var idFoldRef = document.getElementById('idFoldDipilih').value;
+		document.getElementById('iframeHalFolder').src = "";
+		if(aksi == "closeNewFolder")
+		{
+			var appView = document.getElementById('appView').value;
+			if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef; 
+			}
+			if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef; 
+			}
+		}
+		if(aksi == "closeNewFile")
+		{
+			//var wktTungguBukFolder = Math.round(parseInt("{wktTungguBukFolder}") / 80)*1000;
+			var wktTungguBukFolder = Math.round(parseInt("{wktTungguBukFolder}"));
+			var wktTunggu = (wktTungguBukFolder / 80)*1000;
+			if(wktTungguBukFolder <= 100)
+			{
+				wktTunggu = 1000;
+			}
+			
+			var appView = document.getElementById('appView').value;
+			if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFileList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&idFold="+idFoldRef;
+			}
+			if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFileIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&idFold="+idFoldRef;
+			}
+			if(appView == "sideList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFolderSideList.php";
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halFolderSide1.php?idFold="+idFoldRef;
+					window.frames['iframeHalFolder'].window.frames['halFolderSide2'].frameElement.src = "halFolderSide2.php?idFold="+idFoldRef;
+					setTimeout(function()
+					{
+						window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+					},1000);
+					
+				},250);
+			}
+		}
+		
+	}
+	if(yesNo == "yes")
+	{
+		tb_remove(false);
+		
+		var idFoldRef = document.getElementById('idFoldDipilih').value;
+		document.getElementById('iframeHalFolder').src = "";
+		if(aksi == "simpanNewFolder")
+		{
+			var appView = document.getElementById('appView').value;
+			if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&nmFold="+nmFold+"&descFold="+descFold+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&contentType="+contentType;
+			}
+			if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+			{ 
+				document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&nmFold="+nmFold+"&descFold="+descFold+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&contentType="+contentType;
+			} 
+		}
+		if(aksi == "simpanEditFolder")
+		{
+			var iframeHalFolder = "";
+			var appView = document.getElementById('appView').value;
+			if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&nmFold="+nmFold+"&descFold="+descFold+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&contentType="+contentType+"&ide="+ide; 
+			}
+			if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&nmFold="+nmFold+"&descFold="+descFold+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&contentType="+contentType+"&ide="+ide; 
+			}
+		}
+	}
+}
+
+function ajaxGetFold(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "pilihBtnExpand")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	if(aksi == "pilihBtnBack")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	if(aksi == "pilihTeksFoldName")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	if(aksi == "pilihTeksFoldNameSide")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	if(aksi == "pilihBtnExpand2")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	if(aksi == "pilihBtnExpandSide")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	if(aksi == "pilihBtnExpandSide2")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	if(aksi == "pilihBtnBack2")
+	{
+		var parameters="halaman="+aksi+"&ide="+id;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+
+function pilihBtnExpand(ide, foldSub, idFoldRef, tipeKonten)
+{
+	if(tipeKonten == "folder")
+	{
+		var foldSub = parseInt(foldSub) + 1;
+
+		var appView = document.getElementById('appView').value;
+		if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+		{
+			ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+	
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		}
+		if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+	
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		}
+		if(appView == "sideList")
+		{
+			ajaxGetFold(ide, "pilihBtnExpandSide", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpandSide2", "tdBtnBack");
+		}
+	}
+	else if(tipeKonten == "file")
+	{
+		var foldSub = parseInt(foldSub) + 1;
+		var appView = document.getElementById('appView').value;
+		if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+		{
+			ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+			
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halFileList.php?foldSub="+foldSub+"&idFold="+idFoldRef;
+		}
+		if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+			
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halFileIconList.php?foldSub="+foldSub+"&idFold="+idFoldRef;
+		}
+		if(appView == "sideList")
+		{
+			ajaxGetFold(ide, "pilihBtnExpandSide", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpandSide2", "tdBtnBack");
+		}
+	}
+	document.getElementById('tipeKonten').value = tipeKonten;
+}
+
+function pilihTeksFoldName(ide, foldSub, idFoldRef, tipeKonten)
+{
+	//var wktTungguBukFolder = Math.round(parseInt("{wktTungguBukFolder}") / 80)*1000;
+	var wktTungguBukFolder = Math.round(parseInt("{wktTungguBukFolder}"));
+	var wktTunggu = (wktTungguBukFolder / 80)*1000;
+	if(wktTungguBukFolder <= 100)
+	{
+		wktTunggu = 1000;
+	}
+	
+	document.getElementById('iframeHalFolder').src = "";
+	if(tipeKonten == "folder")
+	{
+		var appView = document.getElementById('appView').value;
+		if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+		{
+			ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+	
+			document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		}
+		if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+	
+			document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		}
+		if(appView == "sideList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			ajaxGetFold(ide, "pilihBtnExpandSide", "idHalTeksLvl");
+			ajaxGetFold(ide, "pilihBtnExpandSide2", "tdBtnBack");
+			
+			document.getElementById('iframeHalFolder').src = "templates/halFolderSideList.php";
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halFolderSide1.php?idFold="+idFoldRef;
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},wktTunggu);
+				
+			},250);
+		}
+	}
+	else if(tipeKonten == "file")
+	{
+		var appView = document.getElementById('appView').value;
+		if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFileList.php?foldSub="+foldSub+"&idFold="+idFoldRef;
+		}
+		if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFileIconList.php?foldSub="+foldSub+"&idFold="+idFoldRef;
+		}
+		if(appView == "sideList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFolderSideList.php";
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halFolderSide1.php?idFold="+idFoldRef;
+				window.frames['iframeHalFolder'].window.frames['halFolderSide2'].frameElement.src = "halFolderSide2.php?idFold="+idFoldRef;
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},wktTunggu);
+				
+			},250);
+		}
+	}
+	
+	document.getElementById('tipeKonten').value = tipeKonten;
+}
+
+function pilihBtnBack(ide, foldSub, idFoldRef, tipeKonten)
+{
+	ajaxGetFold(ide, "pilihBtnBack", "idHalTeksLvl");
+	ajaxGetFold(ide, "pilihBtnBack2", "tdBtnBack");
+	
+	document.getElementById('iframeHalFolder').src = "";
+	var appView = document.getElementById('appView').value;
+	if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+	{
+		document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+	}
+	if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+	{
+		document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+	}
+
+	document.getElementById('tipeKonten').value = "folder";
+}
+
+function openPdf(filePdf)
+{
+	if(detectBrowser() == "MSIE")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+	if(detectBrowser() == "Firefox")
+	{
+		window.showModalDialog("halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+}
+
+function cariFolder(paramCari)
+{
+	if(paramCari.replace(/ /g,"") == "")
+	{
+		document.getElementById('halaman').value = "";
+	}
+	else
+	{
+		document.getElementById('halaman').value = "cari";
+	}
+	
+	var halaman = document.getElementById('halaman').value;
+	var foldSub = document.getElementById('foldSub').value;
+	var idFoldRef = document.getElementById('idFoldDipilih').value;
+	
+	document.getElementById('iframeHalFolder').src = "";
+	var appView = document.getElementById('appView').value;
+	if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+	{
+		iframeHalFolder = "halFolderList.php"; 
+		document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?halaman="+halaman+"&paramCari="+paramCari+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+	}
+	if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+	{
+		iframeHalFolder = "halFolderIconList.php";
+		document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+	}
+}
+
+function cariFile(paramCari)
+{
+	if(paramCari.replace(/ /g,"") == "")
+	{
+		document.getElementById('halaman').value = "";
+	}
+	else
+	{
+		document.getElementById('halaman').value = "cari";
+	}
+	
+	var halaman = document.getElementById('halaman').value;
+	var foldSub = document.getElementById('foldSub').value;
+	var idFoldRef = document.getElementById('idFoldDipilih').value;
+	
+	document.getElementById('iframeHalFolder').src = "";
+	var appView = document.getElementById('appView').value;
+	if(appView == "viewList") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW LIST
+	{
+		document.getElementById('iframeHalFolder').src = "templates/halFileList.php?halaman="+halaman+"&paramCari="+paramCari+"&foldSub="+foldSub+"&idFold="+idFoldRef;
+	}
+	if(appView == "viewIcon") // JIKA YANG DIPILIH SEBELUMNYA BUTTON VIEW ICON
+	{
+		document.getElementById('iframeHalFolder').src = "templates/halFileIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&foldSub="+foldSub+"&idFold="+idFoldRef;
+	}
+}
+
+function klikAppView(aksi) // FUNCTION UNTUK KETIKA BUTTON VIEW DIPILIH ATAU BUTTON UNTUK GANTI VIEW DI IFRAMEHALFOLDER
+{
+	document.getElementById('idTdViewList').style.background='#666666';
+	document.getElementById('idTdViewIcon').style.background='#666666';
+	document.getElementById('idTdSideList').style.background='#666666';
+	
+	document.getElementById('idTdViewList').onmouseover = function onmouseover(){
+				this.style.background='#EFEFEF';	}
+	document.getElementById('idTdViewList').onmouseout = function onmouseout(){
+				this.style.background='#666666';	}
+				
+	document.getElementById('idTdViewIcon').onmouseover = function onmouseover(){
+				this.style.background='#EFEFEF';	}
+	document.getElementById('idTdViewIcon').onmouseout = function onmouseout(){
+				this.style.background='#666666';	}
+				
+	document.getElementById('idTdSideList').onmouseover = function onmouseover(){
+				this.style.background='#EFEFEF';	}
+	document.getElementById('idTdSideList').onmouseout = function onmouseout(){
+				this.style.background='#666666';	}
+		
+	var foldSub = document.getElementById('foldSub').value; //direktori level folder (lvl 1,2, dst)
+	var idFoldRef = document.getElementById('idFoldDipilih').value; // idfold folder
+	//var paramCari = document.getElementById('paramText').value;
+	var halaman = document.getElementById('halaman').value; // kosong
+	var tipeKonten = document.getElementById('tipeKonten').value; //TIPE KONTEN DARI ISI IFRAMEHALFOLDER APAKAH FOLDER AYAU FILE
+	var ideDipilih = document.getElementById('ideDipilih').value; // ide folder
+	
+	var iframeHalFolder = "";
+			
+	if(aksi == "viewList")
+	{
+		ajaxGetFold(ideDipilih, "pilihBtnExpand", "idHalTeksLvl");
+		ajaxGetFold(ideDipilih, "pilihBtnExpand2", "tdBtnBack");
+			
+		document.getElementById('idTdViewList').onmouseover = "";
+		document.getElementById('idTdViewList').onmouseout = "";
+		document.getElementById('idTdViewList').style.background='#EFEFEF';
+		
+		var paramText = document.getElementById('paramText').value;
+		if(paramText != "")
+		{
+			var halaman = "cari";
+			setTimeout(function()
+			{
+				document.getElementById('paramText').value = paramText;
+			},250);
+		}
+		
+		if(tipeKonten == "folder")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFolderList.php?halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		}
+		if(tipeKonten == "file")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFileList.php?foldSub="+foldSub+"&idFold="+idFoldRef;
+		}
+	}
+	if(aksi == "viewIcon")
+	{
+		ajaxGetFold(ideDipilih, "pilihBtnExpand", "idHalTeksLvl");
+		ajaxGetFold(ideDipilih, "pilihBtnExpand2", "tdBtnBack");
+			
+		document.getElementById('idTdViewIcon').onmouseover = "";
+		document.getElementById('idTdViewIcon').onmouseout = "";
+		document.getElementById('idTdViewIcon').style.background='#EFEFEF';
+		
+		var paramText = document.getElementById('paramText').value;
+		if(paramText != "")
+		{
+			var halaman = "cari";
+			setTimeout(function()
+			{
+				document.getElementById('paramText').value = paramText;
+			},250);
+		}
+
+		if(tipeKonten == "folder")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFolderIconList.php?halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+		}
+		if(tipeKonten == "file")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halFileIconList.php?foldSub="+foldSub+"&idFold="+idFoldRef;
+		}
+	}
+	if(aksi == "sideList")
+	{		
+		ajaxGetFold(ideDipilih, "pilihBtnExpandSide", "idHalTeksLvl");
+		ajaxGetFold(ideDipilih, "pilihBtnExpandSide2", "tdBtnBack");
+			
+		document.getElementById('idTdSideList').onmouseover = "";
+		document.getElementById('idTdSideList').onmouseout = "";
+		document.getElementById('idTdSideList').style.background='#EFEFEF';
+		
+		var wktTungguBukFolder = Math.round(parseInt("{wktTungguBukFolder}"));
+		var wktTunggu = (wktTungguBukFolder / 80)*1000;
+		if(wktTungguBukFolder <= 100)
+		{
+			wktTunggu = 1000;
+		}
+		
+		var paramText = document.getElementById('paramText').value.replace(/ /g,"");
+		if(paramText != "")
+		{
+			setTimeout(function()
+			{
+				document.getElementById('paramText').value = paramText;
+			},250);
+		}
+		if(tipeKonten == "folder")
+		{
+			//alert(wktTungguBukFolder);
+			document.getElementById('iframeHalFolder').src = "templates/halFolderSideList.php";
+			
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halFolderSide1.php?paramCari="+paramText+"&idFold="+idFoldRef;
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},wktTunggu);
+				
+			},250);
+		}
+		if(tipeKonten == "file")
+		{
+			//alert(wktTungguBukFolder);
+			document.getElementById('iframeHalFolder').src = "templates/halFolderSideList.php";
+			
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halFolderSide1.php?idFold="+idFoldRef;
+				window.frames['iframeHalFolder'].window.frames['halFolderSide2'].frameElement.src = "halFolderSide2.php?idFold="+idFoldRef;
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				}, wktTunggu);
+				
+			},250);
+		}
+	}
+	
+	document.getElementById('appView').value = aksi;
+}
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeHalFolder').height ;
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	if(status == "down")
+	{
+		$("#iframeHalFolder").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeHalFolder').height = heightFramePlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 320)
+		{
+			$("#iframeHalFolder").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeHalFolder').height = heightFrameMin;
+			
+			if(heightFrameMin == 320)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+animatedcollapse.addDiv('jason', 'fade=1,height=auto,overflow-y=scroll')
+animatedcollapse.ontoggle=function($, divobj, state){ //fires each time a DIV is expanded/contracted
+	//$: Access to jQuery
+	//divobj: DOM reference to DIV being expanded/ collapsed. Use "divobj.id" to get its ID
+	//state: "block" or "none", depending on state
+}
+animatedcollapse.init()
+// === end of == Animated Collapsible DIV
+</script>
+
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<input type="hidden" id="appView" name="appView" value="viewList"/>
+<input type="hidden" id="tipeKonten" name="tipeKonten" value="folder"/>
+              
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+	<td id="idHalTeksLvl">
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	{idHalTeksLvl}
+       <!-- <a href="http://www.google.com" target="_blank">
+          <img width="220" height="250" border="0" align="center"  src=""/>
+        </a>-->
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <!-- <tr align="center" style="background-color:#4880FF;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">-->
+        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">
+        	<td width="35%" height="40" align="left" valign="middle">
+            	<table cellpadding="0" cellspacing="0" width="100%">
+                <tr align="center" valign="middle">
+                	<td width="5" height="30"></td>
+                	<td width="40" id="idTdViewList" onclick="klikAppView('viewList')" bgcolor="#EFEFEF" style="cursor:pointer;" title=" View Lists">
+                    	<img src="../picture/Application-View-List-32.png" style="vertical-align:top;" height="25" border="0"/>
+                    </td>
+                    <td width="40" id="idTdViewIcon" onclick="klikAppView('viewIcon')" onMouseOver="this.style.backgroundColor='#EFEFEF';" onMouseOut="this.style.backgroundColor='#666';" style="cursor:pointer;" title=" View Icons">
+                    	<img src="../picture/Application-View-Icons-32.png" style="vertical-align:top;" height="25" border="0"/>
+                    </td>
+                    <td width="40" id="idTdSideList" onclick="klikAppView('sideList')" onMouseOver="this.style.backgroundColor='#EFEFEF';" onMouseOut="this.style.backgroundColor='#666';" style="cursor:pointer;" title=" View Side List">
+                    	<img src="../picture/Application-Side-List-32.png" style="vertical-align:top;" height="25" border="0"/>
+                    </td>
+                    
+                    <td>&nbsp;</td>
+                </tr>
+                </table>
+            </td>
+        	<td width="30%">:: MY FOLDER ::</td>
+            <td width="35%" align="right" id="tdBtnBack">&nbsp;{btnBack}</td>
+        </tr>
+        <tr>
+        	<td colspan="3" id="tdHalIframe">
+               <iframe width="100%" height="320" src="{srcMyFolder}" target="iframeHalFolder" name="iframeHalFolder" id="iframeHalFolder" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                <!--<div style="width:100%;height:387px;overflow:scroll;overflow-x: hidden;top: expression(offsetParent.scrollTop);"> 
+               
+                </div>-->
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

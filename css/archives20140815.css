@@ -1,0 +1,565 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* ######## START KHUSUS LOGIN */
+.loginContainer
+{
+	/*width:100%px;
+	margin-top:150px;
+	float:none;
+	overflow:auto;
+	text-align:left;
+	left:0px;
+
+	position:fixed;
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	/*border: solid 1px #CCC;*/
+	/*z-index:8;
+	
+	background-image:url(../picture/arch_bglogin.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:center;
+	
+	font-family:sans-serif;
+	font-size:14px;
+	font-weight:bold;*/
+	
+	width:100%;
+	margin-top:103px;
+	float:none;
+	overflow:hidden;
+	text-align:left;
+	
+	background-image:url(../picture/header.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:center;
+	
+	font-family:sans-serif;
+
+	position:inherit;
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	z-index:8;
+}
+
+.menuContainerArchives
+{
+	width:100%;
+	height:30px;
+	top:0px;
+	left:0px;
+	background-color:#f5f5f5;
+	position:fixed;
+	
+	font:12px/1.2 Arial,Verdana,'san serif';
+	
+	border-bottom-width:thin;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#666;
+	border-style:dashed;
+	z-index:10;
+}
+
+.loginTypeText
+{
+	width:250px;
+	height:20px;
+	vertical-align:middle;
+
+    border-radius:2px;
+    border: solid 1px #ccc;
+    padding:0.4em;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.btnLogin
+{
+	width:80px;
+	height:40px;
+    text-decoration:none;
+	vertical-align:middle;
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
+	color:#555;
+	background-color:#f5f5f5;
+	
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border-radius:4px;
+    border: solid 1px #ccc;
+    padding:0.3em 0.5em; 
+}
+
+.btnLogin:hover
+{
+	background-color:#1582f5;
+	cursor:pointer;
+	color:#EFEFEF;
+	font-weight:bold;
+}
+
+.btnLogin:active
+{
+	background-color:#36F;
+	cursor:pointer;
+}
+
+.wrongPass
+{
+	top:335px;
+	left:770px;
+	font-size:15px;
+	font-family:"Comic Sans MS";
+	color:#900;
+	font-weight:bold;
+	
+	z-index:10;
+}
+
+/* ######## END KHUSUS LOGIN */
+
+.archivesContainer
+{
+	width:995px;
+	margin-top:40px;
+	padding-top:5px;
+	padding-bottom:0px;
+	float:none;
+	overflow:hidden;
+	text-align:left;
+
+	position:inherit;
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #CCC;
+	z-index:8;
+}
+
+.elementSearch
+{
+	/*height:28px;*/
+	vertical-align:middle;
+	font-family:sans-serif;
+	font-size:14px;
+
+    border-radius:2px;
+    border: solid 1px #ccc;
+    padding:0.4em;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.elementSearch1
+{
+	/*height:28px;*/
+	vertical-align:middle;
+	font-family:sans-serif;
+	font-size:11px;
+
+    border-radius:2px;
+    border: solid 1px #ccc;
+    padding:0.4em;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.elementDefault
+{
+	vertical-align:middle;
+	font-family:tahoma;
+	font-size:12px;
+
+    border-radius:2px;
+    border: solid 1px #ccc;
+    padding:0.4em;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.elementMenu
+{
+	/*height:28px;*/
+	vertical-align:middle;
+	font-family:tahoma;
+	font-size:12px;
+
+    border-radius:2px;
+    border: solid 1px #ccc;
+    padding:0.4em;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.btnStandar3
+{
+	font-family:sans-serif;
+	font-size:14px;
+	background-color:#f5f5f5;
+	
+	border: solid 1px #ccc;
+}
+
+.btnStandarDisabled
+{
+	vertical-align:middle;
+	font-family:sans-serif;
+	font-size:12px;
+	
+	background-color:#f5f5f5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border-radius:4px;
+    border: solid 1px #ccc;
+}
+
+.btnStandar
+{
+	vertical-align:middle;
+	font-family:sans-serif;
+	font-size:12px;
+	
+	background-color:#f5f5f5;
+	/*background-color:#E0E0E0;*/
+	/*background: white url(formelements-select.png) no-repeat center left;*/
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border-radius:4px;
+    border: solid 1px #ccc;
+   /* padding:0.3em 0.5em; */
+}
+
+.btnStandarHover
+{
+	vertical-align:middle;
+	font-family:Arial;
+	font-size:14px;
+	cursor:pointer;
+	
+	background-color:#1582f5;
+	/*background: white url(formelements-select.png) no-repeat center left;*/
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border-radius:4px;
+    border: solid 1px #ccc;
+}
+
+.fontBtnStandar
+{
+	cursor:pointer;	
+	font-family:sans-serif;
+	color:#000;
+	font-size:14px;
+}
+
+.fontBtnStandarHover
+{
+	cursor:pointer;	
+	font-family:sans-serif;
+	color:#EFEFEF;
+	font-size:14px;
+}
+
+.btnStandar:hover
+{
+	font-family:Arial;
+	background-color:#1582f5;
+	cursor:pointer;
+	color:#EFEFEF;
+}
+
+.btnStandar:active
+{
+	background-color:#36F;
+	cursor:pointer;
+}
+
+.teksMyFolder
+{	
+	font-family:Arial;
+	font-weight:bold;
+	color:#666;
+	font-size:16px;
+}
+
+.teksLvlFolder
+{
+	font-family:Tahoma;
+	font-weight:bold;
+	color:#000080;
+	font-size:14px;
+}
+
+/*################## START UNTUK FOLDER LIST */
+.tdMyFolder
+{
+	border-bottom-width:1;
+	border-top-width:1;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#999;
+	border-style:dotted;
+	cursor:pointer;
+}
+
+.fontMyFolderList
+{
+	font-family:Tahoma;
+	font-size:12px;
+	color:#333;
+}
+
+/*##### KHUSUS HANYA JALAN DI MOZILL FIREFOX #####*/
+.btnStandar2
+{
+	border:#DDD 1px solid;
+	border-radius:8px;
+	width:100px;
+	height:60px;
+
+	background-color:#f5f5f5;
+	cursor:pointer;
+	position:relative;
+}
+
+.btnStandar2Hover
+{
+	border:#DDD 1px solid;
+	border-radius:8px;
+	width:100px;
+	height:60px;
+
+	background-color:#1582f5;
+	cursor:pointer;
+	position:relative;
+}
+
+/*##### KHUSUS HANYA JALAN DI INTERNET EXPLORER #####*/
+.fontBtn
+{
+	cursor:pointer;	
+	font-family:"Comic Sans MS";
+	color:#666;
+	/*font-family:Tahoma;
+	color:#666;*/
+	font-weight:bold;
+	font-size:12px;
+	position:relative;
+}
+
+.fontBtnHover
+{
+	cursor:pointer;	
+	font-family:"Comic Sans MS";
+	color:#FFF;
+	font-weight:bold;
+	font-size:12px;
+	position:relative;
+}
+
+/*################## END UNTUK FOLDER LIST */
+/* ######## START KHUSUS HALTAMBAHFOLDER.PHP */
+.formInput
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#999;
+	border-style:dotted;
+	cursor:pointer;
+	
+	font-family:Tahoma;
+	font-size:12px;
+	color:#333;
+}
+
+.errorMsg
+{
+	/*border: solid 1px #ccc;*/
+	text-align:left;
+	margin-left:10px;
+	margin-right:10px;
+	margin-bottom:10px;
+	font-size:13px;
+	font-family:"Comic Sans MS";
+	color:#900;
+	font-weight:100;
+	position:static;
+	text-decoration:blink;
+}
+/* ######## END KHUSUS HALTAMBAHFOLDER.PHP */
+
+/* ######## START KHUSUS HALFOLDER.HTML */
+.mapTeksLvl
+{
+	cursor:pointer;	
+	font-family:Tahoma;
+	font-size:12px;
+	color:#666;
+	font-weight:bold;
+}
+
+.mapTeksLvl:hover
+{
+	font-family:Tahoma;
+	font-size:12px;
+	color:#000080;
+	font-weight:bold;
+}
+
+.btnStandar3
+{
+	border:#DDD 1px solid;
+	border-radius:8px;
+	height:40px;
+
+	background-color:#f5f5f5;
+	cursor:pointer;
+	position:relative;
+}
+
+.btnStandar3Hover
+{
+	border:#DDD 1px solid;
+	border-radius:8px;
+	height:40px;
+
+	background-color:#1582f5;
+	cursor:pointer;
+	position:relative; 
+}
+
+/* ######## END KHUSUS HALFOLDER.HTML */
+
+/* ######## START KHUSUS SUBORDINATE */
+.kotakTree
+{
+	cursor:pointer;	
+	position:relative;
+	text-align:center;
+}
+
+.btnTree
+{
+	border:#999 1px solid;
+	border-radius:8px;
+
+	background-color:#D0E1FD;
+	cursor:pointer;
+}
+
+.btnTreeHover
+{
+	border:#999 1px dashed;
+	border-radius:8px;
+
+	background-color:#33FFFF;
+	cursor:pointer;
+}
+
+.fontBtnTree
+{
+	font-family:Arial;
+	color:#666;
+	font-weight:bold;
+	font-size:11px;
+	cursor:pointer;	
+}
+
+.fontBtnTreeHover
+{
+	font-family:Arial;
+	color:#333;
+	font-weight:bold;
+	font-size:11px;
+	cursor:pointer;	
+}
+
+.btnTreeDisabled
+{
+	border:#999 1px solid;
+	border-radius:8px;
+
+	background-color:#F2F8FF;
+}
+
+.fontBtnTreeDisabled
+{
+	font-family:Arial;
+	color:#666;
+	font-weight:bold;
+	font-size:11px;
+}
+
+.kotakTreeDisabled
+{
+	position:relative;
+	text-align:center;
+}
+
+.btnBrowse
+{
+	background-color:#ECE9D8;
+	border:#CCC 1px solid;
+	cursor:pointer;
+	position:absolute;
+}
+
+.btnBrowseHover
+{
+	border:#CCC 1px solid;
+	cursor:pointer;
+	position:absolute;
+
+	background-color:#1582F5;
+}
+
+.fontBtnBrowse
+{
+	font-size:13px;
+	cursor:pointer;
+	color:#333;
+	position:relative;
+}
+
+.fontBtnBrowseHover
+{
+	font-size:13px;
+	cursor:pointer;
+	color:#FFF;
+	position:relative;
+}
+
+.btnFolder
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#FFF;
+	cursor:pointer;
+}
+
+.btnFolderDis
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#CCC;
+	cursor:pointer;
+}
+
+
+.btnFolderHover
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#1582f5;
+	cursor:pointer;
+}

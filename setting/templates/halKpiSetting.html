@@ -1,0 +1,540 @@
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function pilihBtnAdd()
+{
+	document.getElementById('errorMsg').innerHTML="&nbsp;";
+	var nmDiv = document.getElementById('nmDiv').value.replace(/&/g,"%26");
+	
+	if(nmDiv.replace(/ /g,"") == "")
+	{
+		document.getElementById('errorMsg').innerHTML="<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;Division Name Still Empty";
+		document.getElementById('nmDiv').focus();
+		return false;
+	}
+	
+	ajaxNameDivisi("cekNameDivisi", "idDivisiAdaTidak");
+	
+	var delay=250//1 seconds	
+	setTimeout(function()
+	{
+		var divisiAdaTidak = document.getElementById('divisiAdaTidak').value;
+		if(divisiAdaTidak == "ada")
+		{
+			document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;Name Division already exists";
+			document.getElementById('nmDiv').focus();
+			return false;
+		}
+		
+		var answer = confirm("Are you sure want to add ?");
+		if(answer)
+		{
+			document.getElementById('iframehalDivisionList').src= "";
+			document.getElementById('iframehalDivisionList').src= "templates/halDivisionList.php?aksi=addDivisi&nmDiv="+nmDiv;
+		}
+		else
+		{ return false; }
+	},delay);
+}
+function pilihNameDivisi(kdDiv, nmDivSent, jmlRow )
+{
+	modelChoose("A");
+	document.getElementById('errorMsg').innerHTML="&nbsp;";
+	document.getElementById('errorMsg2').innerHTML = "&nbsp;";
+	
+	document.getElementById('nmDiv').value = ""; //menu name divisi
+	document.getElementById('nmDiv').disabled = true;
+	
+	document.getElementById('btnAdd').disabled = true;
+	document.getElementById('btnAdd').className = 'btnStandarDisabled';
+	document.getElementById('btnRemove').disabled = false;
+	document.getElementById('btnRemove').className = 'btnStandar';
+	if(jmlRow > 0)
+	{
+		document.getElementById('btnRemove').disabled = true;
+		document.getElementById('btnRemove').className = 'btnStandarDisabled';
+	}
+	
+	document.getElementById('kdDiv').value = kdDiv;
+	document.getElementById('divName').innerHTML = nmDivSent;
+	document.getElementById('idHalMenuTahun').disabled= false;
+	document.getElementById('tahun').value= "2014";
+	document.getElementById('model').disabled= false;
+	document.getElementById('model').value= "A";
+	document.getElementById('nmKpiOne').value= "";	
+	document.getElementById('btnAddKpi').disabled= false;
+	document.getElementById('btnAddKpi').className = 'btnStandar';
+	document.getElementById('btnRemoveKpi').disabled = true;
+	document.getElementById('btnRemoveKpi').className = 'btnStandarDisabled';
+	
+	document.getElementById('iframeHalKpiList').src = "";
+	document.getElementById('iframeHalKpiList').src = "templates/halKpiList.php?aksi=showKpiList&kdDiv="+kdDiv;
+}
+
+function pilihKpiList(idKpi)
+{
+	modelChoose("A");
+	document.getElementById('errorMsg').innerHTML="&nbsp;";
+	document.getElementById('errorMsg2').innerHTML = "&nbsp;";
+	
+	document.getElementById('idKpi').value = idKpi;
+	document.getElementById('idHalMenuTahun').disabled= true;
+	document.getElementById('tahun').value= "2014";
+	document.getElementById('model').disabled= true;
+	document.getElementById('model').value= "A";
+	document.getElementById('nmKpiOne').disabled= true;
+	document.getElementById('nmKpiOne').value= "";	
+	document.getElementById('btnAddKpi').disabled= true;
+	document.getElementById('btnAddKpi').className = 'btnStandarDisabled';
+	document.getElementById('btnRemoveKpi').disabled= false;
+	document.getElementById('btnRemoveKpi').className = 'btnStandar';
+}
+
+function refreshPage()
+{
+	modelChoose("");
+	document.getElementById('errorMsg').innerHTML = "&nbsp;";
+	document.getElementById('errorMsg2').innerHTML = "&nbsp;";
+	
+	document.getElementById('nmDiv').value = ""; //menu name divisi
+	document.getElementById('nmDiv').disabled = false;
+	
+	document.getElementById('btnAdd').disabled = false;
+	document.getElementById('btnAdd').className = 'btnStandar';
+	document.getElementById('btnRemove').disabled = true;
+	document.getElementById('btnRemove').className = 'btnStandarDisabled';
+	
+	document.getElementById('divName').innerHTML = "&nbsp";
+	document.getElementById('kdDiv').value = "";
+	document.getElementById('idHalMenuTahun').disabled= true;
+	document.getElementById('tahun').value= "2014";
+	document.getElementById('model').disabled= true;
+	document.getElementById('model').value= "A";
+	
+	document.getElementById('btnAddKpi').disabled= true;
+	document.getElementById('btnAddKpi').className = 'btnStandarDisabled';
+	document.getElementById('btnRemoveKpi').disabled= true;
+	document.getElementById('btnRemoveKpi').className = 'btnStandarDisabled';
+	
+	document.getElementById('iframehalDivisionList').src = "";
+	document.getElementById('iframehalDivisionList').src = "templates/halDivisionList.php";
+	document.getElementById('iframeHalKpiList').src = "";
+	document.getElementById('iframeHalKpiList').src = "templates/halKpiList.php";	
+}
+
+function refreshKpiForm()
+{
+	modelChoose("A");
+	document.getElementById('errorMsg2').innerHTML = "&nbsp;";
+	document.getElementById('idHalMenuTahun').disabled= false;
+	document.getElementById('tahun').value= "2014";
+	document.getElementById('model').disabled= false;
+	document.getElementById('model').value= "A";	
+	document.getElementById('nmKpiOne').value= "";
+	document.getElementById('btnAddKpi').disabled= false;
+	document.getElementById('btnAddKpi').className = 'btnStandar';
+	document.getElementById('btnRemoveKpi').disabled= true;
+	document.getElementById('btnRemoveKpi').className = 'btnStandarDisabled';
+	
+	var kdDiv = document.getElementById('kdDiv').value;
+	document.getElementById('iframeHalKpiList').src = "";
+	document.getElementById('iframeHalKpiList').src = "templates/halKpiList.php?aksi=showKpiList&kdDiv="+kdDiv;	
+}
+function modelChoose(choosen)
+{
+	if(choosen == "A")
+	{
+		document.getElementById('nmKpiOne').disabled= false;
+		document.getElementById('nmKpiTwo').disabled= true;
+		document.getElementById('nmKpiTwo').value= "";
+		document.getElementById('nmKpiThree').disabled= true;
+		document.getElementById('nmKpiThree').value= "";
+	}
+	else if(choosen == "B")
+	{
+		document.getElementById('nmKpiTwo').disabled= false;
+		document.getElementById('nmKpiThree').disabled= true;
+		document.getElementById('nmKpiThree').value= "";
+	}
+	else if(choosen == "C")
+	{
+		document.getElementById('nmKpiTwo').disabled= false;
+		document.getElementById('nmKpiThree').disabled= false;
+	}
+	else if(choosen == "")
+	{
+		document.getElementById('nmKpiOne').disabled= true;
+		document.getElementById('nmKpiTwo').disabled= true;
+		document.getElementById('nmKpiThree').disabled= true;
+		document.getElementById('nmKpiOne').value= "";
+		document.getElementById('nmKpiTwo').value= "";
+		document.getElementById('nmKpiThree').value= "";
+	}
+}
+function btnKpi(dis)
+{
+	if(dis = "removeDis")
+	{
+		document.getElementById('btnAddKpi').disabled= false;
+		document.getElementById('btnAddKpi').className = 'btnStandar';
+		document.getElementById('btnRemoveKpi').disabled = true;
+		document.getElementById('btnRemoveKpi').className = 'btnStandarDisabled';
+	}
+	if(dis = "addDis")
+	{
+		document.getElementById('btnAddKpi').disabled= true;
+		document.getElementById('btnAddKpi').className = 'btnStandarDisabled';
+		document.getElementById('btnRemoveKpi').disabled= false;
+		document.getElementById('btnRemoveKpi').className = 'btnStandar';
+	}
+}
+function pilihBtnAddKpi()
+{
+	document.getElementById('errorMsg2').innerHTML="&nbsp;";
+
+	var kdDiv = document.getElementById('kdDiv').value;
+	var tahun = document.getElementById('tahun').value;
+	var model = document.getElementById('model').value;
+	var nmKpiOne = document.getElementById('nmKpiOne').value.replace(/&/g,"%26");
+	var nmKpiTwo = document.getElementById('nmKpiTwo').value.replace(/&/g,"%26");
+	var nmKpiThree = document.getElementById('nmKpiThree').value.replace(/&/g,"%26");
+	
+	var lanjut = "no";
+	if(model == "A")
+	{
+		if(emptyKpi('nmKpiOne', 'First') == 'true')
+		{ lanjut = "yes"; }
+	}
+	if(model == "B")
+	{
+		if(emptyKpi('nmKpiOne', 'First') == 'true')
+		{
+			if(emptyKpi('nmKpiTwo', 'Second') == 'true')
+			{ lanjut = "yes"; }
+		}
+	}
+	if(model == "C")
+	{
+		if(emptyKpi('nmKpiOne', 'First') == 'true')
+		{
+			if(emptyKpi('nmKpiTwo', 'Second') == 'true')
+			{
+				if(emptyKpi('nmKpiThree', 'Third') == 'true')
+				{ lanjut = "yes"; }
+			}
+		}
+	}
+	
+	if(lanjut == "yes")
+	{
+		ajaxKpi("cekKpi", "idKpiAdaTidak");
+	
+		var delay=250//1 seconds	
+		setTimeout(function()
+		{
+			var kpiAdaTidak = document.getElementById('kpiAdaTidak').value;
+			if(kpiAdaTidak == "ada")
+			{
+				document.getElementById('errorMsg2').innerHTML = "<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;KPI already exists";
+				document.getElementById('nmKpiOne').focus();
+				return false;
+			}
+			
+			var answer = confirm("Are you sure want to add ?");
+			if(answer)
+			{
+				document.getElementById('iframeHalKpiList').src= "";
+				document.getElementById('iframeHalKpiList').src= "templates/halKpiList.php?aksi=addKpi&kdDiv="+kdDiv+"&tahun="+tahun+"&model="+model+"&nmKpiOne="+nmKpiOne+"&nmKpiTwo="+nmKpiTwo+"&nmKpiThree="+nmKpiThree;
+			}
+			else
+			{ return false; }
+		},delay);
+	}
+}
+
+function emptyKpi(idElement, nomor)
+{
+	var boolean = 'false';
+	if(document.getElementById(idElement).value.replace(/ /g,"") == "")
+	{
+		document.getElementById('errorMsg2').innerHTML="<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;KPI "+nomor+" List Still Empty";
+		document.getElementById(idElement).focus();
+		boolean = 'false';
+	}
+	else
+	{
+		boolean = 'true';
+	}
+	return boolean;
+}
+
+function pilihBtnRemove()
+{
+	var answer  = confirm("Are you sure want to remove?");
+	if(answer)
+	{
+		var kdDiv = document.getElementById('kdDiv').value;
+		
+		document.getElementById('iframehalDivisionList').src = "";
+		document.getElementById('iframehalDivisionList').src = "templates/halDivisionList.php?aksi=removeDivisi&kdDiv="+kdDiv;
+	}
+	else
+	{	return false;	}
+}
+
+function pilihBtnRemoveKpi()
+{
+	var answer  = confirm("Are you sure want to remove?");
+	if(answer)
+	{
+		var idKpi = document.getElementById('idKpi').value;
+		var kdDiv = document.getElementById('kdDiv').value;
+		
+		document.getElementById('iframeHalKpiList').src = "";
+		document.getElementById('iframeHalKpiList').src = "templates/halKpiList.php?aksi=removeKpi&idKpi="+idKpi+"&idKpi="+idKpi;
+	}
+	else
+	{	return false;	}
+}
+
+function ajaxNameDivisi(aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekNameDivisi")
+	{
+		var nmDiv = document.getElementById('nmDiv').value;		
+		var parameters="halaman="+aksi+"&nmDiv="+nmDiv;
+	}
+	
+	mypostrequest.open("POST", "halPostSetting.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function ajaxKpi(aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekKpi")
+	{
+		var kdDiv = document.getElementById('kdDiv').value;
+		var nmKpiOne = document.getElementById('nmKpiOne').value.replace(/&/g,"%26");
+		var nmKpiTwo = document.getElementById('nmKpiTwo').value.replace(/&/g,"%26");
+		var nmKpiThree = document.getElementById('nmKpiThree').value.replace(/&/g,"%26");		
+		var parameters="halaman="+aksi+"&nmKpiOne="+nmKpiOne+"&nmKpiTwo="+nmKpiTwo+"&nmKpiThree="+nmKpiThree+"&kdDiv="+kdDiv;
+	}
+	
+	mypostrequest.open("POST", "halPostSetting.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+</script>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td id="idHalTeksLvl">
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN SUBORDINATE CUSTOM -->
+        <tr>
+        	<td height="437" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="5"></td></tr>
+                <tr>
+                	<td width="42%" class="" valign="top" align="center">
+<!-- ############# ISI HALAMAN USER YANG AKAN DIBERIKAN HAK SUBORDINATE CUSTOM -->
+                        <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr align="left">
+                        	<td width="27%" height="30"><span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Division Name</span>
+                            </td>
+                          	<td>
+                            	<input type="text" class="elementDefault" id="nmDiv" name="nmDiv" style="width:290px;height:17px;">
+                           	</td>
+                        </tr>
+                        <tr align="left">
+                        	<td>&nbsp;</td>
+                          	<td colspan="2">
+                                <button class="btnStandar" id="btnAdd" type="button" style="width:55px;height:28px;" onclick="pilihBtnAdd();" title="Add Division Name">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="center"><img src="../picture/Button-Add-blue-32.png" height="20"/> </td>
+                                        <td align="center">Add</td>
+                                      </tr>
+                                    </table>
+                                </button> 
+                                <button class="btnStandarDisabled" id="btnRemove" type="button" style="width:75px;height:29px;" onclick="pilihBtnRemove();" disabled title="Remove Choosen Division Name">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="center"><img src="../picture/Button-Cross-blue-32.png" height="20"/> </td>
+                                        <td align="center">Remove</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                                <div id="idDivisiAdaTidak"><input type="hidden" id="divisiAdaTidak" name="divisiAdaTidak"></div>
+                           	</td>
+                        </tr>
+                        <tr><td colspan="2" align="left" id="errorMsg" class="errorMsg">&nbsp;</td></tr>
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refreshPage();" title="Refresh Page"/></td>
+                                    <td width="50%" height="40">Division List</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halDivisionList.php" width="100%" height="305" target="iframehalDivisionList" name="iframehalDivisionList" id="iframehalDivisionList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    <td width="1%" class="tabelBorderRightJust" style="border-right-width:thin;border-right-style:dashed;border-color:#999;">&nbsp;</td>
+                    <td width="1%" class="">&nbsp;</td>
+                    <td class="" valign="top">
+<!-- ############# ISI HALAMAN SUBORDINATE YANG BISA DIAKSES SECARA CUSTOM -->
+                      <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr class="fontMyFolderList">
+                        	<td colspan="2" height="27" class="tabelBorderRightNull" style="border-width:thin;border-color:#999;background-color:#F7F7F7;">
+                            &nbsp;
+                            <span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Division</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span id="divName" style="font-weight:bold;">&nbsp;</span>
+                            &nbsp;
+                            <input type="hidden" id="kdDiv" name="kdDiv">
+                            </td>
+                        </tr>
+                        <tr><td width="22%" height="2"></td></tr>
+                        <tr class="fontMyFolderList">
+                        	<td colspan="2" height="30">
+                            &nbsp;&nbsp;<span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Year</span>&nbsp;
+                            <span id="idHalMenuTahun" disabled>
+                            	{menuTahun}
+                            </span>
+                            &nbsp;&nbsp;<span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Model</span>&nbsp;
+                            <span id="idHalMenuModel">
+                            	<select class="elementMenu" id="model" name="model" style="width:50px;height:29px;" disabled title="Choose Model" onchange="modelChoose(this.value);">	
+                                <option value="A">A</option>
+                                <option value="B" onclick="kpi2();">B</option>
+                                <option value="C">C</option>
+                                </select>
+                            </span>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td height="30">
+                            	&nbsp;&nbsp;<span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Kpi Name one</span>&nbsp;
+                            </td>
+                          	<td width="78%">
+                            	<input type="text" class="elementDefault" id="nmKpiOne" name="nmKpiOne" style="width:260px;height:17px;" disabled>
+                           	</td>
+                        </tr>
+                        <tr>
+                        	<td height="30">
+                            	&nbsp;&nbsp;<span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Kpi Name two</span>&nbsp;
+                            </td>
+                          	<td width="78%">
+                          		<input type="text" class="elementDefault" id="nmKpiTwo" name="nmKpiTwo" style="width:260px;height:17px;" disabled>
+                             </td>
+                        </tr>
+                        <tr>
+                        	<td height="30">
+                            	&nbsp;&nbsp;<span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Kpi Name three</span>&nbsp;
+                            </td>
+                          	<td width="78%">
+                                <input type="text" class="elementDefault" id="nmKpiThree" name="nmKpiThree" style="width:260px;height:17px;" disabled>
+                                &nbsp;
+                                  <button class="btnStandarDisabled" id="btnAddKpi" type="button" style="width:55px;height:28px;" onclick="pilihBtnAddKpi();" disabled title="Add New KPI">
+                                      <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                        <tr>
+                                          <td align="center"><img src="../picture/Button-Add-blue-32.png" height="20"/> </td>
+                                          <td align="center">Add</td>
+                                        </tr>
+                                      </table>
+                                  </button>
+                                  <button class="btnStandarDisabled" id="btnRemoveKpi" type="button" style="width:75px;height:29px;" onclick="pilihBtnRemoveKpi();" disabled title="Remove Choosen KPI">
+                                      <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                        <tr>
+                                          <td align="center"><img src="../picture/Button-Cross-blue-32.png" height="20"/> </td>
+                                          <td align="center">Remove</td>
+                                        </tr>
+                                      </table>
+                                  </button>
+                                  <div id="idKpiAdaTidak"><input type="hidden" id="kpiAdaTidak" name="kpiAdaTidak"></div>
+                                  <input type="hidden" id="idKpi" name="idKpi">
+                          	</td>
+                        </tr>
+                        <tr>
+                        <td colspan="2" align="left" id="errorMsg2" class="errorMsg">&nbsp;</td></tr>
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                        	<td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%">&nbsp;</td>
+                                    <td width="50%" height="40">Kpi List</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halKpiList.php" width="100%" height="213" target="iframeHalKpiList" name="iframeHalKpiList" id="iframeHalKpiList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>	
+                        </table>
+                    </td>
+                </tr>
+
+                </table>
+            
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+
+</table>

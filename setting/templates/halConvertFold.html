@@ -1,0 +1,463 @@
+<script type="text/javascript" src="../../js/main.js"></script>
+<script>
+function ambilFolder(lokasiFolder)
+{
+	document.getElementById('simpanFolderFile').innerHTML = "&nbsp;";
+	
+	var userIdSelect = document.getElementById('userId').value;
+	var menuFoldSelect = document.getElementById('menuFold').value;
+
+	if(lokasiFolder.replace(/ /g ,"") == "")
+	{
+		sebelumPilihFolder();
+		document.getElementById('errorMsg2').innerHTML = "<img src=\"../../picture/exclamation-red.png\"/>&nbsp;Please Choose Folder";
+		return false;
+	}
+	else if(userIdSelect == "00000")
+	{
+		sebelumPilihFolder();
+		document.getElementById('errorMsg2').innerHTML = "<img src=\"../../picture/exclamation-red.png\"/>&nbsp;Please Select User";
+		return false;
+	}
+	else if(menuFoldSelect == "00000")
+	{
+		sebelumPilihFolder();
+		document.getElementById('errorMsg2').innerHTML = "<img src=\"../../picture/exclamation-red.png\"/>&nbsp;Please Select Folder Level One";
+		return false;
+	}
+	else
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/ajax-loader7.gif\"/>&nbsp;Please wait&nbsp;";
+		document.getElementById('errorMsg2').innerHTML = "&nbsp;";
+		
+		var lokasiFolder = document.getElementById('lokasiFolder').value;
+		if(lokasiFolder.replace(/ /g,"") != "")
+		{
+			try
+			{
+				var fso = new ActiveXObject("Scripting.FileSystemObject");
+				var parentFolder = fso.GetFolder(lokasiFolder);
+				
+				var enumFolders = new Enumerator(parentFolder.SubFolders);
+				var folderItem = "";
+				for (; !enumFolders.atEnd(); enumFolders.moveNext())
+				{
+					folderItem += enumFolders.item()+"*****";
+					
+				}
+				folderItem = folderItem.replace("#","-----");
+				
+				//.replace(/#/g,"-----")
+				var enumFiles = new Enumerator(parentFolder.files);
+				var fileItem = "";
+				for (; !enumFiles.atEnd(); enumFiles.moveNext())
+				{
+					fileItem += enumFiles.item()+"*****";
+				}
+				fileItem = fileItem.replace("#","-----");
+				
+				setelahPilihFolder(folderItem, fileItem);
+				
+				return true;
+			}
+			catch(_err)
+			{
+				alert ("Failed to Populate Folder List:\n" + _err.description );	
+				return false;
+			}
+		}
+	}
+	
+}
+
+function getFolderPath()
+{
+	return showModalDialog("../../archives/templates/FolderDialog.html","","width:400px;height:400px;resizeable:yes;");
+}
+
+function setelahPilihFolder(folderItem, fileItem)
+{
+	var userIdSelect = document.getElementById('userId').value; 
+	var menuFoldSelect = document.getElementById('menuFold').value; 
+	var allFolderItem = encodeURIComponent(folderItem).replace(/%5C/g, '\\');
+	var allFileItem = encodeURIComponent(fileItem).replace(/%5C/g, '\\');
+	//document.getElementById('tesTA').value = allFolderItem;
+	
+	document.getElementById('iframeFoldSource').src = "";
+	document.getElementById('iframeFoldSource').src = "templates/foldSourceList.php?aksi=ambilFolder&allFolder="+allFolderItem+"&allFile="+allFileItem+"&userIdSelect="+userIdSelect+"&idFoldRef="+menuFoldSelect;		
+
+	document.getElementById('btnCekFold').disabled = false;
+	document.getElementById('btnCekFold').className = "btnStandar";
+	
+	document.getElementById('btnSimpanFolder').disabled = false;
+	document.getElementById('btnSimpanFolder').className = "btnStandar";
+	
+	document.getElementById('btnSimpanFile').disabled = false;
+	document.getElementById('btnSimpanFile').className = "btnStandar";
+}
+
+function sebelumPilihFolder()
+{
+	document.getElementById('errorMsg').innerHTML = "&nbsp;";
+	document.getElementById('iframeFoldSource').src = "";
+	
+	document.getElementById('btnCekFold').disabled = true;
+	document.getElementById('btnCekFold').className = "btnStandarDisabled";
+}
+
+function klikBtnCekFolder()
+{
+	document.getElementById('simpanFolderFile').innerHTML = "&nbsp;";
+	document.getElementById('iframeFoldDest').src = "";
+	if(document.getElementById('allCekFolder').value != "")
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/ajax-loader7.gif\"/>&nbsp;Please wait&nbsp;";
+		
+		var idFoldRef = document.getElementById('menuFold').value; 
+
+		var allCekFolder = document.getElementById('allCekFolder').value.replace("#","-----");
+		var allIdFoldRef = document.getElementById('allCekIdFoldSource').value; 
+		
+		var userIdSelect = document.getElementById('userId').value;
+
+		document.getElementById('iframeFoldDest').src = "templates/foldDestList.php?aksi=cekFolder&allCekFolder="+allCekFolder+"&userIdSelect="+userIdSelect+"&allIdFoldRef="+allIdFoldRef+"&idFoldRef="+idFoldRef;	
+	}
+	
+	setTimeout(function()
+	{
+		//window.frames["iframeFoldDest"].beriNilaiAllIdFold();
+	},2500);
+}
+
+function klikBtnBuatSimpanFolder()
+{
+	document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/ajax-loader7.gif\"/>&nbsp;Please wait&nbsp;";
+	window.frames["iframeFoldDest"].klikBtnBuatFolder();
+
+	setTimeout(function()
+	{
+		document.getElementById('errorMsg').innerHTML = "&nbsp;";
+		//document.getElementById('simpanFolderFile').innerHTML = "&nbsp;";
+		//alert("FINISH BUAT FOLDER")
+	},2500);
+}
+
+function klikBtnBuatSimpanFile()
+{
+	document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/ajax-loader7.gif\"/>&nbsp;Please wait&nbsp;";
+	window.frames["iframeFoldDest"].klikBtnBuatFile();
+	//window.frames["iframeFoldDest"].kopiFileToOtherFile();
+	
+	/*setTimeout(function()
+	{
+		window.frames["iframeFoldDest"].kopiFileToOtherFile();
+	},3000);*/
+	
+	setTimeout(function()
+	{
+		document.getElementById('errorMsg').innerHTML = "&nbsp;";
+		//document.getElementById('simpanFolderFile').innerHTML = "&nbsp;";
+		//alert("FINISH BUAT FILE")
+	},2500);
+}
+
+function pilihUserIdMenu(userId)
+{
+	if(userId == "00000")
+	{
+		document.getElementById('menuFold').disabled = true;
+		document.getElementById('menuFold').value = "00000";
+		return false
+	}
+	document.getElementById('menuFold').disabled = false;
+	ajaxConvertFold(userId, "pilihMenuUser", "idMenuFold")
+}
+
+function ajaxConvertFold(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "pilihMenuUser")
+	{
+		var userId = id;
+		
+		var parameters="halaman="+aksi+"&userId="+userId;
+	}
+	
+	mypostrequest.open("POST", "halPostSetting.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>  
+<!--<textarea id="tesTA" style="width:500px;height:500px;"></textarea>-->
+<input type="hidden" id="allCekFolder" style="width:900px;">
+<input type="hidden" id="allCekIdFoldSource" style="width:900px;">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td id="idHalTeksLvl" colspan="3">
+        <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10">
+            </td>
+        </tr>
+        <tr><td height="20" colspan="3">&nbsp;</td></tr>
+        <tr>
+            <td valign="bottom" align="left" height="35" class="">
+            	&nbsp;
+                <button class="btnStandar" type="button" 
+                onClick="lokasiFolder.value=getFolderPath();" 
+                style="width:115px;height:29px;" title="Choose Folder">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center"><img src="../picture/folder-tree.png" height="20"/> </td>
+                        <td align="center">Choose Folder</td>
+                      </tr>
+                    </table>
+                </button>
+                &nbsp;<input type="text" class="elementDefault" name="lokasiFolder" id="lokasiFolder" size="104" style="height:17px;">
+            	&nbsp;<span id="errorMsg2" class="errorMsg">&nbsp;</span>
+            </td>
+        </tr>
+        <tr>
+        	<td colspan="2" height="35">
+            	<table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                	<td align="left" valign="bottom">
+                    &nbsp;
+                    <select class="elementMenu" id="userId" name="userId" style="width:270px;height:29px;" onchange="pilihUserIdMenu(this.value);" title="Choose User">
+                    	<option value="00000">-- PLEASE SELECT USER --</option>
+                        {userIdMenu}
+                    </select>
+                    <span id="idMenuFold">
+                    <select class="elementMenu" id="menuFold" name="menuFold" style="width:400px;height:29px;" disabled>
+                    	<option value="00000">-- PLEASE SELECT FOLDER LEVEL ONE --</option>
+                    </select>
+                    </span>
+                    &nbsp;
+                	<button class="btnStandar" type="button" onClick="ambilFolder(document.getElementById('lokasiFolder').value);" 
+                    style="width:50px;height:29px;" title="Continue proceed with chosen folder">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                          <tr>
+                            <td align="center"><img src="../picture/arrow-turn-000-left.png" height="16"/> </td>
+                            <td align="center">GO</td>
+                          </tr>
+                        </table>
+                    </button>
+                    </td>
+                </tr>
+                </table>
+            </td> 
+        </tr>
+        
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td colspan="3" height="25">
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+        	<td width="8">&nbsp;</td>
+        	<td id="simpanFolderFile" class="fontMyFolderList">&nbsp;</td>
+            <td width="8">&nbsp;</td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="99%">
+        <tr>
+        	<td width="8">&nbsp;</td>
+        	<td height="35" valign="top">
+            	<button class="btnStandarDisabled" type="button" 
+                onClick="klikBtnCekFolder();" 
+                style="width:100px;height:33px;" title="Cek Folder" disabled id="btnCekFold">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center"><img src="../picture/document-task.png" height="16"/> </td>
+                        <td align="left">&nbsp;&nbsp;&nbsp;Cek Folder</td>
+                      </tr>
+                    </table>
+                </button>
+				&nbsp;
+            	<button class="btnStandarDisabled" type="button" 
+                onClick="klikBtnBuatSimpanFolder();" 
+                style="width:115px;height:33px;" title="simpanFolder" disabled id="btnSimpanFolder">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center" rowspan="2" width="21"><img src="../picture/blue-folder-export.png" height="16"/> </td>
+                        <td align="left">&nbsp;&nbsp;&nbsp;Simpan Folder</td>
+                      </tr>
+                      <tr>
+                        <td align="left">&nbsp;&nbsp;&nbsp;ke Database</td>
+                      </tr>
+                    </table>
+                </button>
+            	&nbsp;
+            	<button class="btnStandarDisabled" type="button" 
+                onClick="klikBtnBuatSimpanFile();" 
+                style="width:115px;height:33px;" title="simpanFile" disabled id="btnSimpanFile">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center" rowspan="2" width="21"><img src="../picture/document-export.png" height="16"/> </td>
+                        <td align="left">&nbsp;&nbsp;&nbsp;Simpan File</td>
+                      </tr>
+                      <tr>
+                        <td align="left">&nbsp;&nbsp;&nbsp;ke Database</td>
+                      </tr>
+                    </table>
+                </button>
+                &nbsp;&nbsp;
+                <span id="errorMsg" class="errorMsg">&nbsp;</span>
+            </td>
+        </tr>
+        <tr>
+        	<td width="8">&nbsp;</td>
+        	<td>
+            	<table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                <tr style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:14px;font-weight:bold;">
+                    <td height="30" align="left">&nbsp;&nbsp;Folder Source</td>
+                </tr>
+                <tr>
+                	<td>
+                    <iframe width="100%" height="280" src="templates/foldSourceList.php" target="iframeFoldSource" name="iframeFoldSource" 
+                id="iframeFoldSource" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                    </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        <tr><td height="5"></td></tr>
+        <tr>
+        	<td width="8">&nbsp;</td>
+        	<td>
+            	<table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                <tr style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:14px;font-weight:bold;">
+                    <td height="30" align="left">&nbsp;&nbsp;Folder Destination</td>
+                </tr>
+                <tr>
+                	<td>
+                    <iframe width="100%" height="280" src="templates/foldDestList.php" target="iframeFoldDest" name="iframeFoldDest" 
+                    id="iframeFoldDest" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                    </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        
+        </table>
+    </td>
+</tr>
+
+<!--<tr>
+	<td width="40%" height="373">
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+        <!--
+    	<table cellpadding="0" cellspacing="0" width="99%">
+        <tr style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+        	<td height="30">&nbsp;Folder Source</td>
+        </tr>
+        <tr>
+        	<td colspan="3" class="tabelBorderTopNull" style="border-width:thin;">
+				<iframe width="100%" height="344" src="templates/foldSourceList.php" target="iframeFoldSource" name="iframeFoldSource" 
+                id="iframeFoldSource" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto" style="overflow-y:hidden; overflow-x:scroll;"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+    <td valign="top">
+    	<table cellpadding="0" cellspacing="0" width="99%">
+        <tr><td height="34"><span id="errorMsg" class="errorMsg">&nbsp;</span></td></tr>
+        <tr>
+        	<td valign="top" align="center" height="35">
+            <button class="btnStandarDisabled" type="button" 
+                onClick="klikBtnCekFolder();" 
+                style="width:115px;height:29px;" title="Cek Folder" disabled id="btnCekFold">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center"><img src="../picture/document-task.png" height="16"/> </td>
+                        <td align="left">&nbsp;&nbsp;&nbsp;Cek Folder</td>
+                      </tr>
+                    </table>
+                </button>
+            </td>
+        </tr>
+        <tr>
+        	<td valign="top" align="center" height="46">
+            	<button class="btnStandarDisabled" type="button" 
+                onClick="klikBtnBuatSimpanFolder();" 
+                style="width:115px;height:40px;" title="simpanFolder" disabled id="btnSimpanFolder">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center" rowspan="2" width="21"><img src="../picture/blue-folder-export.png" height="16"/> </td>
+                        <td align="left">&nbsp;&nbsp;&nbsp;Simpan Folder</td>
+                      </tr>
+                      <tr>
+                        <td align="left">&nbsp;&nbsp;&nbsp;ke Database</td>
+                      </tr>
+                    </table>
+                </button>
+            </td>
+        </tr>
+        
+        <tr>
+        	<td valign="top" align="center" height="35">
+            	<button class="btnStandarDisabled" type="button" 
+                onClick="klikBtnBuatSimpanFile();" 
+                style="width:115px;height:40px;" title="simpanFile" disabled id="btnSimpanFile">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center" rowspan="2" width="21"><img src="../picture/document-export.png" height="16"/> </td>
+                        <td align="left">&nbsp;&nbsp;&nbsp;Simpan File</td>
+                      </tr>
+                      <tr>
+                        <td align="left">&nbsp;&nbsp;&nbsp;ke Database</td>
+                      </tr>
+                    </table>
+                </button>
+            </td>
+        </tr>
+        </table>
+    </td>
+    <td width="50%">
+    	<table cellpadding="0" cellspacing="0" width="99%">
+        <tr style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+        	<td height="30">&nbsp;Folder Destination</td>
+        </tr>
+        <tr>
+        	<td colspan="3" class="tabelBorderTopNull" style="border-width:thin;">
+            	<iframe width="100%" height="344" src="templates/foldDestList.php" target="iframeFoldDest" name="iframeFoldDest" id="iframeFoldDest" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>-->
+<!--<tr>
+	<td colspan="3">
+        <table cellpadding="0" cellspacing="0" width="99%">
+        <tr style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+            <td height="30">&nbsp;Folder Destination</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="tabelBorderTopNull" style="border-width:thin;">
+                <iframe width="100%" height="500" src="templates/foldDestList.php" target="iframeFoldDest" name="iframeFoldDest" id="iframeFoldDest" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>-->
+</table>

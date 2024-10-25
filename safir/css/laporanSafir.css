@@ -1,0 +1,231 @@
+@charset "utf-8";
+/* CSS Document */
+
+body 
+{
+	font-family:Arial;
+	font-size:10px;
+	
+	
+}
+.wrap
+{
+	position:relative;
+	/*width: 210mm;
+	height: 297mm;*/
+	width: 794px;
+	height: 1122px;
+
+	margin:0 auto;
+
+	/*overflow: auto;*/
+}
+
+.wrap2
+{
+	position:relative;
+	width: 794px;
+	height: 1122px;
+
+	margin:0 auto;
+}
+
+.wrap3
+{
+	position:relative;
+	width: 794px;
+	height: 1122px;
+
+	margin:0 auto;
+}
+
+.header1 {
+  position: absolute;
+  width: 620px;
+  
+  left: 50%;
+  margin-left: -310px;
+}
+
+.judulSafir
+{
+	position: absolute;
+	width: 750px;
+	top:113px;
+	
+	left: 50%;
+  	margin-left: -375px;
+	
+	font-size:17px;
+	font-weight:bold;
+}
+
+.konten1
+{
+	position: absolute;
+	width: 750px;
+	top:132px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+.konten2
+{
+	position: absolute;
+	width: 750px;
+	top:237px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.description12
+{
+	position: absolute;
+	width: 750px;
+	top:272px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.konten3
+{
+	position: absolute;
+	width: 750px;
+	top:304px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.konten4
+{
+	position: absolute;
+	width: 750px;
+	top:806px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.konten5
+{
+	position: absolute;
+	width: 750px;
+	top:874px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.konten6
+{
+	position: absolute;
+	width: 750px;
+	top: 962px;
+	left: 50%;
+	margin-left: -375px;
+}
+
+.description22
+{
+	position: absolute;
+	width: 750px;
+	top:113px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.guidelines
+{
+	position: absolute;
+	width: 750px;
+	top:168px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.konten7
+{
+	position: absolute;
+	width: 750px;
+	top: 255px;
+	
+	left: 50%;
+	margin-left: -375px;
+}
+
+.konten8
+{
+	position: absolute;
+	width: 750px;
+	top: 467px;
+	
+	left: 50%;
+	margin-left: -375px;
+}
+
+.konten9
+{
+	position: absolute;
+	width: 750px;
+	top: 679px;
+	
+	left: 50%;
+	margin-left: -375px;
+}
+
+.konten10
+{
+	position: absolute;
+	width: 750px;
+	top: 960px;
+	
+	left: 50%;
+	margin-left: -375px;
+}
+
+.verificationCorr
+{
+	position: absolute;
+	width: 750px;
+	top:113px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.verificationRes
+{
+	position: absolute;
+	width: 750px;
+	top:252px;
+	
+	left: 50%;
+  	margin-left: -375px;
+}
+
+.kotakCek
+{
+	border-bottom-width:1px;
+	border-top-width:1px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-color:#666;
+	border-style:solid;
+	letter-spacing:0px;
+	
+	width:20px;
+	height:10px;
+	padding-top:2px;
+	padding-bottom:2px;
+	padding-left:2px;
+	padding-right:2px;
+	
+	-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    		box-sizing: border-box;
+}

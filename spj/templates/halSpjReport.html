@@ -1,0 +1,579 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="css/cssSpj.css" rel="stylesheet" type="text/css" />
+<link href="css/loading.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen"></LINK>
+
+<SCRIPT type="text/javascript" src="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+<script type="text/javascript" src="../../js/animatedcollapse.js"></script>
+<script type="text/javascript" src="js/loading.js"></script>
+<script type="text/javascript" src="../js/loading.js"></script>
+
+<link rel="stylesheet" href="asset/jquery-ui.css">
+<script src="asset/jquery-1.12.4.js"></script>
+<script src="asset/jquery-ui.js"></script>
+<style type="text/css">
+	#TB_window{
+		margin-top: -15%;
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#btnSearch").click(function(){
+		var sName = $("#txtSearch").val();
+		var sDate = $("#txtSearchDate").val();
+
+		$url = "templates/halReportList.php?sName="+sName+"&&sDate="+sDate;
+		$("#iframeForm").attr('src',$url);
+	});
+	$("#btnFormSearch").click(function(){
+		$("#idKetStInfo").hide();
+		$("#idShowSearch").show();
+	});
+	$("#txtSearchDate").datepicker({
+    	dateFormat: 'yymmdd',
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        defaultDate: new Date(),
+    });
+});
+function openThickboxWindow(id, aksi)
+{	
+	var height = 360;
+	var tipeUser = $('#tipeUser').val();
+	if(tipeUser == "admin")
+	{
+		var height = 390;
+	}
+
+	if(aksi == "newReport")
+	{
+		document.getElementById('hrefThickbox').href="templates/halNewReport.php?&placeValuesBeforeTB_=savedValues&TB_iframe=true&height="+height+"&width=520&modal=true";
+	}
+	if(aksi == "editReport")
+	{
+		var reportId = $('#reportId').val();
+		var trActive = $('#trActive').val();
+		document.getElementById('hrefThickbox').href="templates/halNewReport.php?halaman=edit&reportId="+reportId+"&trActive="+trActive+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height="+height+"&width=520&modal=true";
+	}
+	document.getElementById('hrefThickbox').click();
+}
+
+function thickboxDetail(aksi)
+{	
+	var reportId = $('#reportId').val();
+	var trActive = $('#trActive').val();
+	if(aksi == "new")
+	{
+		document.getElementById('hrefThickbox').href="templates/halNewDetail.php?aksi="+aksi+"&reportId="+reportId+"&trActive="+trActive+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=445&width=570&modal=true";
+	}
+	if(aksi == "edit")
+	{
+		var detilId = $('#detilId').val();
+		document.getElementById('hrefThickbox').href="templates/halNewDetail.php?aksi="+aksi+"&reportId="+reportId+"&detilId="+detilId+"&trActive="+trActive+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=445&width=570&modal=true";
+	}
+	document.getElementById('hrefThickbox').click();
+}
+
+function detailSpj(reportId,halaman)
+{
+	$('#iframeDetilForm').attr("src","templates/halDetilReport.php?reportId="+reportId+"&halaman="+halaman);
+}
+
+function btnAksi(status)
+{
+	if(status != "submitOff")
+	{
+		$('#status').html(status);
+	}
+		
+	if(status != "Draft")
+	{
+		$('#btnSubmit').attr('class','spjBtnStandarDis');
+		$('#btnSubmit').attr('disabled','disabled');
+		$('#btnEdit').attr('class','spjBtnStandarDis');
+		$('#btnEdit').attr('disabled','disabled');
+		$('#btnCancel').attr('class','spjBtnStandar');
+		$('#btnCancel').removeAttr('disabled');
+		$('#btnPrint').attr('class','spjBtnStandar');
+		$('#btnPrint').removeAttr('disabled','disabled');
+	}
+	if(status == "Draft" || status == "Revise")
+	{
+		$('#btnSubmit').attr('class','spjBtnStandar');
+		$('#btnSubmit').removeAttr('disabled','disabled');
+		$('#btnEdit').attr('class','spjBtnStandar');
+		// $('#btnEdit').attr('className','spjBtnStandar');
+		$('#btnEdit').removeAttr('disabled','disabled');
+		$('#btnCancel').attr('class','spjBtnStandarDis');
+		// $('#btnCancel').attr('className','spjBtnStandarDis');
+		$('#btnCancel').attr('disabled','disabled');
+		document.getElementById('btnCancel').disabled = true;
+		// $('#btnPrint').attr('class','spjBtnStandarDis');
+		// $('#btnPrint').attr('disabled','disabled');
+		$('#btnPrint').attr('class','spjBtnStandar');
+		$('#btnPrint').removeAttr('disabled','disabled');
+	}
+	if(status == "Processed" || status == "Checked")
+	{
+		$('#btnSubmit').attr('class','spjBtnStandarDis');
+		$('#btnSubmit').attr('disabled','disabled');
+		$('#btnEdit').attr('class','spjBtnStandarDis');
+		$('#btnEdit').attr('disabled','disabled');
+		$('#btnCancel').attr('class','spjBtnStandarDis');
+		$('#btnCancel').attr('disabled','disabled');
+	}
+	
+	if(status == "submitOff")
+	{
+		$('#btnSubmit').attr('class','spjBtnStandarDis');
+		$('#btnSubmit').attr('disabled','disabled');
+		$('#btnEdit').attr('class','spjBtnStandar');
+		$('#btnEdit').removeAttr('disabled','disabled');
+		$('#btnCancel').attr('class','spjBtnStandarDis');
+		$('#btnCancel').attr('disabled','disabled');
+		document.getElementById('btnCancel').disabled = true;
+		$('#btnPrint').attr('class','spjBtnStandarDis');
+		$('#btnPrint').attr('disabled','disabled');
+	}
+	
+	// $('#btnPrint').attr('className','spjBtnStandar');
+	// $('#btnPrint').removeAttr('disabled','disabled');
+}
+
+function refresh(left, right)
+{
+	if(left == "Y")
+	{
+		$('#iframeForm').attr("src","templates/halReportList.php");
+	}
+	if(right == "Y")
+	{
+		$('#iframeDetilForm').attr("src","templates/halSelectData.html");
+	}
+	refreshBtn();
+	$('#status').html('');
+	$("#idKetStInfo").show();
+	$("#idShowSearch").hide();
+	$("#txtSearch").val("");
+	$("#txtSearchDate").val("");
+}
+
+function refreshBtn()
+{
+	$('#btnSubmit').attr('className','spjBtnStandarDis');
+	$('#btnSubmit').attr('disabled','disabled');
+	$('#btnEdit').attr('className','spjBtnStandarDis');
+	$('#btnEdit').attr('disabled','disabled');
+	$('#btnCancel').attr('className','spjBtnStandarDis');
+	$('#btnCancel').attr('disabled','disabled');
+	$('#btnPrint').attr('className','spjBtnStandarDis');
+	$('#btnPrint').attr('disabled','disabled');
+}
+
+function refreshStatus()
+{
+	$('#status').html('');
+}
+
+function report(text)
+{
+	document.getElementById('report').innerHTML = "* "+text;
+	
+	setTimeout(function()
+	{
+		document.getElementById('report').innerHTML = "&nbsp;";
+	},10000);
+}
+
+function klikTr(urutan)
+{
+	setTimeout(function()
+	{
+		window.frames['iframeForm'].document.getElementById('tr'+urutan).click();
+	},200);
+}
+
+function submitReport()
+{
+	var reportId = $('#reportId').val();
+	
+	$.post( 
+		"halPost.php",
+		{	halaman: 'cekDuplctd', reportId: reportId	},
+		function(data){
+			if(data != 0)
+			{
+				alert('Duplicated report form. Check your data, please.');
+			}
+			if(data == 0)
+			{
+				var answer  = confirm("Are you sure want to Submit?");
+				if(answer)
+				{
+					var warning = confirm("Please prepare supporting document");
+					if(warning)
+					{
+						pleaseWait();
+						$('#iframeForm').attr("src","templates/halReportList.php?aksi=submit&reportId="+reportId);
+					}
+					else
+					{	return false;	}
+				}
+				else
+				{	return false;	}
+			}
+		}
+	);
+}
+
+function cancel()
+{
+	var reportId = $('#reportId').val();
+	
+	var answer  = confirm("Are you sure want to Cancel?");
+	if(answer)
+	{
+		pleaseWait();
+		$('#iframeForm').attr("src","templates/halReportList.php?aksi=cancel&reportId="+reportId);
+	}
+	else
+	{	return false;	}
+}
+
+function delDetil()
+{
+	var reportId = $('#reportId').val();
+	var detilId = $('#detilId').val();
+	
+	var answer  = confirm("Are you sure want to Delete current detil?");
+	if(answer)
+	{
+		$('#iframeDetilForm').attr("src","templates/halDetilReport.php?aksi=delDetil&reportId="+reportId+"&detilId="+detilId);
+	}
+	else
+	{	return false;	}
+}
+
+function close()
+{
+	var answer  = confirm("Are you sure want to EXIT WITHOUT SAVE?");
+	if(answer)
+	{
+		exit();
+	}
+	else
+	{	return false;	}
+	
+}
+
+function exit()
+{
+	tb_remove(false);
+}
+
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeForm').height ; // 404
+	var heightFrameDetail = document.getElementById('iframeDetilForm').height ; // 436
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	var heightFrameDetailPlus = parseInt(heightFramePlus) + 32; // selisih tinggi 2 frame
+	var heightFrameDetailMin = parseInt(heightFrameMin) + 32; // selisih tinggi 2 frame
+	
+	if(status == "down")
+	{
+		$("#iframeForm").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeForm').height = heightFramePlus;
+		$("#iframeDetilForm").animate(
+			{
+				height: heightFrameDetailPlus
+				
+			}, 1000);
+		document.getElementById('iframeDetilForm').height = heightFrameDetailPlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 404)
+		{
+			$("#iframeForm").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeForm').height = heightFrameMin;
+			$("#iframeDetilForm").animate(
+				{
+					height: heightFrameDetailMin
+				}, 1000);
+			document.getElementById('iframeDetilForm').height = heightFrameDetailMin;
+			
+			if(heightFrameMin == 404)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function count()
+{
+	var reportId = $('#reportId').val();
+	$.post( 
+		"halPost.php",
+		{	halaman: 'countUpdate', reportId: reportId	}
+		/*function(data){
+			$('#'+halaman+'').html(data);	
+		}*/
+	);
+	setTimeout(function()
+	{
+		detailSpj(reportId,'');
+	},100);
+}
+
+function printReport()
+{
+	alert('Print Document on Landscape Position, please.');
+	$('#submitPrintReport').click();
+}
+
+// === start == Animated Collapsible DIV
+animatedcollapse.addDiv('jason', 'fade=1,height=auto,overflow-y=scroll')
+animatedcollapse.ontoggle=function($, divobj, state){ //fires each time a DIV is expanded/contracted
+	//$: Access to jQuery
+	//divobj: DOM reference to DIV being expanded/ collapsed. Use "divobj.id" to get its ID
+	//state: "block" or "none", depending on state
+}
+animatedcollapse.init()
+// === end of == Animated Collapsible DIV
+</script>
+
+<div id="loaderImg" style="visibility:visible;" class="pleaseWait">
+    <div class="isiPleaseWait tabelBorderAll">
+    	&nbsp;Please Wait...&nbsp;<img src="picture/loading (115).gif" height="12"/>&nbsp;
+    </div>
+</div>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<!--<input type="hidden" id="reportId"/>-->
+<input type="hidden" id="detilId"/>
+<input type="hidden" id="trActive"/>
+<input type="hidden" id="tipeUser" value="{tipeUser}"/>
+<input type="hidden" id="userIdLogin" value="{userIdLogin}"/>
+
+<form method="post" action="halPrint.php" name="formPrintAct" id="formPrintAct" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=yes');" style="width:100px;position:absolute;">
+<input type="submit" id="submitPrintReport" style="display:none;"/>
+<input type="hidden" id="reportId" name="reportId"/>
+<input type="hidden" id="hal" name="hal" value="spjReport"/>
+</form>
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN REQUEST NEW ITEM -->
+        <tr>
+        	<td height="485" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="2px"></td></tr>
+                <tr>
+                	<td width="30%" class="" valign="top" align="left">
+<!-- ############# ISI HALAMAN REQUEST LIST -->
+                        <table cellpadding="0" cellspacing="0" width="100%" style="margin-left:3px;">
+                        <tr>
+                        	<td colspan="2" align="left">
+                                <!--<button class="spjBtnStandar" id="btnNewFolder" onclick="openThickboxWindow('','newSpj');" style="width:93px;height:29px;" title="Write A New Stop Card">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                    <tr>
+                                        <td align="center"><img src="../picture/Document-blue-32.png" height="20"/> </td>
+                                        <td align="center">New Form</td>
+                                    </tr>
+                                    </table>
+                                </button>--><!--<span style="font-size:12px;font-family:Comic Sans MS;color:#060;font-weight:100;" id="report"></span>-->
+                            </td>
+                        </tr>
+                        <!--<tr><td colspan="2" height="5px"></td></tr>-->
+                        <tr>
+                        	<td colspan="2" width="28%" align="left" style="font-family:Tahoma;font-size:11px;" id="idTdSearch">
+                        		<div id="idKetStInfo">
+	                            	<a id="hrefKPI" href="javascript:animatedcollapse.toggle('jason')"></a>
+	                            	<button type="button" id="stsInfo" class="spjBtnStandar" onmouseover="document.getElementById('hrefKPI').click();" onmouseout="document.getElementById('hrefKPI').click();" style="width:96px;height:28px;">
+	                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+	                                      <tr>
+	                                        <td align="right" width="22"><img src="picture/question-octagon-frame.png" height="16"/> </td>
+	                                        <td align="center">Status Info</td>
+	                                      </tr>
+	                                    </table>
+	                                </button>
+	                                <button type="button" id="btnFormSearch" class="spjBtnStandar" style="width:96px;height:28px;">
+	                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+	                                      <tr>
+	                                        <td align="right" width="22"><img src="picture/Search-blue-32.png" height="16"/> </td>
+	                                        <td align="center">Search</td>
+	                                      </tr>
+	                                    </table>
+	                                </button>
+	                            </div>
+	                            <div id="idShowSearch" style="display: none;" >
+	                                <input type="text" name="txtSearch" style="width:50%;" class="elementDefault" id="txtSearch" placeholder="Spj No">
+	                                <input type="text" name="txtSearchDate" style="width:40%;" class="elementDefault" id="txtSearchDate" placeholder="Date">
+	                                <button type="button" id="btnSearch" class="spjBtnStandar" style="width:100%;height:28px;margin-top:3px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%"><tr><td align="right" width="22"><img src="picture/Search-blue-32.png" height="16"/> </td><td align="center">Search</td></tr></table></button>
+                                </div>
+                            </td>
+                        <!--<tr>
+                        	<td colspan="2" align="left" style="font-family:Tahoma;font-size:11px;">
+                            	<div style="float:left;">
+                                	<div style="width:17px;height:17px;float:left;"><img src="picture/script-text.png" width="15px"/></div>
+                                	Draft&nbsp;&nbsp;
+                                </div>
+                            	<div style="float:left;">
+                                	<div style="width:17px;height:17px;float:left;"><img src="../../picture/qhse_notif.png" width="15px"/></div>
+                                    
+                                	Wait&nbsp;&nbsp;
+                                </div>
+                        	</td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" align="left" style="font-family:Tahoma;font-size:11px;">    
+                            	<div style="float:left;">
+                                	<div style="width:15px;height:12px;background-color:#F5FF46;float:left;border:1px solid #CCC;">&nbsp;</div>
+                                    &nbsp;Acknowledged&nbsp;&nbsp;
+                                </div>    
+                                <div style="float:left;">
+                                	<div style="width:15px;height:12px;background-color:#00B3B3;float:left;border:1px solid #CCC;">&nbsp;</div>
+                                    &nbsp;Checked&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:15px;height:12px;background-color:#5EFF46;float:left;border:1px solid #CCC;">&nbsp;</div>
+                                    &nbsp;Processed
+                                </div>
+                        	</td>
+                        </tr>-->
+                        		<div id="jason" style="position:fixed;display:none;margin:4px 0 0 99px;font-family:Tahoma;font-size:11px;padding:3px;background-color:#FFF;">
+                            
+                            	<div style="float:left;">
+                                	<div style="width:17px;height:17px;float:left;"><img src="picture/script-text-24.png" width="15px"/></div>
+                                	Draft&nbsp;&nbsp;
+                                </div>
+                            	<div style="float:left;">
+                                	<div style="width:17px;height:17px;float:left;"><img src="picture/hourglass-select-remain.png" width="15px"/></div>
+                                    
+                                	Wait&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:17px;height:17px;float:left;"><img src="picture/hammer.png" width="15px"/></div>
+                                    
+                                	Revise&nbsp;&nbsp;
+                                </div> 
+                                <div style="float:left;">
+                                    <div style="width:17px;height:17px;float:left;"><img src="picture/eye.png" width="15px"/></div>
+                                    &nbsp;Acknowledged&nbsp;&nbsp;
+                                </div> 
+                                <div style="float:left;">
+                                    <div style="width:17px;height:17px;float:left;"><img src="picture/thumb-up-24.png" width="15px"/></div>
+                                    &nbsp;Checked&nbsp;&nbsp;
+                                </div>
+                                <!--<div style="float:left;">
+                                    <div style="width:17px;height:17px;float:left;"><img src="picture/tick-24.png" width="15px"/></div>
+                                    &nbsp;Processed
+                                </div>-->
+                                
+                            </div>
+                        </tr>
+                        <tr><td colspan="2" height="2px"></td></tr>
+                        
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" align="left">&nbsp;<img src="../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refresh('Y','Y');$('#report').html('');" title="Refresh Page"/></td>
+                                    <td width="50%" height="40" align="center">Report List</td>
+                                    <td width="25%" align="right">
+                                    	<button class="spjBtnStandar" id="btnNewFolder" onclick="openThickboxWindow('','newReport');" style="width:52px;height:23px;" title="Create a new SPJ Report">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                            <tr>
+                                                <td align="right" width="19"><img src="picture/plus.png" height="15"/> </td>
+                                                <td align="center">New</td>
+                                            </tr>
+                                            </table>
+                                        </button>&nbsp;
+                                    </td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halReportList.php" width="100%" height="404" target="iframeForm" name="iframeForm" id="iframeForm" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    
+                    <td width="1%"></td>
+                    
+                    <td width="69%" valign="top" class="">
+<!-- ############# ISI HALAMAN REQUEST DETAIL -->
+                      <table cellpadding="0" cellspacing="0" width="99.3%">
+                        <tr class="fontMyFolderList">
+                        	<td width="25%">
+                            	<span id="status" style="font-weight:bold;color:#0066FF;text-decoration:underline;font-size:14px;"></span>
+                            </td>
+                            <td width="1%" id="idReAprv">&nbsp;
+                            	
+                            </td>
+                            <td width="74%" align="right">
+                                <span style="font-size:12px;font-family:Comic Sans MS;color:#060;font-weight:100;" id="report"></span>
+                                <button type="button" id="btnSubmit" class="spjBtnStandarDis" onclick="submitReport(); return false;" style="width:76px;height:28px;" title="Submit Report" disabled>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="right" width="22"><img src="picture/arrow-transition.png" height="16"/> </td>
+                                        <td align="center">Submit</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                                <button type="button" id="btnEdit" class="spjBtnStandarDis" onclick="openThickboxWindow('','editReport');" style="width:55px;height:28px;" title="Edit Report" disabled>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="right" width="22"><img src="picture/pencil.png" height="16"/> </td>
+                                        <td align="center">Edit</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                            	<button type="button" id="btnCancel" class="spjBtnStandarDis" onclick="cancel(); return false;" style="width:72px;height:28px;" title="Cancel Report, Return to Draft" disabled>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="right" width="22"><img src="picture/blue-document-broken.png" height="16"/> </td>
+                                        <td align="center">Cancel</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                                {printBtn}
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td colspan="3" height="2px"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tabelBorderTopNull" style="border-width:thick;border-color:#1582f5;">
+                                <iframe src="templates/halSelectData.html" width="100%" height="436" target="iframeDetilForm" name="iframeDetilForm" id="iframeDetilForm" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>	
+                        </table>
+                    </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

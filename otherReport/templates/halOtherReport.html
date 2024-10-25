@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<link href="../css/news.css" rel="stylesheet" type="text/css" />
+
+<script language="javascript" type="text/javascript">
+function loadUrl(newLocation)
+{
+	if(newLocation == "index.php?aksi=")
+	{
+		alert("There isn'nt report choosen");
+		return false;
+	}
+	else
+	{
+		window.location = newLocation;
+		return false;
+	}
+}
+
+function tutup()
+{
+	tb_remove(false);
+}
+</script>
+<a class="thickbox" id="hrefThickbox"></a>
+<div class="archivesContainer">
+<input type="hidden" id="cari" />
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr>
+	<td height="35" colspan="2">
+    <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT -->
+    	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+        <tr>
+            <td>
+            &nbsp;&nbsp;<span class="teksMyFolder" style="color:#369;">OTHER REPORT</span>&nbsp;>&nbsp;<span class="teksMyFolder" style="color:#369;text-decoration:underline;">PHE ONWJ</span>&nbsp;</td>
+        </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+	<td valign="bottom" class="">
+       &nbsp;
+        <select id="jenisReport" name="jenisReport" class="elementMenu" style="width:200px;" title="Choose Document Type">
+            <option value="">--PLEASE SELECT--</option>
+            <option value="pheonwj" selected="selected">PHE OWNJ</option>
+        </select>
+        &nbsp;
+        <button id="idBtnNew" class="btnStandar" style="width:50px;height:29px;" onclick="loadUrl('index.php?aksi='+document.getElementById('jenisReport').value);" title="Go to Report Page">
+            <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+              <tr>
+                <td align="center"><img src="../picture/Arrow-Right-blue-32.png" height="20"/> </td>
+                <td align="left">Go</td>
+              </tr>
+            </table>
+        </button><span id="errorMsg" class="errorMsg"></span><span id="report" class="report"></span>
+    </td>
+    <td align="right">
+            <!--<img src="../picture/Search2-32.png" width="25" style="vertical-align:bottom;"/>
+            <input type="text" class="elementSearch" id="paramText" size="41" onclick="cekHal();" onfocus="cariFile(this.value)" onkeyup="cariFile(this.value)">-->
+            &nbsp
+    </td>
+</tr>
+<tr>
+	<td class="batasTitik" height="5" colspan="2"></td>
+</tr>
+
+<tr>
+	<td colspan="2">
+    	<!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+    </td>
+</tr>
+</table>
+</div>
+<div class="archivesContainerBottom">
+	<div id="btnZoom">
+    	<button class="btnPageSetting" style="width:36px;height:36px;" type="button" onclick="frameSize('down');">
+            <table border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgDown" src="../../picture/btnDown.png" height="25" border="0"/> </td> 
+                </tr><tr><td>&nbsp;</td></tr>
+            </table>
+         </button>
+         <button class="btnPageSetting" style="width:36px;height:36px;" type="button" onclick="frameSize('up');">
+            <table border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgUp" src="../../picture/btnUp.png" height="25" border="0"/></td> 
+                </tr><tr><td>&nbsp;</td></tr>
+            </table>
+         </button>
+	</div>
+    <p id="back-top">
+		<a href="#top"><span></span>Back to Top</a>
+	</p>
+</div>
+</HTML>

@@ -1,0 +1,47 @@
+<html>
+<script language="javascript">
+function printpr()
+{
+	if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+    {
+    	var OLECMDID = 7;
+		/* OLECMDID values:
+		* 6 - print
+		* 7 - print preview
+		* 1 - open window
+		* 4 - Save As
+		*/
+		
+		var PROMPT = 1; // 2 DONTPROMPTUSER
+		var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+		document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
+		
+		WebBrowser1.ExecWB(OLECMDID, PROMPT); 
+		WebBrowser1.outerHTML = "";
+    }  
+	else
+	{
+		window.print();
+	}
+} 
+</script>
+
+
+<style>
+</style>
+
+<link href="css/tableReport.css" rel="stylesheet" type="text/css">
+
+<body onLoad="printpr();" onBlur="open('', '_self').close();">
+<!--<body onLoad="printpr();" onBlur="this.window.close();">-->
+<!--<body onLoad="printpr();" onBlur="open(location, '_self').<body onLoad="printpr();" onBlur="this.window.closea();">
+close();">-->
+<center>
+
+<table width="99%" cellpadding="0" cellspacing="0">
+{dataList}
+</table>
+
+</center>
+</body>
+</html>

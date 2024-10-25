@@ -1,0 +1,630 @@
+<script type="text/javascript">
+function pilihBtnChoose()
+{
+	var empNoShared = document.getElementById('empNoShared').value; // daftar employee yang diberikan akses
+	var userIdOwner = document.getElementById('userIdOwner').value;
+	if(empNoShared == "00000")
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" />&nbsp;Please select employee name";
+	}
+	else
+	{
+		klikAppView('viewList');
+		document.getElementById('errorMsg').innerHTML = "&nbsp;";
+		document.getElementById('iframeHalFolder').src = "";
+		document.getElementById('iframeHalFolder').src = "templates/halOwnShareList.php?aksi=empChoose&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared;
+		
+		document.getElementById('idHalTeksLvl').innerHTML = "&nbsp;";
+		document.getElementById('srcIframeSek').value = "templates/halOwnShareList.php?aksi=empChoose&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared;
+		document.getElementById('isiList').value = "folder";
+		document.getElementById('tipeKonten').value = "folder";
+		document.getElementById('aksiHidden').value = "empChoose";
+		document.getElementById('idFoldRef').value = "";
+	}
+	document.getElementById('tdBtnBack').innerHTML = "&nbsp;";
+}
+
+function exit()
+{
+	tb_remove(false);
+	
+	var appView = document.getElementById('appView').value;
+	var empNoShared = document.getElementById('empNoShared').value; // daftar employee yang diberikan akses
+	var userIdOwner = document.getElementById('userIdOwner').value;	
+	var foldSub = document.getElementById('foldSub').value;
+	var idFoldRef = document.getElementById('idFoldRef').value;
+	
+	document.getElementById('iframeHalFolder').src = "";
+	document.getElementById('iframeHalFolder').src = document.getElementById('srcIframeSek').value;
+
+	if(appView == "sideList")
+	{
+		document.getElementById('idTdSideList').onmouseover = "";
+		document.getElementById('idTdSideList').onmouseout = "";
+		document.getElementById('idTdSideList').style.background='#EFEFEF';
+		
+		document.getElementById('iframeHalFolder').src = "templates/halOwnSharedFolderSide.php";
+		
+		setTimeout(function()
+		{
+			window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halOwnSharedFolderSide1.php?aksi=empChoose&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared+"&idFold="+idFoldRef;
+			window.frames['iframeHalFolder'].window.frames['halFolderSide2'].frameElement.src = "halOwnSharedFolderSide2.php?aksi=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+			
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+			},400);
+			
+		},300);
+	}
+}
+
+function openThickboxWindow(id, aksi)
+{
+	if(aksi == "detailOwnShare")
+	{
+		document.getElementById('hrefThickbox').href="templates/halDetailOwnShare.php?ide="+id+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(aksi == "detailOwnShareFile")
+	{
+		document.getElementById('hrefThickbox').href="templates/halDetailOwnShareFile.php?ide="+id+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	document.getElementById('hrefThickbox').click();
+}
+
+function ajaxGetFold(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "pilihBtnExpand")
+	{
+		var idAuthorFold = document.getElementById('idAuthorFold').value;		
+		var parameters="halaman=pilihBtnExpandOwnShare&ide="+id+"&idAuthorFold="+idAuthorFold;
+	}
+	if(aksi == "pilihTeksFoldName")
+	{
+		var parameters="halaman=pilihTeksFoldName&ide="+id;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function pilihBtnExpand(ide, foldSub, idFoldRef, tipeKonten, idAuthorFold)
+{
+	var appView = document.getElementById('appView').value;
+	
+	if(idAuthorFold != "")
+	{
+		document.getElementById('idAuthorFold').value = idAuthorFold;
+	}
+	
+	if(tipeKonten == "folder")
+	{
+		var foldSub = parseInt(foldSub) + 1;
+		
+		ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+		ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+		
+		if(appView == "viewList")
+		{
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		}
+		if(appView == "viewIcon")
+		{
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareIconList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareIconList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		}
+		if(appView == "sideList")
+		{
+		}
+		document.getElementById('isiList').value = "folder";
+		document.getElementById('tipeKonten').value = "folder";
+	}
+	else if(tipeKonten == "file")
+	{
+		var foldSub = parseInt(foldSub) + 1;
+		var userIdOwner = document.getElementById('userIdOwner').value;
+		
+		ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+		ajaxGetFold(ide, "pilihBtnExpand2", "tdBtnBack");
+		
+		if(appView == "viewList")
+		{
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileList.php?aksi=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner+"&idAuthorFold="+idAuthorFold;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareFileList.php?aksi=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner+"&idAuthorFold="+idAuthorFold;
+		}
+		if(appView == "viewIcon")
+		{
+			//klikAppView("sideList");
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileIconList.php?aksi=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareFileIconList.php?aksi=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+		}
+		if(appView == "sideList")
+		{
+		}
+		
+		document.getElementById('isiList').value = "file";
+		document.getElementById('tipeKonten').value = "file";
+	}
+	document.getElementById('aksiHidden').value = "expand";
+	document.getElementById('foldSub').value = foldSub;
+	document.getElementById('idFoldRef').value = idFoldRef;
+}
+
+function pilihTeksFoldName(ide, foldSub, idFoldRef, tipeKonten, idAuthorFold)
+{
+	if(idAuthorFold != "")
+	{
+		document.getElementById('idAuthorFold').value = idAuthorFold;
+	}
+	
+	ajaxGetFold(ide, "pilihBtnExpand", "idHalTeksLvl");
+	
+	document.getElementById('iframeHalFolder').src = "";
+	var userIdOwner = document.getElementById('userIdOwner').value;
+	var empNoShared = document.getElementById('empNoShared').value;
+	var appView = document.getElementById('appView').value;
+	
+	if(tipeKonten == "folder")
+	{
+		if(appView == "viewList")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		}
+		if(appView == "viewIcon")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareIconList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareIconList.php?aksi=expand&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		}
+		if(appView == "sideList")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnSharedFolderSide.php";
+			document.getElementById('srcIframeSek').value = "templates/halOwnSharedFolderSide.php";
+			
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halOwnSharedFolderSide1.php?aksi=empChoose&idFold="+idFoldRef+"&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared;
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},400);
+				
+			},300);
+		}
+		
+		document.getElementById('isiList').value = "folder";
+		document.getElementById('tipeKonten').value = "folder";
+	}
+	else if(tipeKonten == "file")
+	{
+		if(appView == "viewList")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileList.php?aksi=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+		}
+		if(appView == "viewIcon")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileIconList.php?aksi=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+		}
+		if(appView == "sideList")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnSharedFolderSide.php";
+			document.getElementById('srcIframeSek').value = "templates/halOwnSharedFolderSide.php";
+			
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halOwnSharedFolderSide1.php?aksi=empChoose&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared+"&idFold="+idFoldRef;
+				window.frames['iframeHalFolder'].window.frames['halFolderSide2'].frameElement.src = "halOwnSharedFolderSide2.php?&halaman=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+				document.getElementById('srcIframeSek').value = "templates/halOwnSharedFolderSide.php";
+				
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},400);
+				
+			},300);
+		}
+		
+		document.getElementById('isiList').value = "file";
+		document.getElementById('tipeKonten').value = "file";
+	}
+	document.getElementById('aksiHidden').value = "expand";
+	document.getElementById('foldSub').value = foldSub;
+	document.getElementById('idFoldRef').value = idFoldRef;
+}
+
+function refreshPage()
+{
+	var srcIframeSek = document.getElementById('srcIframeSek').value;
+	document.getElementById('iframeHalFolder').src = srcIframeSek;
+}
+
+function cari(paramCari)
+{
+	var appView = document.getElementById('appView').value;
+	var paramCari = document.getElementById('paramText').value;
+	if(paramCari.replace(/ /g,"") == "")
+	{	document.getElementById('halaman').value = "";	}
+	else
+	{	document.getElementById('halaman').value = "cari";	}
+	var halaman = document.getElementById('halaman').value;
+	
+	var isiList = document.getElementById('isiList').value;
+	if(isiList == "folder")
+	{
+		var aksi = document.getElementById('aksiHidden').value;
+		if(aksi == "empChoose")
+		{
+			var userIdOwner = document.getElementById('userIdOwner').value;
+			var empNoShared = document.getElementById('empNoShared').value;
+			
+			if(appView == "viewList")
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halOwnShareList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared;
+			}
+			if(appView == "viewIcon")
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halOwnShareIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared;
+			}
+		}
+		if(aksi == "expand")
+		{
+			var foldSub = document.getElementById('foldSub').value;
+			var idFoldRef = document.getElementById('idFoldRef').value;
+			var idAuthorFold = document.getElementById('idAuthorFold').value;
+			
+			if(appView == "viewList")
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halOwnShareList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+			}
+			if(appView == "viewIcon")
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halOwnShareIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+			}
+		}
+		
+	}
+	if(isiList == "file")
+	{
+		var aksi = document.getElementById('aksiHidden').value;
+		if(aksi == "expand")
+		{
+			var foldSub = document.getElementById('foldSub').value;
+			var idFoldRef = document.getElementById('idFoldRef').value;
+			var idAuthorFold = document.getElementById('idAuthorFold').value;
+			var userIdOwner = document.getElementById('userIdOwner').value;
+			
+			if(appView == "viewList")
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner+"&idAuthorFold="+idAuthorFold;
+			}
+			if(appView == "viewIcon")
+			{
+				document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileIconList.php?halaman="+halaman+"&paramCari="+paramCari+"&aksi="+aksi+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner+"&idAuthorFold="+idAuthorFold;
+			}
+		}
+	}
+}
+
+function openPdf(filePdf)
+{
+	if(detectBrowser() == "MSIE")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+	if(detectBrowser() == "Firefox")
+	{
+		window.showModalDialog("halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+}
+
+function klikAppView(aksi) // FUNCTION UNTUK KETIKA BUTTON VIEW DIPILIH ATAU BUTTON UNTUK GANTI VIEW DI IFRAMEHALFOLDER
+{
+	document.getElementById('idTdViewList').style.background='#666666';
+	document.getElementById('idTdViewIcon').style.background='#666666';
+	document.getElementById('idTdSideList').style.background='#666666';
+	
+	document.getElementById('idTdViewList').onmouseover = function onmouseover(){
+				this.style.background='#EFEFEF';	}
+	document.getElementById('idTdViewList').onmouseout = function onmouseout(){
+				this.style.background='#666666';	}
+				
+	document.getElementById('idTdViewIcon').onmouseover = function onmouseover(){
+				this.style.background='#EFEFEF';	}
+	document.getElementById('idTdViewIcon').onmouseout = function onmouseout(){
+				this.style.background='#666666';	}
+				
+	document.getElementById('idTdSideList').onmouseover = function onmouseover(){
+				this.style.background='#EFEFEF';	}
+	document.getElementById('idTdSideList').onmouseout = function onmouseout(){
+				this.style.background='#666666';	}
+				
+	document.getElementById('imgRefresh').onclick = function onclick(){
+				refreshPage();};
+	document.getElementById('imgRefresh').onmouseover = function onmouseover(){
+				this.style.backgroundColor='#FF888B';};
+	document.getElementById('imgRefresh').style.cursor = 'pointer';
+	
+	var empNoShared = document.getElementById('empNoShared').value; // daftar employee yang diberikan akses
+	var userIdOwner = document.getElementById('userIdOwner').value;	
+	var foldSub = document.getElementById('foldSub').value;
+	var idFoldRef = document.getElementById('idFoldRef').value;
+	
+	//var paramCari = document.getElementById('paramText').value;
+	var halaman = document.getElementById('halaman').value;
+	var tipeKonten = document.getElementById('isiList').value; //TIPE KONTEN DARI ISI IFRAMEHALFOLDER APAKAH FOLDER AYAU FILE
+
+	//var ideDipilih = document.getElementById('ideDipilih').value;
+	
+	var iframeHalFolder = "";
+			
+	if(aksi == "viewList")
+	{
+		document.getElementById('idTdViewList').onmouseover = "";
+		document.getElementById('idTdViewList').onmouseout = "";
+		document.getElementById('idTdViewList').style.background='#EFEFEF';
+		document.getElementById('paramText').disabled = false;
+		
+		var paramText = document.getElementById('paramText').value;
+		if(paramText != "")
+		{
+			var halaman = "cari";
+			setTimeout(function()
+			{
+				document.getElementById('paramText').value = paramText;
+			},250);
+		}
+		
+		if(tipeKonten == "folder")
+		{
+			var aksiChoose = "empChoose";
+			if(foldSub != 1 && idFoldRef != "")//kondisi jika folder lebih dari lvl 1
+			{
+				var aksiChoose = "expand";
+			}
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareList.php?aksi="+aksiChoose+"&halaman="+halaman+"&paramCari="+paramText+"&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+			document.getElementById('srcIframeSek').value ="templates/halOwnShareList.php?aksi=empChoose&halaman="+halaman+"&paramCari="+paramText+"&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared;
+			//document.getElementById('srcIframeSek').value = "templates/halOwnShareList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		
+		}
+		if(tipeKonten == "file")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareFileList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+			//document.getElementById('srcIframeSek').value = "templates/halOwnShareFileList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		}
+	}
+	if(aksi == "viewIcon")
+	{
+		document.getElementById('idTdViewIcon').onmouseover = "";
+		document.getElementById('idTdViewIcon').onmouseout = "";
+		document.getElementById('idTdViewIcon').style.background='#EFEFEF';
+		document.getElementById('paramText').disabled = false;
+		
+		var paramText = document.getElementById('paramText').value;
+		if(paramText != "")
+		{
+			var halaman = "cari";
+			setTimeout(function()
+			{
+				document.getElementById('paramText').value = paramText;
+			},250);
+		}
+
+		if(tipeKonten == "folder")
+		{
+			var aksiChoose = "empChoose";
+			if(foldSub != 1 && idFoldRef != "")//kondisi jika folder lebih dari lvl 1
+			{
+				var aksiChoose = "expand";
+			}
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareIconList.php?aksi="+aksiChoose+"&halaman="+halaman+"&paramCari="+paramText+"&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef;
+			document.getElementById('srcIframeSek').value = "templates/halOwnShareIconList.php?aksi=empChoose&halaman="+halaman+"&paramCari="+paramText+"&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared;
+			//document.getElementById('srcIframeSek').value = "templates/halOwnShareIconList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		}
+		if(tipeKonten == "file")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnShareFileIconList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+			document.getElementById('srcIframeSek').value ="templates/halOwnShareFileIconList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+			//document.getElementById('srcIframeSek').value = "templates/halOwnShareFileIconList.php?aksi=expand&halaman="+halaman+"&paramCari="+paramText+"&foldSub="+foldSub+"&idFoldRef="+idFoldRef+"&idAuthorFold="+idAuthorFold;
+		}
+	}
+	if(aksi == "sideList")
+	{	
+		document.getElementById('idTdSideList').onmouseover = "";
+		document.getElementById('idTdSideList').onmouseout = "";
+		document.getElementById('idTdSideList').style.background='#EFEFEF';
+		document.getElementById('paramText').disabled = true;
+		document.getElementById('imgRefresh').onclick = '&nbsp;';
+		document.getElementById('imgRefresh').onmouseover = '&nbsp;';
+		document.getElementById('imgRefresh').style.cursor = 'none;';
+		
+		/*var paramText = document.getElementById('paramText').value.replace(/ /g,"");
+		if(paramText != "")
+		{
+			setTimeout(function()
+			{
+				document.getElementById('paramText').value = paramText;
+			},250);
+		}*/
+		
+		var wktTungguBukFolder = Math.round(parseInt(document.getElementById('jmlFolder').value));
+		var wktTunggu = (wktTungguBukFolder / 80)*1000;
+		if(wktTungguBukFolder <= 100)
+		{
+			wktTunggu = 400;
+		}
+		
+		if(tipeKonten == "folder")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnSharedFolderSide.php";
+			document.getElementById('srcIframeSek').value = "templates/halOwnSharedFolderSide.php";
+			
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halOwnSharedFolderSide1.php?aksi=empChoose&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared+"&idFold="+idFoldRef;
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},400);
+				
+			},300);
+		}
+		if(tipeKonten == "file")
+		{
+			document.getElementById('iframeHalFolder').src = "templates/halOwnSharedFolderSide.php";
+			document.getElementById('srcIframeSek').value = "templates/halOwnSharedFolderSide.php";
+			
+			setTimeout(function()
+			{
+				window.frames['iframeHalFolder'].window.frames['halFolderSide1'].frameElement.src = "halOwnSharedFolderSide1.php?aksi=empChoose&userIdOwner="+userIdOwner+"&empNoShared="+empNoShared+"&idFold="+idFoldRef;
+				window.frames['iframeHalFolder'].window.frames['halFolderSide2'].frameElement.src = "halOwnSharedFolderSide2.php?&halaman=expand&foldSub="+foldSub+"&idFold="+idFoldRef+"&userIdOwner="+userIdOwner;
+				document.getElementById('srcIframeSek').value = "templates/halOwnSharedFolderSide.php";
+				
+				setTimeout(function()
+				{
+					window.frames['iframeHalFolder'].window.frames['halFolderSide1'].document.getElementById('btnKlikfold').click();
+				},400);
+				
+			},300);
+		}
+	}
+	
+	document.getElementById('appView').value = aksi;
+}
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeHalFolder').height ;
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	if(status == "down")
+	{
+		$("#iframeHalFolder").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeHalFolder').height = heightFramePlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 320)
+		{
+			$("#iframeHalFolder").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeHalFolder').height = heightFrameMin;
+			
+			if(heightFrameMin == 320)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a> 
+
+<input type="hidden" id="appView" name="appView" value="viewList"/>
+<input type="hidden" id="tipeKonten" name="tipeKonten" value="folder"/>
+
+<input type="hidden" id="userIdOwner" value="{userIdOwner}" />
+<input type="hidden" id="idAuthorFold"/>
+<input type="hidden" id="srcIframeSek" style="width:90%;"/>
+
+<input type="hidden" id="aksiHidden"/>
+<input type="hidden" id="foldSub"/>
+<input type="hidden" id="idFoldRef"/>
+
+<input type="hidden" id="isiList"/>
+<input type="hidden" id="halaman"/>
+
+<input type="hidden" id="jmlFolder" name="jmlFolder" value="10"/>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td>
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        <tr><td id="idHalTeksLvl" height="20" colspan="3">&nbsp;</td></tr>
+        <tr>
+            <td valign="bottom" width="60%">
+            &nbsp;{menuEmpOwnShare}
+            &nbsp;
+            <button class="btnStandar" onclick="pilihBtnChoose();" style="width:80px;height:29px;" title="Display Own Shared Folder List">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="right" width="25"><img src="../picture/Arrow-Right-blue-32.png" height="20"/> </td>
+                        <td align="center">Display</td>
+                      </tr>
+                    </table>
+                </button>
+            &nbsp;<span id="errorMsg" class="errorMsg">&nbsp;</span>
+            </td>
+            <td align="right"><img src="../picture/Search2-32.png" width="25" style="vertical-align:bottom;"/>
+						<input type="text" class="elementSearch" id="paramText" size="41" style="height:16px;color:#333;" onfocus="cari();" onkeyup="cari();">&nbsp;</td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+        	<td width="25%" align="left">
+            <table cellpadding="0" cellspacing="0" width="100%">
+                <tr align="center" valign="middle">
+                    <td width="40">&nbsp;<img id="imgRefresh" src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refreshPage();" title="Refresh Page"/></td>
+                    <td width="40" id="idTdViewList" onclick="klikAppView('viewList')" onMouseOver="this.style.backgroundColor='#EFEFEF';" onMouseOut="this.style.backgroundColor='#666';" style="cursor:pointer;" title=" View Lists">
+                        <img src="../picture/Application-View-List-32.png" style="vertical-align:top;" height="25" border="0"/>
+                    </td>
+                    <td width="40" id="idTdViewIcon" onclick="klikAppView('viewIcon')" onMouseOver="this.style.backgroundColor='#EFEFEF';" onMouseOut="this.style.backgroundColor='#666';" style="cursor:pointer;" title=" View Icons">
+                        <img src="../picture/Application-View-Icons-32.png" style="vertical-align:top;" height="25" border="0"/>
+                    </td>
+                    <td width="40" id="idTdSideList" onclick="klikAppView('sideList')" onMouseOver="this.style.backgroundColor='#EFEFEF';" onMouseOut="this.style.backgroundColor='#666';" style="cursor:pointer;" title=" View Side List">
+                        <img src="../picture/Application-Side-List-32.png" style="vertical-align:top;" height="25" border="0"/>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+            </td>
+        	<td width="50%" height="40">:: OWN SHARED FOLDERS ::</td>
+            <td width="25%" align="right" id="tdBtnBack">&nbsp;</td>
+        </tr>
+        <tr>
+        	<td colspan="3">
+				<iframe width="100%" height="320" target="iframeHalFolder" name="iframeHalFolder" id="iframeHalFolder" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>    
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

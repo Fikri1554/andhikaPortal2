@@ -1,0 +1,120 @@
+<!DOCTYPE html> 
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="css/cssSpj.css" rel="stylesheet" type="text/css" />
+    
+<script type="text/javascript">
+function loadUrl(newLocation)
+{
+	window.location = newLocation;
+	return false;
+}
+
+$(document).ready(function() {
+    var active = $('#active').val();
+	if(active != "")
+	{
+		$('#'+active+'').attr('class','spjBtnMenuActive');
+		$('#'+active+'').attr('onclick', '');
+	}
+});
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+<div class="archivesContainer">
+<input type="hidden" id="active" value="{activeMenu}"/>
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr>
+	<td>
+    <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT #############-->
+    	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+        <tr>
+            <td>
+            	&nbsp;&nbsp;
+                <!--<img src="picture/question-white.png" height="13" style="cursor: pointer;" title="SPJ Tutorial" onmouseover="this.style.background='#1582f5';" onmouseout="this.style.background=''" onclick="klikBtnHelp();"/>-->
+                <span class="spjTeksMyFolder" style="color:#369;">SPJ {halaman2}</span> &nbsp;
+                <div style="position:absolute;margin-left:927px;margin-top:-18px;">
+                    <button class="spjBtnStandar" type="button" onclick="document.getElementById('hrefOpenFile').click();" style="width:63px;height:29px;box-shadow:none;" title="Manual Book Pdf">
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                        <tr>
+                          <td align="right" width="22"><img src="picture/question-frame.png"/> </td> 
+                          <td align="center"><b>HELP</b></td>
+                        </tr>
+                      </table>
+                    </button>&nbsp;
+                    <a id="hrefOpenFile" href="#" onclick="window.open('{linkPdf}', '_blank', 'left=220px,top=70px, width=900px,height=600px,resizable=yes'); return false;"></a>
+                </div>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td valign="bottom" class="">
+    <table cellpadding="0" cellspacing="" border="0" width="100%">
+    <tr>
+    	<td width="17%">
+           &nbsp;
+           <button id="btnForm" class="spjBtnMenu" type="button" onclick="loadUrl('index.php?aksi=spjForm'); return false;" title="SPJ FORM INDEX">
+            <table width="65" height="29">
+                <tr>
+                    <td align="center" width="20"><img src="picture/blog.png"/></td>
+                    <td align="left">FORM</td> 
+                </tr>
+            </table>
+          </button>
+          <button id="btnReport" class="spjBtnMenu" type="button" onclick="loadUrl('index.php?aksi=spjReport');" title="SPJ REPORT INDEX">
+            <table width="77" height="29">
+                <tr>
+                    <td align="center" width="20"><img src="picture/documents-stack.png"/></td>
+                    <td align="left">REPORT</td> 
+                </tr>
+            </table>
+          </button>
+          </td>
+          <td width="83%" style="border-bottom:1px solid #CCC;">
+          {subMenu}{subMenuAdm}<!--<button id="ack" class="btnSubMenu4" type="button" onclick="'.$link2.'" title="List SPJ Form for Acknowledge">
+        <table width="40" height="23">
+            <tr>
+                <td align="center">All</td> 
+            </tr>
+        </table>
+      </button>-->
+          </td>
+    </tr>
+    </table>
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+    </td>
+</tr>
+
+</table>
+
+</div>
+</div>
+<div class="archivesContainerBottom">
+	<div id="btnZoom" style="margin-top:-2px;">
+    	<button class="spjBtnStandar" style="width:36px;height:20px;border-radius:0px;" type="button" onclick="frameSize('down');">
+            <table border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgDown" src="../picture/control-270.png" border="0"/> </td> 
+                </tr>
+            </table>
+         </button><button class="spjBtnStandar" style="width:36px;height:20px;border-radius:0px;" type="button" onclick="frameSize('up');">
+            <table border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgUp" src="../picture/control-090.png" border="0"/></td> 
+                </tr>
+            </table>
+         </button>
+	</div>
+    <p id="back-top">
+		<a href="#top"><span></span>Back to Top</a>
+	</p>
+</div>
+</html>

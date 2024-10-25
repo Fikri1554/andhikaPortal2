@@ -1,0 +1,86 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+function loadUrl(newLocation)
+{
+	window.location = newLocation;
+	return false;
+}
+
+function ajaxCekPin(aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekPin")
+	{
+		var pin = document.getElementById('pin').value;
+		var parameters="halaman="+aksi+"&pin="+pin;
+	}
+	
+	mypostrequest.open("POST", "halPostFoldSurvey.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<div class="archivesContainer">
+
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr>
+	<td height="35">
+    <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT -->
+    	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+        <tr>
+            <td>&nbsp;&nbsp;<span class="teksMyFolder" style="color:#369;">EMPLOYEE SATISFACTION SURVEY</span></td>
+        </tr>
+        </table>
+    
+    </td>
+</tr>
+
+<tr>
+	<td valign="bottom" class="">
+    <form method="post" action="index.php">
+    <input type="hidden" name="aksi" value="satisfaction"/>
+       &nbsp;
+       <input type="text" id="pin" name="pin" class="elementDefault" onkeyup="ajaxCekPin('cekPin', 'pinAdaTidak');" value="{pinBefore}"/>
+      &nbsp;
+      <button id="btnDisplay" class="btnStandar" style="width:80px;height:29px;" title="Go to Survey Form">
+        <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+          <tr>
+            <td align="right" width="25"><img src="../picture/Archive-blue-32.png" height="20"/> </td>
+            <td align="center">Display</td>
+          </tr>
+        </table>
+    </button>
+    <span id="pinAdaTidak"></span>
+    &nbsp;
+    {error}
+    {menuResultSurvey}
+    </form>
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+    </td>
+</tr>
+
+</table>
+
+</div>

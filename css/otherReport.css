@@ -1,0 +1,72 @@
+@charset "utf-8";
+/* CSS Document */
+
+.ganjil
+{
+	background-color:#F5FEFE;
+	color:#000;
+	font-family:Arial;
+	font-size:13px;
+}
+
+.ganjil:hover
+{
+	background-color:#CCE4FF;
+	color:#000;
+	font-family:Arial;
+	font-size:13px;
+	cursor:pointer;
+}
+
+.genap
+{
+	background-color:#DDF0FF;
+	color:#000;
+	font-family:Arial;
+	font-size:13px;
+}
+
+.genap:hover
+{
+	background-color:#CCE4FF;
+	color:#000;
+	font-family:Arial;
+	font-size:13px;
+	cursor:pointer;
+}
+
+.borderAll
+{
+	border:dotted 1px #999999;
+}
+
+.borderTopNull
+{
+	border:dotted 1px #999999;
+	border-top: 0px;
+}
+
+.borderLeftNull
+{
+	border:dotted 1px #999999;
+	border-left: 0px;
+}
+
+.borderTopLeftNull
+{
+	border:dotted 1px #999999;
+	border-top: 0px;
+	border-left: 0px;
+}
+
+.borderLeftRightNull
+{
+	border:dotted 1px #999999;
+	border-left: 0px;
+	border-right: 0px;
+}
+
+.borderBottom
+{
+	border-bottom:dotted 1px #999999;
+}

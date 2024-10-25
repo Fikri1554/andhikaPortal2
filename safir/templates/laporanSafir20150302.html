@@ -1,0 +1,797 @@
+<html>
+<script language="javascript">
+function printpr()
+{
+	var OLECMDID = 7;
+	/* OLECMDID values:
+	* 6 - print
+	* 7 - print preview
+	* 1 - open window
+	* 4 - Save As
+	*/
+	
+	var PROMPT = 1; // 2 DONTPROMPTUSER
+	var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+	document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
+	
+	WebBrowser1.ExecWB(OLECMDID, PROMPT); 
+	WebBrowser1.outerHTML = "";
+} 
+
+</script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+
+<style>
+</style>
+
+<link href="css/laporanSafir.css" rel="stylesheet" type="text/css">
+<link href="../css/laporanSafir.css" rel="stylesheet" type="text/css">
+<link href="css/tableReport.css" rel="stylesheet" type="text/css">
+<link href="../css/tableReport.css" rel="stylesheet" type="text/css">
+<body onLoad="printpr();loadScroll('laporan');" onUnload="saveScroll('laporan');" onBlur="this.window.close();">
+<!-- height="1020"-->
+<center>
+<div class="wrap">
+
+	<div style="position:absolute; bottom:14px; left:30px;font-size:12px;">MSAP 12.2</div>
+	<div class="header1">
+    	<table width="100%" cellpadding="0" cellspacing="0" style="">
+        <tr align="center">
+        	<td width="16%" rowspan="3" class="tabelBorderRightNull"><img src="picture/Andhika.gif" width="80"></td>
+            <td colspan="3" class="tabelBorderAll">
+            <span style="font-weight:bold;font-size:14px;font-family:Times New Roman;">VESSEL OPERATION PROCEDURES</span><br>
+            <span style="font-size:13px;"><i>Prosedur Operasi Kapal</i></span><br>
+            <span style="font-size:14px;font-family:Times New Roman;"><i>Appendix: VOM 12.2</i></span><br>
+            <span style="font-size:13px;"><i>Lampiran VOM 12.2</i></span>
+            </td>
+        </tr>
+        <tr align="center" style="font-weight:bold;font-size:14px;font-family:Times New Roman;">
+            <td width="28%" class="tabelBorderTopRightNull">Pages</td>
+            <td width="28%" class="tabelBorderTopRightNull">Rev</td>
+            <td width="28%" class="tabelBorderTopNull">Date</td>
+        </tr>
+        <tr align="center" style="font-weight:bold;font-size:14px;font-family:Times New Roman;">
+        	<td class="tabelBorderTopRightNull">1 of 6</td>
+            <td class="tabelBorderTopRightNull">2.0</td>
+            <td class="tabelBorderTopNull">10/09/14</td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="judulSafir">
+    SAFETY AND IMPROVEMENT REPORT ( SAFIR )
+    </div>
+    
+    <div class="konten1">
+    	<table width="100%" height="105" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:11px;">
+        <tr>
+        	<td width="19%" class="tabelBorderRightNull" height="105">&nbsp;
+            	<div style="position:absolute; top:5px; width:124px; font-size:14px;">
+                	<b>GENERAL INFORMATION</b>
+                </div>
+            	<div class="tabelBorderAll" style="position:absolute;width:129px;height:45px;top:55px;padding:2px;">
+                	<b>000 Report No.</b><br>
+                    {noReport}
+                </div>
+            </td>
+            <td width="81%" class="tabelBorderAll">&nbsp;
+            	<div class="tabelBorderAll" style="position:absolute;width:270px;height:45px;top:5px;padding:2px;">
+                	<b>001 Name of vessel</b><br>
+                    {nmVessel}
+                </div>
+                <div class="tabelBorderAll" style="position:absolute;width:140px;height:45px;top:5px;left:426px;padding:2px;">
+                	<b>002 Voyage No.</b><br>
+                    {noVoyage}
+                </div>
+                <div class="tabelBorderAll" style="position:absolute;width:170px;height:45px;top:5px;left:572px;padding:2px;">
+                	<b>003 Date of event</b><br>
+                    {dateEvent}
+                </div>
+                <div class="tabelBorderAll" style="position:absolute;width:270px;height:45px;top:55px;padding:2px;">
+                	<b>004 Writer's name and position / </b><br>
+                    {nmWriter}
+                </div>
+                 <div class="tabelBorderAll" style="position:absolute;width:140px;height:45px;top:55px;left:426px;padding:2px;">
+                	<b>005 Date of report </b><br>
+                    {dateReport}
+                </div>
+                
+                <div class="kotakCek" style="position:absolute;top:65px;left:572px;">&nbsp;&nbsp;</div>
+                <div class="" style="position:absolute; width:47px; height:20px; top:60px; left:598px;">
+                <b>Final<BR>Report</b>
+          		</div>
+                
+                <div class="kotakCek" style="position:absolute; top:65px; left:650px;">&nbsp;&nbsp;</div>
+              <div class="" style="position:absolute; width:68px; height:20px; top:60px; left:676px;">
+                <b>Preliminary<BR>Report</b>
+          		</div>
+                
+            </td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="konten2">
+    	<table width="100%" height="35" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:11px;">
+        <tr>
+        	<td width="19%" class="tabelBorderTopRightNull">&nbsp;
+            	<div style="position:absolute; top:1px; width:100px; font-size:14px;">
+                	<b>TYPE OF REPORT</b>
+                </div>
+            </td>
+            <td width="81%" class="tabelBorderTopNull">&nbsp;
+            	<div class="kotakCek" style="position:absolute;top:7px;">&nbsp;{cekA}&nbsp;</div>
+                <div class="" style="position:absolute;width:80px;height:20px;top:4px;left:175px;">
+                <b>A-Version<BR>Accident</b>
+          		</div>
+                
+                <div class="kotakCek" style="position:absolute;top:7px;left:265px;">&nbsp;{cekB}&nbsp;</div>
+                <div class="" style="position:absolute;width:80px;height:20px;top:4px;left:292px;">
+                <b>B-Version<BR>Near Accident</b>
+   		    </div>
+                
+                <div class="kotakCek" style="position:absolute;top:7px;left:400px;">&nbsp;{cekC}&nbsp;</div>
+                <div class="" style="position:absolute; width:99px; height:20px; top:4px; left:427px;">
+                <b>C-Version<BR>Non-Conformity</b>
+                </div>
+                
+              <div class="kotakCek" style="position:absolute;top:7px;left:545px;">&nbsp;{cekD}&nbsp;</div>
+                <div class="" style="position:absolute; width:160px; height:20px; top:4px; left:572px;">
+                <b>D-Version<BR>Suggestion for improvement</b>
+              </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="description12 tabelBorderTopNull">
+    	<p style="font-weight:bold;font-size:14px;text-align:left;margin-left:5px;">DESCRIPTION 1/2 : KEY INFORMATION DEPENDING ON TYPE OF REPORT ( DETAILED DESCRIPTION OVERLEAF )</p>
+    </div>
+    
+  <div class="konten3">
+   	  <table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+        	<td width="19%" rowspan="8" class="tabelBorderTopRightNull">&nbsp;
+            	<div class="tabelBorderAll" style="padding:8px; position:absolute; top:60px; width:100px; font-size:14px; height: 48px; left: 21px;z-index:1;background-color:#FFF;">
+                	<p style="text-align:center;"><b>A-VERSION ACCIDENT</b></p>
+                </div>
+                
+   		  <div class="tabelBorderAll" style="padding:7px; position:absolute; top:160px; width:110px; font-size:14px; height: 48px; left: 16px;z-index:1;background-color:#FFF;">
+                	<p style="text-align:justify;"><b>B-VERSION NEAR-ACCIDENT</b></p>
+                </div>
+                
+                <div style="position:absolute; top:-10px; left:30px; height: 545px;width:40px;">
+                	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr valign="bottom">
+                    	<td colspan="2" class="" height="10" align="center"><img src="picture/Arrow-sans-up-32.png" height="20" style="position:absolute;top:5px;left:10px;"></td>
+                    </tr>
+                    <tr>
+                    	<td class="tabelBorderRightJust" width="10">&nbsp;</td>
+                        <td class="tabelBorderLeftJust" width="10">&nbsp;</td>
+                    </tr>
+                    <tr valign="bottom">
+                    	<td colspan="2" class="" height="10" align="center"><img src="picture/Arrow-sans-down-32.png" height="20" style="position:absolute;bottom:5px;left:10px;"></td>
+                    </tr>
+                    </table>	
+                </div>
+                
+                <div style="position:absolute; top:-10px; left:70px; height: 275px;width:40px;">
+                	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr valign="bottom">
+                    	<td colspan="2" class="" height="10" align="center"><img src="picture/Arrow-sans-up-32.png" height="20" style="position:absolute;top:5px;left:10px;"></td>
+                    </tr>
+                    <tr>
+                    	<td class="tabelBorderRightJust" width="10">&nbsp;</td>
+                        <td class="tabelBorderLeftJust" width="10">&nbsp;</td>
+                    </tr>
+                    <tr valign="bottom">
+                    	<td colspan="2" class="" height="10" align="center"><img src="picture/Arrow-sans-down-32.png" height="20" style="position:absolute;bottom:5px;left:10px;"></td>
+                    </tr>
+                    </table>	
+                </div>
+            </td>
+            <td width="81%" height="20" class="tabelBorderTopNull"><p style="font-size:14px;font-weight:bold;margin-left:5px;">EVENT :</p></td>
+        </tr>
+        <tr>
+            <td class="tabelBorderTopNull" height="87">&nbsp;
+            	<div class="kotakCek" style="position:absolute;top:25px;">&nbsp;{cek100}&nbsp;</div>
+                <div class="" style="position:absolute;width:80px;height:20px;top:26px;left:175px;">
+                <b>100 Collision</b>
+  </div>
+                
+                <div class="kotakCek" style="position:absolute; top:25px; left:332px;">&nbsp;{cek110}&nbsp;</div>
+                <div class="" style="position:absolute; width:100px; height:20px; top:26px; left:357px;">
+                <b>110 Grounding</b>
+           	  </div>
+                
+              	<div class="kotakCek" style="position:absolute; top:25px; left:524px;">&nbsp;{cek120}&nbsp;</div>
+           	  <div class="" style="position:absolute; width:150px; height:20px; top:26px; left:549px;">
+                <b>120 Fire / Explosion</b>
+   		    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:53px;">&nbsp;{cek130}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:54px; left:175px;">
+                <b>130 Weather change</b>
+   		    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:53px; left:332px;">&nbsp;{cek140}&nbsp;</div>
+                <div class="" style="position:absolute; width:158px; height:20px; top:54px; left:357px;">
+                <b>140 Machinery break-down</b>
+          		</div>
+                
+              <div class="kotakCek" style="position:absolute; top:53px; left:524px;">&nbsp;{cek150}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:54px; left:549px;">
+                <b>150 Loss of stability / flooding</b>
+   		    </div>
+                
+          <div class="kotakCek" style="position:absolute; top:82px;">&nbsp;{cek160}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:83px; left:175px;">
+                <b>160 Contact damages</b>
+   		    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:82px; left:332px;">&nbsp;{cek170}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:83px; left:357px;">
+                <b>170 Harm to people</b>
+   		    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:82px; left:524px;">&nbsp;{cek180}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:83px; left:549px;">
+                <b>180 Other</b>
+           	  </div>
+            </td>
+        </tr>
+        <tr>
+            <td height="20" class="tabelBorderTopNull"><p style="font-size:14px;font-weight:bold;margin-left:5px;">PROBABLE CAUSE(S) :</p></td>
+        </tr>
+        <tr>
+			<td class="tabelBorderTopNull" height="110">&nbsp;
+            	<div class="kotakCek" style="position:absolute; top:133px;">&nbsp;{cek200}&nbsp;</div>
+                <div class="" style="position:absolute; width:80px; height:20px; top:134px; left:175px;">
+                <b>200 Weather</b>
+       	    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:133px; left:332px;">&nbsp;{cek210}&nbsp;</div>
+              	<div class="" style="position:absolute; width:164px; height:20px; top:134px; left:357px;">
+                <b>210 Tech. / ops. conditions</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>override the control of</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>the ship</b>
+       	    </div>
+                
+    			<div class="kotakCek" style="position:absolute; top:133px; left:524px;">&nbsp;{cek220}&nbsp;</div>
+              	<div class="" style="position:absolute; width:200px; height:20px; top:134px; left:549px;">
+                <b>220 Construction / equipment /</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>materials</b>
+              </div>
+                
+	      <div class="kotakCek" style="position:absolute; top:174px;">&nbsp;{cek230}&nbsp;</div>
+                <div class="" style="position:absolute; width:156px; height:20px; top:175px; left:175px;">
+                <b>230 Design / arrangement /</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>function</b>
+				</div>
+                
+              <div class="kotakCek" style="position:absolute; top:174px; left:332px;">&nbsp;{cek240}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:175px; left:357px;">
+                <b>240 Cargo / bunkers</b>
+            </div>
+                
+                <div class="kotakCek" style="position:absolute; top:174px; left:524px;">&nbsp;{cek250}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:175px; left:549px;">
+                <b>250 Procedures and routine</b>
+            </div>
+                
+      <div class="kotakCek" style="position:absolute; top:205px;">&nbsp;{cek260}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:206px; left:175px;">
+                <b>260 Working schedules</b>
+   		    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:205px; left:332px;">&nbsp;{cek270}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:206px; left:357px;">
+                <b>270 Education / training /</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>motivation</b>
+            </div>
+                
+                <div class="kotakCek" style="position:absolute; top:205px; left:524px;">&nbsp;{cek280}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:206px; left:549px;">
+                <b>280 Other</b>
+              </div>
+            </td>
+        </tr>
+        <tr>
+            <td height="20" class="tabelBorderTopNull"><p style="font-size:14px;font-weight:bold;margin-left:5px;">CONSEQUENCES IN TERMS OF HARM TO PEOPLE.  IF ANY :</p></td>
+        </tr>
+        <tr>
+			<td class="tabelBorderTopNull" height="125">&nbsp;
+           	  <div class="kotakCek" style="position:absolute; top:265px;">&nbsp;{cek300}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:266px; left:175px;">
+                <b>300 Death casualty</b>
+              	</div>
+                
+                <div class="kotakCek" style="position:absolute; top:265px; left:332px;">&nbsp;{cek310}&nbsp;</div>
+              	<div class="" style="position:absolute; width:164px; height:20px; top:266px; left:357px;">
+                <b>310 Personal injury</b>
+   	      </div>
+                
+    			<div class="kotakCek" style="position:absolute; top:265px; left:524px;">&nbsp;{cek320}&nbsp;</div>
+              	<div class="" style="position:absolute; width:200px; height:20px; top:266px; left:549px;">
+                <b>320 Occupational disease / illness</b>
+                </div>
+                
+                <div class="tabelBorderAll" style="position:absolute; width:280px; height:45px; top:293px; padding:1px;">
+                	<b>&nbsp;330 Name of harmed person</b><br>
+                    {text330}
+                </div>
+                
+                <div class="tabelBorderAll" style="position:absolute; width:220px; height:45px; top:293px; left:524px; padding:1px;">
+                	<b>&nbsp340 Job position</b><br>
+                    {text340}
+                </div>
+                
+                <div class="kotakCek" style="position:absolute; top:350px;">&nbsp;{cek350}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:351px; left:175px;">
+                <b>350 Doctor's report</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>filled in</b>
+                </div>
+                
+                <div class="kotakCek" style="position:absolute; top:350px; left:332px;">&nbsp;{cek360}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:351px; left:357px;">
+                <b>360 RTV report filled in</b>
+                </div>
+                
+                <div class="kotakCek" style="position:absolute; top:350px; left:524px;">&nbsp;{cek370}&nbsp;</div>
+              	<div class="" style="position:absolute; width:200px; height:20px; top:351px; left:549px;">
+                <b>370 Other reports, if any</b>
+                </div>
+                
+               
+            </td>
+        </tr>
+        <tr>
+            <td height="20" class="tabelBorderTopNull"><p style="font-size:14px;font-weight:bold;margin-left:5px;">CONSEQUENCES IN TERMS OF DAMAGE TO PROPERTY, ENVIRONMENT OR LOSS TO OPERATION :</p></td>
+        </tr>
+        <tr>
+            <td class="tabelBorderTopNull" height="92">&nbsp;
+            	<div class="kotakCek" style="position:absolute; top:421px;">&nbsp;{cek400}&nbsp;</div>
+                <div class="" style="position:absolute; width:80px; height:20px; top:422px; left:175px;">
+                <b>400 Hull</b>
+   	      </div>
+                
+                <div class="kotakCek" style="position:absolute; top:421px; left:332px;">&nbsp;{cek410}&nbsp;</div>
+                <div class="" style="position:absolute; width:100px; height:20px; top:422px; left:357px;">
+                <b>410 Machinery</b>
+              </div>
+                
+              	<div class="kotakCek" style="position:absolute; top:421px; left:524px;">&nbsp;{cek420}&nbsp;</div>
+           	  <div class="" style="position:absolute; width:150px; height:20px; top:422px; left:549px;">
+                <b>420 Equipment</b>
+          </div>
+                
+                <div class="kotakCek" style="position:absolute; top:450px;">&nbsp;{cek430}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:451px; left:175px;">
+                <b>430 Cargo</b>
+          </div>
+                
+                <div class="kotakCek" style="position:absolute; top:450px; left:332px;">&nbsp;{cek440}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:451px; left:357px;">
+                <b>440 Third party</b>
+          </div>
+                
+                <div class="kotakCek" style="position:absolute; top:450px; left:524px;">&nbsp;{cek450}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:451px; left:549px;">
+                <b>450 Marine environment</b>
+          </div>
+                
+              <div class="kotakCek" style="position:absolute; top:479px;">&nbsp;{cek460}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:480px; left:175px;">
+                <b>460 Air</b>
+          </div>
+                
+                <div class="kotakCek" style="position:absolute; top:479px; left:332px;">&nbsp;{cek470}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:480px; left:357px;">
+                <b>470 Loss of time</b>
+          </div>
+                
+                <div class="kotakCek" style="position:absolute; top:479px; left:524px;">&nbsp;{cek480}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:480px; left:549px;">
+                <b>480 Other</b>
+              </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+    
+<div class="konten4">
+    	<table width="100%" height="68" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+        	<td width="19%" class="tabelBorderTopRightNull">&nbsp;
+            	<div style="position:absolute; top:5px; width:130px; font-size:14px;">
+                	<b>C-VERSION NON-CONFORMITY</b>
+                </div>
+            </td>
+            <td width="81%" class="tabelBorderTopNull">&nbsp;
+            	<div class="kotakCek" style="position:absolute; top:8px;">&nbsp;{cek500}&nbsp;</div>
+                <div class="" style="position:absolute; width:80px; height:20px; top:9px; left:175px;">
+                <b>500 Flag state</b>
+    	    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:8px; left:332px;">&nbsp;{cek510}&nbsp;</div>
+                <div class="" style="position:absolute; width:100px; height:20px; top:9px; left:357px;">
+                <b>510 Port state</b>
+              	</div>
+                
+              	<div class="kotakCek" style="position:absolute; top:8px; left:524px;">&nbsp;{cek520}&nbsp;</div>
+              	<div class="" style="position:absolute; width:150px; height:20px; top:9px; left:549px;">
+                <b>520 Classification</b>
+                </div>
+                
+      <div class="kotakCek" style="position:absolute; top:38px;">&nbsp;{cek530}&nbsp;</div>
+                <div class="" style="position:absolute; width:107px; height:20px; top:39px; left:175px;">
+                <b>530 Company</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>management</b>
+          </div>
+                
+              <div class="kotakCek" style="position:absolute; top:38px; left:332px;">&nbsp;{cek540}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:39px; left:357px;">
+                <b>540  Charterer</b>
+                </div>
+                
+                <div class="kotakCek" style="position:absolute; top:38px; left:524px;">&nbsp;{cek550}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:39px; left:549px;">
+                <b>550  Other</b>
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+    
+<div class="konten5">
+    	<table width="100%" height="92" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+        	<td width="19%" class="tabelBorderTopRightNull">&nbsp;
+            	<div style="position:absolute; top:5px; width:130px; font-size:14px;">
+                	<b>D-VERSION SUGGESTION FOR IMPROVEMENT</b>
+                </div>
+            </td>
+            <td width="81%" class="tabelBorderTopNull">&nbsp;
+            	<div class="kotakCek" style="position:absolute;top:5px;">&nbsp;{cek600}&nbsp;</div>
+                <div class="" style="position:absolute;width:150px;height:20px;top:6px;left:175px;">
+                <b>600 Working methods</b>
+    	    </div>
+                
+                <div class="kotakCek" style="position:absolute; top:5px; left:332px;">&nbsp;{cek610}&nbsp;</div>
+                <div class="" style="position:absolute; width:163px; height:20px; top:6px; left:357px;">
+                <b>610 Procedures & routines </b>
+              	</div>
+                
+           	  <div class="kotakCek" style="position:absolute; top:5px; left:524px;">&nbsp;{cek620}&nbsp;</div>
+              	<div class="" style="position:absolute; width:201px; height:20px; top:6px; left:549px;">
+                <b>620 Constructions / equipment /</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>materials</b>
+       	    </div>
+                
+              	<div class="kotakCek" style="position:absolute; top:34px;">&nbsp;{cek630}&nbsp;</div>
+                <div class="" style="position:absolute; width:157px; height:20px; top:35px; left:175px;">
+                <b>630 Education and training</b>
+   		    </div>
+                
+              <div class="kotakCek" style="position:absolute; top:34px; left:332px;">&nbsp;{cek640}&nbsp;</div>
+                <div class="" style="position:absolute; width:163px; height:20px; top:35px; left:357px;">
+                <b>640 Information / instruction</b>
+            </div>
+                
+              	<div class="kotakCek" style="position:absolute; top:34px; left:524px;">&nbsp;{cek650}&nbsp;</div>
+       			<div class="" style="position:absolute; width:200px; height:20px; top:35px; left:549px;">
+                <b>650 Social</b>
+       	    </div>
+                
+              <div class="kotakCek" style="position:absolute; top:63px;">&nbsp;{cek660}&nbsp;</div>
+                <div class="" style="position:absolute; width:150px; height:20px; top:64px; left:175px;">
+                <b>660 Other ship related</b>
+       		  </div>
+                
+              <div class="kotakCek" style="position:absolute; top:63px; left:332px;">&nbsp;{cek670}&nbsp;</div>
+              <div class="" style="position:absolute; width:150px; height:20px; top:64px; left:357px;">
+                <b>670 Other shore related</b>
+       		  </div>
+                
+              <div class="kotakCek" style="position:absolute; top:63px; left:524px;">&nbsp;{cek680}&nbsp;</div>
+              <div class="" style="position:absolute; width:150px; height:20px; top:64px; left:549px;">
+                <b>680 Other</b>
+       		  </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+    
+  <div class="konten6">
+    	<table width="100%" height="60" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+            <td class="tabelBorderTopNull">&nbsp;
+            	<div style="position:absolute; top:11px; width:170px; font-size:14px;">
+                	<b>NOTICE GIVEN, IF ANY :</b>
+                </div>
+                <div style="position:absolute; top:36px; width:738px; font-size:14px;">
+                	<b>IF NOTICE IS GIVEN, STATE REFERENCE ( document ref., att., date, etc. ) :</b>
+                    &nbsp;{noticeGiven}
+                </div>
+    <div class="kotakCek" style="position:absolute; top:11px; left:180px">&nbsp;{cek700}&nbsp;</div>
+              	<div class="" style="position:absolute; width:80px; height:20px; top:12px; left:205px;">
+                <b>700 Flag state</b>
+       	    	</div>
+                
+              	<div class="kotakCek" style="position:absolute; top:11px; left:295px;">&nbsp;{cek710}&nbsp;</div>
+              	<div class="" style="position:absolute; width:80px; height:20px; top:12px; left:320px;">
+                <b>710 Port state</b>
+              	</div>
+                
+           	  	<div class="kotakCek" style="position:absolute; top:11px; left:410px;">&nbsp;{cek720}&nbsp;</div>
+           	  	<div class="" style="position:absolute; width:80px; height:20px; top:12px; left:435px;">
+                <b>720 Class</b>
+            	</div>
+                
+              	<div class="kotakCek" style="position:absolute; top:11px; left:525px;">&nbsp;{cek730}&nbsp;</div>
+           	  	<div class="" style="position:absolute; width:80px; height:20px; top:12px; left:550px;">
+                <b>730 Charterer</b>
+            	</div>
+                
+              	<div class="kotakCek" style="position:absolute; top:11px; left:640px;">&nbsp;{cek740}&nbsp;</div>
+           	  	<div class="" style="position:absolute; width:80px; height:20px; top:12px; left:665px;">
+                <b>740 Others</b>
+            	</div>
+          </td>
+        </tr>
+        </table>
+    </div>
+    <div style="page-break-after: left;"></div>
+</div>
+
+
+
+<div class="wrap2">
+
+	<div class="header1">
+    	<table width="100%" cellpadding="0" cellspacing="0" style="">
+        <tr align="center">
+        	<td width="16%" rowspan="3" class="tabelBorderRightNull"><img src="picture/Andhika.gif" width="80"></td>
+            <td colspan="3" class="tabelBorderAll">
+            <span style="font-weight:bold;font-size:14px;font-family:Times New Roman;">VESSEL OPERATION PROCEDURES</span><br>
+            <span style="font-size:13px;"><i>Prosedur Operasi Kapal</i></span><br>
+            <span style="font-size:14px;font-family:Times New Roman;"><i>Appendix: VOM 12.2</i></span><br>
+            <span style="font-size:13px;"><i>Lampiran VOM 12.2</i></span>
+            </td>
+        </tr>
+        <tr align="center" style="font-weight:bold;font-size:14px;font-family:Times New Roman;">
+            <td width="28%" class="tabelBorderTopRightNull">Pages</td>
+            <td width="28%" class="tabelBorderTopRightNull">Rev</td>
+            <td width="28%" class="tabelBorderTopNull">Date</td>
+        </tr>
+        <tr align="center" style="font-weight:bold;font-size:14px;font-family:Times New Roman;">
+        	<td class="tabelBorderTopRightNull">2 of 6</td>
+            <td class="tabelBorderTopRightNull">2.0</td>
+            <td class="tabelBorderTopNull">10/09/14</td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="description22">
+    	<table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:11px;">
+        <tr>
+        	<td class="tabelBorderAll" height="55">
+            	 <div class="tabelBorderAll" style="position:absolute;width:130px;height:45px;left:580px;top:5px;">
+                    &nbsp; Version
+                </div>
+    			<p style="font-weight:bold;font-size:14px;text-align:left;margin-left:5px;">DESCRIPTION 2 / 2 : DETAILED INFORMATION</p>
+       
+        	</td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="guidelines">
+    	<table width="100%" height="55" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+            <td class="tabelBorderTopNull" height="85">&nbsp;
+           	  <div style="position:absolute; top:15px; width:170px; font-size:14px;">
+                	<b>GENERAL GUIDELINES :</b>
+                </div>
+                <div style="position:absolute; top:40px; width:738px; font-size:13px;font-weight:bold;">
+                	<p>This page is to be filled in on board for all reports versions.  The description should be as short and specific as possible.  If you need more space for your description, please continue on separate paper.</p>
+                </div>
+          </td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="konten7">
+    	<table width="100%" height="55" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+            <td class="tabelBorderAll" height="210">&nbsp;
+            	<div style="position:absolute; top:5px; width:732px; font-size:14px; font-weight:bold;">
+                	<p>Versions A / B : Describe what happened / Version C : Describe the non-conformity / Version D : Describe what can be improved.</p>
+                </div>
+                <div style="position:absolute; width:732px; font-size:13px;top:45px;text-align:justify;">
+                	<p>{describeHappen}</p>
+                </div>
+          </td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="konten8">
+    	<table width="100%" height="55" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+            <td class="tabelBorderAll" height="210">&nbsp;
+            	<div style="position:absolute; top:5px; width:732px; font-size:14px; font-weight:bold;">
+                	<p>Versions A / B / C : Describe probable causes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version D : Give motivation ( Why ? ).</p>
+                </div>
+                <div style="position:absolute; width:732px; font-size:13px;top:30px;text-align:justify;">
+                	<p>{probableCaused}</p>
+                </div>
+          </td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="konten9">
+    	<table width="100%" height="55" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:12px;">
+        <tr>
+            <td class="tabelBorderAll" height="280">&nbsp;
+           	  <div style="position:absolute; top:15px; width:732px; font-size:14px; font-weight:bold;">
+                	<p>Versions A / B / C : Describe immediate executed corrective action, ( if any ) and further recommended corrective action and preventive action.<br>
+Version D : Estimate probable cost ( if possible ) and other implications.</p>
+                </div>
+                
+                <div class="" style="position:absolute; width:732px; top:80px; font-size:13px;">
+                    <b>Immediate corrective action :</b>
+                </div>
+                <div style="position:absolute; width:732px; top:94px; text-align:justify;">
+                	<p>{immediateCorr}</p>
+                </div>
+                
+                <div class="" style="position:absolute; width:732px; top:140px; font-size:13px;">
+                    <b>Corrective action :</b>
+                </div>
+                <div style="position:absolute; width:732px; top:154px; text-align:justify;">
+                	<p>{corraction}</p>
+                </div>
+                
+                <div class="" style="position:absolute; width:732px; top:200px; font-size:13px;">
+                    <b>Preventive action :</b>
+                </div>
+                <div style="position:absolute; width:732px;top:214px; text-align:justify;">
+                	<p>{preventive}</p>
+                </div>
+                
+                <div class="" style="position:absolute; width:732px; height:20px; top:260px; font-size:13px; ">
+                    &nbsp;<b>Corrective & Preventive Action Proposal Completion Date :</b> {proposalDate} &nbsp;&nbsp;<b>PIC :</b> {pic}
+                </div>
+          </td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="konten10">
+    	<table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:11px;">
+        <tr>
+        	<td class="tabelBorderAll" height="65">&nbsp;
+            	 <div class="tabelBorderAll" style="padding:2px; position:absolute; width:170px; height:45px; left:13px; top:10px;">
+                    <b>&nbsp;Place and date</b>
+                    <div style="padding:2px; position:absolute; width:170px; top:25px; left: 50%; margin-left: -85px;"><p style="text-align:center;">{signPlace}, {signDate}</p></div>
+                </div>
+                
+                <div class="tabelBorderAll" style="padding:2px; position:absolute; width:170px; height:45px; left:197px; top:10px;">
+                    <b>&nbsp;Masters signature</b>
+                    <div class="kontenPlaceDate"><p style="text-align:center;">{signMaster}</p></div>
+                </div>
+                
+                <div class="tabelBorderAll" style="padding:2px; position:absolute; width:170px; height:45px; left:381px; top:10px;">
+                    <b>&nbsp;Ch.off / Ch.eng's signature</b>
+                    <div class="kontenPlaceDate"><p style="text-align:center;">{signChef}</p></div>
+                </div>
+                
+                <div class="tabelBorderAll" style="padding:2px; position:absolute; width:170px; height:45px; left:565px; top:10px;">
+                    <b>&nbsp;Safety Com. rep's signature</b>
+                    <div class="kontenPlaceDate"><p style="text-align:center;">{signSafcom}</p></div>
+                </div>
+        	</td>
+        </tr>
+        </table>
+    </div>
+    <div style="page-break-after: left;"></div>
+</div>
+
+<div class="wrap3">
+
+	<div class="header1">
+    	<table width="100%" cellpadding="0" cellspacing="0" style="">
+        <tr align="center">
+        	<td width="16%" rowspan="3" class="tabelBorderRightNull"><img src="picture/Andhika.gif" width="80"></td>
+            <td colspan="3" class="tabelBorderAll">
+            <span style="font-weight:bold;font-size:14px;font-family:Times New Roman;">VESSEL OPERATION PROCEDURES</span><br>
+            <span style="font-size:13px;"><i>Prosedur Operasi Kapal</i></span><br>
+            <span style="font-size:14px;font-family:Times New Roman;"><i>Appendix: VOM 12.2</i></span><br>
+            <span style="font-size:13px;"><i>Lampiran VOM 12.2</i></span>
+            </td>
+        </tr>
+        <tr align="center" style="font-weight:bold;font-size:14px;font-family:Times New Roman;">
+            <td width="28%" class="tabelBorderTopRightNull">Pages</td>
+            <td width="28%" class="tabelBorderTopRightNull">Rev</td>
+            <td width="28%" class="tabelBorderTopNull">Date</td>
+        </tr>
+        <tr align="center" style="font-weight:bold;font-size:14px;font-family:Times New Roman;">
+        	<td class="tabelBorderTopRightNull">3 of 6</td>
+            <td class="tabelBorderTopRightNull">2.0</td>
+            <td class="tabelBorderTopNull">10/09/14</td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="verificationCorr">
+    	<table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:11px;">
+        <tr>
+        	<td class="tabelBorderAll" height="140">&nbsp;
+<div style="position:absolute; top:15px; width:379px; font-size:14px; font-weight:bold;">
+                	<p>Verification Corrective & Preventive Action Proposal : </p>
+                </div>
+                
+              <div class="kotakCek" style="position:absolute; top:12px; left:375px;">&nbsp;{cekAccept}&nbsp;</div>
+       	  	  <div class="" style="position:absolute; width:80px; height:20px; top:16px; left:400px; font-size:13px;">
+                Accepted
+           	  </div>
+                
+           	  <div class="kotakCek" style="position:absolute; top:12px; left:485px;">&nbsp;{cekNotAccept}&nbsp;</div>
+           	  	<div class="" style="position:absolute; width:80px; height:20px; top:16px; left:509px; font-size:13px;">
+                Not Accepted
+            	</div>
+                
+                <div style="position:absolute; top:88px; width:72px; font-size:13px; left: 90px;">
+                	(<span style="color:#999;">Signature</span>)
+                </div>
+                
+    <div style="position:absolute; top:105px; width:400px; font-size:14px;">
+                	Verified by : &nbsp;{acceptBy}
+                </div>
+       
+        	</td>
+        </tr>
+        </table>
+    </div>
+    
+    <div class="verificationRes">
+    	<table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:11px;">
+        <tr>
+        	<td class="tabelBorderAll" height="170">&nbsp;
+            	<div style="position:absolute; top:15px; width:144px; font-size:14px; font-weight:bold;">
+                	<p>Verification Result : </p>
+                </div>
+                
+                <div style="position:absolute; top:40px; width:91px; font-size:14px;">
+               	  <p>Explanation : </p>
+                </div>
+                
+                <div style="position:absolute; top:40px; width:637px; font-size:13px; left:100px; text-align:justify; height: 50px;">
+                	<p>{explanation}</p>
+                </div>
+                
+  <div class="kotakCek" style="position:absolute; top:12px; left:155px;">&nbsp;{cekClosed}&nbsp;</div>
+           	  	<div class="" style="position:absolute; width:80px; height:20px; top:16px; left:180px; font-size:13px;">
+                Closed
+            	</div>
+                
+           	  <div class="kotakCek" style="position:absolute; top:12px; left:265px;">&nbsp;{cekNotClosed}&nbsp;</div>
+           	  	<div class="" style="position:absolute; width:80px; height:20px; top:16px; left:290px; font-size:13px;">
+                Not Closed
+            	</div>
+                
+                <div style="position:absolute; top:118px; width:72px; font-size:13px; left: 90px;">
+                	(<span style="color:#999;">Signature</span>)
+</div>
+                
+                <div style="position:absolute; top:135px; width:400px; font-size:14px;">
+                	Verified by : &nbsp;{closedBy}
+                </div>
+       
+        	</td>
+        </tr>
+        </table>
+    </div>
+	<div style="page-break-after: left;"></div>
+</div>
+
+{paperDescribe}
+
+</center>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<!--<link href="../css/button.css" rel="stylesheet" type="text/css" />
+<link href="../../css/button.css" rel="stylesheet" type="text/css" />-->
+
+<script type="text/javascript" src="../../js/main.js"></script>
+<script src="../js/main.js"></script>
+
+<script type="text/javascript">
+function openThickboxWindowReq(id, aksi, hal)
+{
+	if(hal == "newReq")
+	{
+		document.getElementById('hrefThickbox').href="templates/halRequest.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=430&width=700&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+
+function detailReq()
+{
+	document.getElementById('iframeHalRequestDetail').src = "templates/halRequestDetail.php";
+}
+
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeHalRequestList').height ;
+	var heightFrameDetail = document.getElementById('iframeHalRequestDetail').height ;
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	var heightFrameDetailPlus = parseInt(heightFramePlus) + 32;
+	var heightFrameDetailMin = parseInt(heightFrameMin) + 32;
+	
+	if(status == "down")
+	{
+		$("#iframeHalRequestList").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeHalRequestList').height = heightFramePlus;
+		$("#iframeHalRequestDetail").animate(
+			{
+				height: heightFrameDetailPlus
+				
+			}, 1000);
+		document.getElementById('iframeHalRequestDetail').height = heightFrameDetailPlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 301)
+		{
+			$("#iframeHalRequestList").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeHalRequestList').height = heightFrameMin;
+			$("#iframeHalRequestDetail").animate(
+				{
+					height: heightFrameDetailMin
+				}, 1000);
+			document.getElementById('iframeHalRequestDetail').height = heightFrameDetailMin;
+			
+			if(heightFrameMin == 301)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function closeWarn()
+{
+	var answer  = confirm("You haven't submit 'Request New Item', yet.\nAre you sure want to close ?");
+	if(answer)
+	{
+		tb_remove(false);
+	}
+	else
+	{	return false;	}
+}
+
+function exit()
+{
+	tb_remove(false);
+}
+
+function refreshPage()
+{
+	document.getElementById('iframeHalRequestList').src="templates/halRequestList.php" ;
+	document.getElementById('iframeHalRequestDetail').src="" ;
+}
+
+function report(teks)
+{
+	document.getElementById('report').innerHTML = "* "+teks;
+	
+	setTimeout(function()
+	{
+		document.getElementById('report').innerHTML = "&nbsp;";
+	},10000);
+}
+
+function detailTrans(reqId, halaman)
+{
+	document.getElementById('iframeHalRequestDetail').src="templates/halRequestDetail.php?reqId="+reqId+"&halaman="+halaman ;
+}
+
+function ajaxStatus(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekStatusReadReq")
+	{
+		var parameters="halaman="+aksi+"&reqId="+id;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function cancel()
+{
+	var reqId = document.getElementById('reqId').value;
+	var tipeUser = document.getElementById('tipeUser').value;
+	var statusRead = document.getElementById('statusRead').value;
+	
+	var answer  = confirm("Are you sure to cancel Request New Item?");
+	if(answer)
+	{
+		ajaxStatus(reqId, "cekStatusReadReq", "idStatusRead");
+	
+		setTimeout(function()
+		{
+			if(tipeUser != "adminAtk")
+			{
+				if(statusRead != "Unread")
+				{
+					alert('Transaction has been Processed\nCannot cancel it');
+					return false;	
+				}
+			}
+			if(statusRead == "Unread" || tipeUser == "adminAtk")
+			{
+				document.getElementById('iframeHalRequestList').src="templates/halRequestList.php?aksi=cancel&reqId="+reqId ;
+			}
+		},500);
+	}
+	else
+	{ return false;	}
+}
+
+function give()
+{
+	var reqId = document.getElementById('reqId').value;
+	document.getElementById('iframeHalRequestDetail').src ="templates/halRequestDetail.php?reqId="+reqId+"&halaman=give";
+}
+
+function reqListClick()
+{
+	var trActive = document.getElementById('trActive').value;
+	document.getElementById('iframeHalRequestList').src="templates/halRequestList.php" ;
+	setTimeout(function()
+	{
+		window.frames['iframeHalRequestList'].document.getElementById('tr'+trActive).click();
+	},200);
+}
+function ajaxFilter(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	var tipeUser = document.getElementById('tipeUser').value;
+	var userIdLogin = document.getElementById('userIdLogin').value;
+	var userJenis = "N";
+	var thn = document.getElementById('thn').value;
+	var bln = document.getElementById('bln').value;
+	var tgl = document.getElementById('tgl').value;
+	
+	var ajaxTahun = document.getElementById('ajaxTahun').value;
+	var ajaxBulan = document.getElementById('ajaxBulan').value;
+	var ajaxTanggal = document.getElementById('ajaxTanggal').value;
+	
+	if(tipeUser == "adminAtk")
+	{
+		var userJenis = "Y";
+	}
+
+	if(aksi == "filterThnReq")
+	{
+		document.getElementById('ajaxTahun').value = "on";
+		var parameters="halaman="+aksi+"&thn="+id+"&userJenis="+userJenis+"&userIdLogin="+userIdLogin;
+	}
+	if(aksi == "filterBlnReq")
+	{
+		document.getElementById('ajaxBulan').value = "on";
+		var parameters="halaman="+aksi+"&userJenis="+userJenis+"&userIdLogin="+userIdLogin+"&thn="+thn+"&bln="+id+"&ajaxTahun="+ajaxTahun;
+	}
+	if(aksi == "filterTglReq")
+	{
+		document.getElementById('ajaxTanggal').value = "on";
+		var parameters="halaman="+aksi+"&userJenis="+userJenis+"&userIdLogin="+userIdLogin+"&thn="+thn+"&bln="+bln+"&tgl="+id+"&ajaxTahun="+ajaxTahun+"&ajaxBulan="+ajaxBulan;
+	}
+	if(aksi == "filterStsReq" && tipeUser == "adminAtk")
+	{
+		var parameters="halaman="+aksi+"&thn="+thn+"&bln="+bln+"&tgl="+tgl+"&status="+id+"&ajaxTahun="+ajaxTahun+"&ajaxBulan="+ajaxBulan+"&ajaxTanggal="+ajaxTanggal;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function btnDisplay()
+{
+	var fThn = document.getElementById('thn').value;
+	var fBln = document.getElementById('bln').value;
+	var fTgl = document.getElementById('tgl').value;
+	var fSts = document.getElementById('stat').value;
+	
+	var tipeUser = document.getElementById('tipeUser').value;
+	if(tipeUser == "adminAtk")
+	{
+		var fNm = document.getElementById('nama').value;
+		document.getElementById('iframeHalRequestList').src = "templates/halRequestList.php?halaman=filter&fThn="+fThn+"&fBln="+fBln+"&fTgl="+fTgl+"&fSts="+fSts+"&fNm="+fNm;
+	}
+	else
+	{
+		document.getElementById('iframeHalRequestList').src = "templates/halRequestList.php?halaman=filter&fThn="+fThn+"&fBln="+fBln+"&fTgl="+fTgl+"&fSts="+fSts+"&fNm="+fNm;
+	}
+	
+	document.getElementById('iframeHalRequestDetail').src = "";
+}
+</script>
+<a class="thickbox" id="hrefThickbox"></a>
+<input type="hidden" id="reqId"/>
+<input type="hidden" id="trActive"/>
+<input type="hidden" id="ajaxTahun" value="off"/>
+<input type="hidden" id="ajaxBulan" value="off"/>
+<input type="hidden" id="ajaxTanggal" value="off"/>
+<input type="hidden" id="tipeUser" value="{tipeUser}"/>
+<input type="hidden" id="userIdLogin" value="{userIdLogin}"/>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td id="idHalTeksLvl">
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN REQUEST NEW ITEM -->
+        <tr>
+        	<td height="434" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="5"></td></tr>
+                <tr>
+                	<td width="46%" class="" valign="top" align="center">
+<!-- ############# ISI HALAMAN REQUEST LIST -->
+                        <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr align="right">
+                        	<td colspan="2" height="32">
+                            	<select id="thn" class="elementMenu" style="width:63px;height:29px;" title="Choose Category" onchange="ajaxFilter(this.value, 'filterThnReq', 'idFltrThnReq');">
+                                    <option value="0000">Year</option>
+                                    {menuThnReq}
+                                </select>
+                                <span id="idFltrThnReq">
+                                    <select id="bln" class="elementMenu" style="width:69px;height:29px;" title="Choose Category" onchange="ajaxFilter(this.value, 'filterBlnReq', 'idFltrBlnReq');">
+                                        <option value="00">Month</option>
+                                        {menuBlnReq}
+                                    </select>
+                                    <span id="idFltrBlnReq">
+                                        <select id="tgl" class="elementMenu" style="width:62px;height:29px;" title="Choose Category" onchange="ajaxFilter(this.value, 'filterTglReq', 'idFltrTglReq');">
+                                            <option value="00">Date</option>
+                                            {menuTglReq}
+                                        </select>
+                                        <span id="idFltrTglReq">
+                                            <select id="stat" class="elementMenu" style="width:93px;height:29px;" title="Choose Category" onchange="ajaxFilter(this.value, 'filterStsReq', 'idFltrStsReq');">
+                                                <option value="all">All Status</option>
+                                                {menuStatusReq}
+                                            </select>
+                                            <span id="idFltrStsReq">
+                                            	{nameRequestReq}
+                                        	</span>
+                                    	</span>
+                                	</span>
+                            	</span>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td width="55%" valign="bottom" align="left" style="font-family:tahoma;font-size:12px;">
+                            	<div style="float:left;">
+                                	<div style="width:19px;height:19px;border:#F00;background-image:url(../../picture/qhse_notif.png);background-repeat:no-repeat;float:left;">&nbsp;</div>Unread&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:14px;height:14px;border:solid 1px #ccc;background-color:#FF464A;float:left;">&nbsp;</div>&nbsp;Processed&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:14px;height:14px;border:solid 1px #ccc;background-color:#5EFF46;float:left;">&nbsp;</div>&nbsp;Completed
+                                </div>
+                            </td>
+                        	<td width="45%" align="right">
+                            	{btnNewReq}
+                                <button class="btnStandar" title="Display Item" onclick="btnDisplay();">
+                                    <table height="27">
+                                      <tr>
+                                        <td align="center" width="20"><img src="picture/projection-screen.png"/></td>
+                                        <td align="left">Display&nbsp;</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                        	<td height="2"></td>
+                        </tr>
+                        
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" valign="middle" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" width="25" onclick="refreshPage();" title="Refresh Page"/></td>
+                                    <td width="50%" height="40">Request List</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halRequestList.php" width="100%" height="317" target="iframeHalRequestList" name="iframeHalRequestList" id="iframeHalRequestList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    
+                    <td width="1%" class="tabelBorderRightJust" style="border-right-width:thin;border-right-style:dashed;border-color:#999;">&nbsp;</td>
+                    
+                    <td width="1%" class="">&nbsp;</td>
+                    
+                    <td width="52%" valign="top" class="">
+<!-- ############# ISI HALAMAN REQUEST DETAIL -->
+                      <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr class="fontMyFolderList">
+                        	<td width="50%">
+                            	Status : <span id="status" style="font-weight:bold;"></span>
+                            </td>
+                            <td align="right">
+                            	{btnGive}
+                            	<button id="btnCancel" class="btnStandarDisabled" onclick="cancel(); return false;" title="Cancel Request" disabled>
+                                    <table height="27">
+                                      <tr>
+                                        <td align="center" width="20"><img src="picture/cross.png"/> </td>
+                                        <td align="left">Cancel&nbsp;</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                        <td colspan="2" align="left" id="errorMsg2" class="errorMsg">
+                        <span id="report" class="report">&nbsp;</span>
+                        <span id="idStatusRead"><input type="hidden" id="statusRead" name="statusRead"/></span>
+                        </td></tr>
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                        	<td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%">&nbsp;</td>
+                                    <td width="50%" height="40">Request Detail</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="" width="100%" height="333" target="iframeHalRequestDetail" name="iframeHalRequestDetail" id="iframeHalRequestDetail" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>	
+                        </table>
+                    </td>
+                </tr>
+
+                </table>
+            
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+
+</table>

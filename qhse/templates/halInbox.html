@@ -1,0 +1,228 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen"></LINK>
+<SCRIPT type="text/javascript" src="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+
+<script>
+function openThickboxWindow(id, aksi)
+{	
+	var thnBln = document.getElementById('thnBln').value;
+	var dateCard = document.getElementById('dateCard').value;
+	var ownerId = document.getElementById('ownerId').value;
+	//alert(dateCard);
+	if(aksi == "view")
+	{
+		document.getElementById('hrefThickbox').href="templates/halViewStopCard.php?idkeluhan="+id+"&halaman="+aksi+"&thnBln="+thnBln+"&dateCard="+dateCard+"&ownerId="+ownerId+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=520&modal=true";
+	}
+	document.getElementById('hrefThickbox').click();
+}
+
+function pilihBtnChoose()
+{
+	var thnBln = document.getElementById('thnBln').value;
+	var dateCard = document.getElementById('dateCard').value;
+	var ownerId = document.getElementById('ownerId').value;
+	
+	if(thnBln != '0000-00' && dateCard == '00' && ownerId == '00000')
+	{
+		document.getElementById('btnMonthly').disabled = false;
+		document.getElementById('btnMonthly').className = 'btnStandar';
+	}
+	else
+	{
+		document.getElementById('btnMonthly').disabled = true;
+		document.getElementById('btnMonthly').className = 'btnStandarDisabled';
+	}
+	document.getElementById('iframeHalInboxList').src = "";
+	document.getElementById('iframeHalInboxList').src = "templates/halInboxList.php?dateCard="+dateCard+"&thnBln="+thnBln+"&ownerId="+ownerId;
+}
+
+function deleteStopCard(id)
+{
+	var answer  = confirm("Are you sure want to delete?");
+	if(answer)
+	{	
+		document.getElementById('iframeHalStopCardList').src = "";
+		document.getElementById('iframeHalStopCardList').src = "templates/halStopCardList.php?aksi=delete&idkeluhan="+id;
+	}
+	else
+	{	return false;	}
+}
+
+function refreshPage()
+{
+	document.getElementById('btnMonthly').disabled = false;
+	document.getElementById('btnMonthly').className = 'btnStandar';
+	document.getElementById('thnBln').value = '{thnBln}';
+	document.getElementById('dateCard').value = '00';
+	document.getElementById('ownerId').value = '00000';
+	document.getElementById('iframeHalInboxList').src = "";
+	document.getElementById('iframeHalInboxList').src = "templates/halInboxList.php?thnBln={thnBln}&dateCard=00&ownerId=00000";
+}
+
+function ajaxGetDate(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cariDate")
+	{
+		var createDate = id;
+		var parameters="halaman="+aksi+"&createDate="+createDate;
+	}
+	
+	mypostrequest.open("POST", "halPostFoldQhse.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function ajaxGetOwner(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cariOwner")
+	{
+		var thnBln = document.getElementById('thnBln').value;
+		var createDate = id;
+		var parameters="halaman="+aksi+"&createDate="+createDate+"&thnBln="+thnBln;
+	}
+	
+	mypostrequest.open("POST", "halPostFoldQhse.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function ajaxGetUnread(aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "unreadQuery")
+	{
+		var thnBln = document.getElementById('thnBln').value;
+		var dateCard = document.getElementById('dateCard').value;
+		var ownerId = document.getElementById('ownerId').value;
+		var parameters="halaman="+aksi+"&dateCard="+dateCard+"&ownerId="+ownerId+"&thnBln="+thnBln;
+	}
+	
+	if(aksi == "unreadQueryRefresh")
+	{
+		var dateCard = '{thnBln}-00' ;
+		var ownerId = '00000' ;
+		var parameters="halaman="+aksi+"&dateCard="+dateCard+"&ownerId="+ownerId;
+	}
+	
+	mypostrequest.open("POST", "halPostFoldQhse.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function klikBtnPrint(idCard)
+{
+	document.getElementById('idCard').value = idCard ;
+	document.getElementById('submitFormPrintCard').click();
+}
+function klikBtnPrintMonthly()
+{
+	var thnBln = document.getElementById('thnBln').value;
+	document.getElementById('idMonth').value = thnBln ;
+	document.getElementById('submitMothlyCardReport').click();
+}
+</script>
+<form method="post" action="halPrint.php" name="formPrintAct" id="formPrintAct" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=yes');" style="width:100px;position:absolute;">
+	<input type="submit" id="submitFormPrintCard" style="visibility:hidden;"/>
+    <input type="hidden" id="idCard" name="idCard"/>
+    <input type="hidden" name="aksi" value="printCard"/> 
+</form>
+<form method="post" action="halPrint.php" name="formPrintAct" id="formPrintAct" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=yes');" style="width:100px;position:absolute;">
+	<input type="submit" id="submitMothlyCardReport" style="visibility:hidden;"/>
+    <input type="hidden" id="idMonth" name="idMonth"/>
+    <input type="hidden" name="aksi" value="printMonthly"/> 
+</form>
+         
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        <tr valign="middle">
+        	<td height="40"colspan="2">
+            	{monthYear}&nbsp;<span id="ajaxCariDate">{dateCard}&nbsp;<span id="ajaxCariOwner">{ownerCard}</span></span>
+                
+            	&nbsp;
+            	<button class="btnStandar" onclick="pilihBtnChoose();ajaxGetUnread('unreadQuery', 'tdUnread');" style="width:80px;height:29px;" title="Display Stop Card of Choosen Date & Employee">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                      <tr>
+                        <td align="right" width="25"><img src="../picture/Arrow-Right-blue-32.png" height="20"/> </td>
+                        <td align="center">Display</td>
+                      </tr>
+                    </table>
+                </button>
+                <button class="btnStandar" id="btnMonthly" onclick="klikBtnPrintMonthly();" style="width:100px;height:29px;" title="Print Monthly Summary Report">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                        <td align="center"><img src="../picture/Printer-blue-32.png" height="20"/> </td>
+                        <td align="center">Monthly Print</td>
+                    </tr>
+                    </table>
+                </button>
+                <!--{btnMonthlyPrint}-->
+                <span class="errorMsg" id="errorMsg"></span>
+            </td>
+            <td align="right"  class="teksLvlFolder" style="color:#666;" id="tdUnread">
+            UNREAD : {unread} &nbsp;
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <!-- <tr align="center" style="background-color:#4880FF;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">-->
+        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">
+        	<td width="25%" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refreshPage();ajaxGetUnread('unreadQueryRefresh', 'tdUnread');" title="Refresh Page"/></td>
+        	<td width="50%" height="40" id="tdJudulTitle">:: INBOX LIST ::</td>
+            <td width="25%" align="right" id="tdBtnBack">&nbsp;</td>
+        </tr>
+        <tr>
+        	<td colspan="3">
+                <iframe width="100%" height="345" src="templates/halInboxList.php?thnBln={thnBln}&dateCard=00&ownerId=00000" target="iframeHalInboxList" name="iframeHalInboxList" id="iframeHalInboxList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

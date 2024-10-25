@@ -1,0 +1,261 @@
+<script type="text/javascript" src="../js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="js/invReg.js"></script>
+<script type="text/javascript" src="js/agingReport.js"></script>
+<script type="text/javascript" src="../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+
+<link href="css/invReg.css" rel="stylesheet" type="text/css" />
+<link href="css/button.css" rel="stylesheet" type="text/css" />
+<link href="css/table.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen">
+
+<link href="../css/invReg.css" rel="stylesheet" type="text/css" />
+<link href="../css/button.css" rel="stylesheet" type="text/css" />
+<link href="../css/table.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+window.onload = function()
+{
+    document.getElementById('loaderImg').style.visibility = "hidden";
+	setup();
+	
+	doneWait();
+	panggilEnableLeftClick();
+	//klikBtnDisplay();
+	//windowDisplayOutstanding();
+	
+	{disBtnIncoming}
+	{disBtnInvProcess}
+	{disBtnPayment}
+	{disBtnOutgoing}
+	{disBtnPrint}
+	{disBtnPrintMailInv}
+	{disBtnPrintAging}		
+	
+	{disBtnAckDetail}
+	
+	//frameJquery();
+}
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<div class="wrap">
+	<div id="loaderImg" style="visibility:visible;" class="pleaseWait">
+    	<div class="isiPleaseWait tabelBorderAll">&nbsp;Please Wait...&nbsp;<img src="picture/loading (115).gif" height="12"/>&nbsp;</div>
+    </div>
+  	<div class="namaAplikasi"> INVOICE REGISTER </div>
+</div>
+
+<div class="kotakInvReg">
+	
+    <div class="kotakBtnAtas">
+    	<form method="post" action="index.php" id="formIncoming">
+        <input type="hidden" id="halaman" name="halaman" value="halIncoming" />
+        </form>
+        <form method="post" action="index.php" id="formProcess">
+        <input type="hidden" id="halaman" name="halaman" value="halProcessAck" />
+        </form>
+        <form method="post" action="index.php" id="formPayment">
+        <input type="hidden" id="halaman" name="halaman" value="halPaymentOutstanding"/>
+        </form>
+        <form method="post" action="index.php" id="formOutgoing">
+        <input type="hidden" id="halaman" name="halaman" value="halOutgoing" />
+        </form>
+        <form method="post" action="index.php" id="formCari">
+        <input type="hidden" id="halaman" name="halaman" value="halCari"/>
+        </form>
+        <form method="post" action="index.php" id="formPrint">
+        <input type="hidden" id="halaman" name="halaman" value="halPrint"/>
+        </form>
+        <form method="post" action="index.php" id="formCoveringNote">
+        <input type="hidden" id="halaman" name="halaman" value="halCoveringNote"/>
+        </form>
+        <form method="post" action="index.php" id="formPrintMailInv" style="display:none;">
+        <input type="hidden" id="halaman" name="halaman" value="halPrintMailInv"/>
+        </form>
+        <form method="post" name="formPrintAging" id="formPrintAging" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=no, titlebar=no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no');"></form>
+        <button class="btnStandar" id="btnIncoming" title="INCOMING MAIL / DATA INVOICE" onclick="$('#formIncoming').submit();return false;">
+            <table width="79" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/documents-stack.png"/></td>
+                <td align="left">INCOMING</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnInvProcess" title="MAIL / DATA PROCESS" onclick="$('#formProcess').submit();return false;">
+            <table width="77" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/wand.png"/></td>
+                <td align="left">INVOICE PROCESS</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnPayment" title="PAYMENT TRANSACTION" onclick="$('#formPayment').submit();return false;">
+            <table width="77" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/credit-cards.png"/></td>
+                <td align="left">PAYMENT</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnOutgoing" title="OUTGOING MAIL / DATA INVOICE" onclick="$('#formOutgoing').submit();return false;">
+            <table width="81" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/document-export.png"/></td>
+                <td align="left">OUTGOING</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandarTabPilih" id="btnPrint" title="PRINT MAIL / DATA INVOICE" onclick="return false;">
+            <table width="58" height="29">
+              <tr>
+                <td align="center" width="20"><img src="picture/printer.png"/> </td>
+                <td align="left">PRINT</td>
+              </tr>
+            </table>
+        </button>
+        <button id="btnSearch" class="btnStandar" title="SEARCHING DATA" onclick="$('#formCari').submit();return false;">
+            <table width="70" height="28">
+              <tr>
+                <td align="center" width="20"><img src="picture/magnifier.png"/> </td>
+                <td align="left">SEARCH</td>
+              </tr>
+            </table>
+        </button>
+    </div>
+    
+    <div class="kotakBtnTengah">
+        <input type="hidden" id="idMailInv" name="idMailInv"/>
+        <input type="hidden" id="jenisPayment" name="jenisPayment" value="outstanding"/>
+        <button id="btnPrintMailInv" class="btnStandar" title="DISTRIBUTION LIST PRINT PAGE" onclick="$('#formPrintMailInv').submit(); return false;">
+            <table width="134" height="24" border="0">
+            <tr>
+                <td align="center" width="20"><img src="picture/document-sticky-note.png"/></td>
+                <td align="left">MAIL / INVOICE DATA</td> 
+            </tr>
+            </table>
+        </button>
+        <button id="btnPrintAging" class="btnStandarTabPilih" title="Account Payable/Receivable Aging Report" onclick="return false;">
+            <table width="105" height="25" border="0">
+            <tr>
+                <td align="center" width="20"><img src="picture/document-clock.png"/></td>
+                <td align="left">AGING REPORT</td> 
+            </tr>
+            </table>
+        </button>
+       <!-- <button id="" class="btnStandar" title="COVERING NOTE PRINT PAGE" onclick="$('#formCoveringNote').submit();return false;">
+            <table width="113" height="24" border="0">
+              <tr>
+                <td align="center" width="20"><img src="picture/notebook-sticky-note.png"/> </td>
+                <td align="left">COVERING NOTE</td>
+              </tr>
+            </table>
+        </button>
+        <button id="" class="btnStandar" title="INVOICE LIST TO BE PAID" onclick="$('#formPaymentBatch').submit();return false;">
+            <table width="125" height="24" border="0">
+              <tr>
+                <td align="center" width="20"><img src="picture/document-import.png"/> </td>
+                <td align="left">INCOMING INVOICE</td>
+              </tr>
+            </table>
+        </button>-->
+    </div>
+    
+    <div class="kotakSortBy">
+    	&nbsp;
+    </div>
+    
+    <div id="idTeksMap" class="kotakTeksMap">{teksMap}</div>
+    
+    <div class="kotakIframe" style="border-style:dotted;"> 
+		<div style="position:relative; float:left; border: solid 1px #CCC; top:5px; left:5px;background-color:#FFF;">
+			<table width="340" cellpadding="0" cellspacing="0" style="font:0.7em sans-serif;color:#485a88;">
+          	<tr><td width="83" height="7"></td></tr>
+            <tr>
+              	<td height="22" class="">&nbsp;&nbsp;<b>COMPANY</b></td>
+             	<td width="255" class="elementTeks" id="">
+				<select id="company" name="company" class="elementMenu" style="width:250px;">
+					<option value="XXX">-- PLEASE SELECT  --</option>
+					{menuCompany}
+				</select>
+              </td>
+          	</tr>
+          	<tr>
+              	<td height="22" class="">&nbsp;&nbsp;<b>ACCOUNT</b></td>
+             	<td class="elementTeks" id="">
+				<!--<select id="dataFrom" name="account" class="elementMenu" style="width:100px;" onchange="return false;" disabled="disabled">
+					<option value="pay">PAYABLE</option>
+                    <option value="rec">RECEIVABLE</option>
+				</select>-->
+                <input type="radio" id="pay" name="account" value="pay" checked/>&nbsp;&nbsp;<span onclick="$('#pay').click();" style="cursor:pointer;">PAYABLE</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="rec" name="account" value="rec" />&nbsp;&nbsp;<span onclick="$('#rec').click();" style="cursor:pointer;">RECEIVABLE</span>
+              </td>
+          	</tr>
+          	<tr valign="middle">
+              	<td height="22" class="">&nbsp;&nbsp;<b>DATE</b></td>
+              	<td class="elementTeks" id="">                    
+                    <input type="text" name="fromDate" id="fromDate" class="elementInput" style="width:60px;" placeholder="Start Date"/>
+                    <img src="../picture/calendar.gif" class="gayaKalender" title="Select Date" onclick="displayCalendar(document.getElementById('fromDate'),'dd/mm/yyyy',this, '', '', '193', '183');" id="imgFromDate"/>
+
+                    <input type="text" name="endDate" id="endDate" class="elementInput" style="width:60px;margin-left:30px;" placeholder="End Date"/>
+                    <img src="../picture/calendar.gif" class="gayaKalender" title="Select Date" onclick="displayCalendar(document.getElementById('endDate'),'dd/mm/yyyy',this, '', '', '193', '183');" id="imgEndDate"/>
+                    
+                    <input type="hidden" id="userId" name="userId" value="{userId}"/>
+                    <input type="hidden" id="hasil" name="hasil"/>
+              	</td>
+          	</tr>
+            <tr><td height="6"></td></tr>
+			</table>
+        </div>
+        
+        <div style="position:relative; float:left; margin-left:10px; top:5px; vertical-align:top; text-align:left;border: solid 0px #CCC;	width:350px;">
+        	<div style="position:relative;float:left;width:285px;margin-bottom:5px;height:50px;">
+        		<div id="idErrorMsg" class="errorMsgInv" style="position:absolute; visibility:hidden;width:183px;bottom:0;"><img src="../picture/exclamation-red.png"/>&nbsp;<span>&nbsp;</span>&nbsp;</div>
+            </div>
+            
+        	<div style="position:relative;float:left;width:75px;">
+            <button class="btnStandar" title="" onclick="printAging('preview');return false;">
+                <table width="75" height="24">
+                <tr>
+                    <td align="center" width="20"><img src="picture/document-list.png"/></td>
+                    <td align="left">PREVIEW</td> 
+                </tr>
+                </table>
+            </button>
+            </div>
+            <div style="position:relative;float:left;margin-left:12px;width:103px;">
+                <button class="btnStandarDis" id="btnPrintAgingSum" title="" onclick="printAging('print');return false;" disabled>
+                    <table width="103" height="24">
+                    <tr>
+                        <td align="center" width="20"><img src="picture/printer.png"/></td>
+                        <td align="left">PRINT REPORT</td> 
+                    </tr>
+                    </table>
+                </button>
+            </div>
+            <div style="position:relative;float:left;margin-left:12px;width:103px;">
+                <button class="btnStandarDis" id="btnExportExcel" title="" onclick="printAging('export');return false;" disabled>
+                    <table width="105" height="24">
+                    <tr>
+                        <td align="center" width="20"><img src="picture/arrow-skip-270.png"/></td>
+                        <td align="left">Export to Excel</td> 
+                    </tr>
+                    </table>
+                </button>
+            </div>
+        </div>
+        
+        <div id="divFrame" style="position:relative; float:left; margin: 10px 0 0 5px; vertical-align:top; text-align:left;	width:99%; height:360px; visibility:hidden;">
+        <iframe width="100%" height="100%" src="" target="frameAging" name="frameAging" id="frameAging" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+        </div>
+    </div>
+    <form name="formExportAgingPayable" method="post" action="halPostMailInv.php">
+        <input type="hidden" id="aksi" name="aksi" value="actionExportAgingPayable"/>
+        <input type="hidden" id="txtCompanyHid" name="txtCompanyHid" value=""/>
+        <input type="hidden" id="txtSdateHid" name="txtSdateHid" value=""/>
+        <input type="hidden" id="txtEdateHid" name="txtEdateHid" value=""/>
+        <input type="hidden" id="rbAccountHid" name="rbAccountHid" value=""/>
+        <input type="hidden" id="txtUserIdHid" name="txtUserIdHid" value=""/>
+    </form>
+</div>

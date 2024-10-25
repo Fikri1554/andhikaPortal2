@@ -1,0 +1,313 @@
+<link type="text/css" rel="stylesheet" href="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen"></LINK>
+<SCRIPT type="text/javascript" src="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+
+<script>
+function openThickboxWindow(id, aksi)
+{	
+	var dateAct = document.getElementById('paramDateAct').value;
+	if(aksi == "edit")
+	{
+		document.getElementById('hrefThickbox').href="templates/halSubordinateEditAct.php?idactivity="+id+"&halaman="+aksi+"&dateAct="+dateAct+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+
+function deleteAct(id)
+{
+	var answer  = confirm("Are you sure want to delete?");
+	if(answer)
+	{
+		var dateAct = document.getElementById('paramDateAct').value;
+		
+		document.getElementById('iframeHal').src = "";
+		document.getElementById('iframeHal').src = "templates/halDailyActList.php?aksi=delete&dateAct="+dateAct+"&idactivity="+id;
+	}
+	else
+	{	return false;	}
+}
+
+function gantiDateAct(dateAct)
+{
+	document.getElementById('dateAct').value = dateAct;
+	document.getElementById('dateAct2').value = dateAct;
+	
+	var subordinateId = document.getElementById('subordinateId').value;
+	document.getElementById('iframeHal').src = "";
+	document.getElementById('iframeHal').src = "templates/halSubordinateDailyActList.php?halaman=gantiDateAct&dateAct="+dateAct+"&subordinateId="+subordinateId;
+}
+
+function klikBtnViewMonth()
+{
+	//var halaman = document.getElementById('halaman').value;
+	var dateAct = document.getElementById('paramDateAct').value;
+	var empNo = document.getElementById('empNo').value;
+	parent.loadUrl('index.php?aksi=openSubordinateDailyActBalik&dateAct='+dateAct+'&empNo='+empNo);
+}
+
+function ajaxSubDailyAct(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekNewActAdaTidak")
+	{
+		var subordinateId = document.getElementById('subordinateId').value;
+		var dateAct = document.getElementById('paramDateAct').value;
+		var parameters="halaman="+aksi+"&dateAct="+dateAct+"&subordinateId="+subordinateId;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function klikBtnApprove()
+{
+	var answer  = confirm('Are you sure want to Approve?');
+	if(answer)
+	{
+		ajaxSubDailyAct("", "cekNewActAdaTidak", "idHalNewActAdaTidak");
+		//return false;
+		var delay=1000;//1 seconds
+		
+    	setTimeout(function()
+		{
+			
+			var newActAdaTidak = document.getElementById('newActAdaTidak').value;
+			if(newActAdaTidak == "ada")
+			{
+				alert('There is a new Daily Activity please refresh the list first');
+				return false;
+				
+			}
+			
+			var dateAct = document.getElementById('paramDateAct').value;
+			var subordinateId = document.getElementById('subordinateId').value;
+
+			document.getElementById('iframeHal').src = "";
+			document.getElementById('iframeHal').src = "templates/halSubordinateDailyActList.php?halaman=approve&dateAct="+dateAct+"&subordinateId="+subordinateId; 
+   		},delay);
+	}
+	else
+	{	return false;	}
+}
+
+function setelahKlikBtnApprove(dateAct, empNo)
+{
+	parent.loadUrl('../index.php?aksi=openSubordinateJobList&dateAct='+dateAct+'&empNo='+empNo);
+}
+
+function klikBtnUnapprove()
+{
+	var answer  = confirm('Are you sure want to Disapprove?');
+	if(answer)
+	{
+		var dateAct = document.getElementById('paramDateAct').value;
+		var empNo = document.getElementById('empNo').value;
+		
+		document.getElementById('hrefThickbox').href="templates/halUnapprove.php?dateAct="+dateAct+"&empNo="+empNo+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=470&width=450&modal=true";
+		document.getElementById('hrefThickbox').click();
+	}
+	else
+	{	return false;	}
+}
+
+function refreshPage()
+{
+	var dateAct = document.getElementById('dateAct').value;
+	var paramDateAct = document.getElementById('paramDateAct').value;
+	if(dateAct != paramDateAct)
+	{
+		var dateAct = paramDateAct;
+	}
+	gantiDateAct(dateAct);
+	//var srcIframeSek = document.getElementById('srcIframeSek').value;
+	//document.getElementById('iframeHal').src = srcIframeSek;
+}
+
+function klikBtnPrint()
+{
+	//formPrintAct.submit();
+	document.getElementById('submitFormPrintAct').click();
+}
+function klikBtnPrintWeekly()
+{
+	document.getElementById('submitFormPrintWeeklyAct').click();
+}
+function prevOrNext(prevNext)
+{
+	var prev = iframeHal.document.getElementById('prev').value;
+	var next = iframeHal.document.getElementById('next').value;
+	var lastDate = iframeHal.document.getElementById('lastDate').value;
+	var paramDateAct = document.getElementById('paramDateAct').value;
+	var subordinateId = document.getElementById('subordinateId').value;
+	
+	document.getElementById('btnPrev').disabled = false;
+	document.getElementById('btnPrev').className = 'btnStandarKecil';
+	document.getElementById('btnNext').disabled = false;
+	document.getElementById('btnNext').className = 'btnStandarKecil';
+	
+	var datePrev = prev.substr(0,2);
+	var dateNext = next.substr(0,2);
+	var paramDate = paramDateAct.substr(0,2);
+	
+	if(prevNext == "prev")
+	{
+		document.getElementById('paramDateAct').value = prev;
+		if(datePrev == 01)
+		{
+			document.getElementById('btnPrev').disabled = true;
+			document.getElementById('btnPrev').className = 'btnStandarKecilDis';
+		}
+	}
+	if(prevNext == "next")
+	{
+		 document.getElementById('paramDateAct').value = next;
+		 if(dateNext == lastDate)
+		 {
+			document.getElementById('btnNext').disabled = true;
+			document.getElementById('btnNext').className = 'btnStandarKecilDis';
+		 }
+	}
+	if(prevNext == "")
+	{
+		if(paramDate == 01)
+		{
+			document.getElementById('btnPrev').disabled = true;
+			document.getElementById('btnPrev').className = 'btnStandarKecilDis';
+		}
+		if(paramDate == lastDate)
+		{
+			document.getElementById('btnNext').disabled = true;
+			document.getElementById('btnNext').className = 'btnStandarKecilDis';
+		}
+	}
+	var dateAct = document.getElementById('paramDateAct').value;
+	
+	document.getElementById('iframeHal').src = "";
+	document.getElementById('iframeHal').src = "templates/halSubordinateDailyActList.php?halaman=gantiDateAct&dateAct="+dateAct+"&subordinateId="+subordinateId;
+}
+</script>
+<body onLoad="prevOrNext('');">
+<a class="thickbox" id="hrefThickbox"></a>
+<input type="hidden" id="halaman" value="{halaman}" />  
+<input type="hidden" id="empNo" value="{empNo}" />  
+<input type="hidden" id="subordinateId" value="{subordinateId}" />  
+<input type="hidden" id="srcIframeSek" name="srcIframeSek" value="{srcMyFolder}"/>  
+
+<form method="post" action="halPrint.php" name="formPrintAct" id="formPrintAct" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=yes');" style="width:100px;position:absolute;">
+	<input type="submit" id="submitFormPrintAct" style="visibility:hidden;"/>
+    <input type="hidden" name="empNo" value="{empNo}"/>
+    <input type="hidden" name="subordinateId" value="{subordinateId}"/>
+    <input type="hidden" id="dateAct" name="dateAct" value="{dateAct}"/>
+    <input type="hidden" name="aksi" value="printSubordinateJob"/> 
+</form>
+
+<form method="post" action="halPrint.php" name="formPrintAct" id="formPrintAct" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=yes');" style="width:100px;position:absolute;">
+	<input type="submit" id="submitFormPrintWeeklyAct" style="visibility:hidden;"/>
+    <input type="hidden" name="empNo" value="{empNo}"/>
+    <input type="hidden" name="subordinateId" value="{subordinateId}"/>
+    <input type="hidden" id="dateAct2" name="dateAct2" value="{dateAct}"/>
+    <input type="hidden" name="aksi" value="printSubordinateWeeklyJob"/> 
+</form> 
+   
+<div id="idHalNewActAdaTidak"><input type="hidden" id="newActAdaTidak" name="newActAdaTidak"/> </div>
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+	<td id="idHalTeksLvl">
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        <tr><td height="20" colspan="3">&nbsp;</td></tr>
+        <tr>
+            <td width="41%" align="right">
+                <input type="text" class="elementSearch" id="paramDateAct" size="6" style="height:16px;color:#333;font-weight:bold;font-size:16px;border-width:0;background-color:#FFF;text-align:right;" value="{dateAct}" onChange="gantiDateAct(this.value);prevOrNext('');" readonly="readonly">
+                <button class="btnStandar" id="btnNewFolder" onClick="displayCalendar(document.getElementById('paramDateAct'),'dd/mm/yyyy',this, '', '', '193', '191');" style="width:28px;height:29px;" title="Calendar Activity Quick Action">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                        <td align="center"><img src="../picture/Toggle-Down-Alt-blue-32.png" height="20"/> </td>
+                    </tr>
+                    </table>
+                </button>
+                <button class="btnStandar" id="btnNewFolder" onClick="klikBtnViewMonth();" style="width:95px;height:29px;" title="Calendar Activity">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                        <td align="center"><img src="../picture/Application-blue-32.png" height="20"/> </td>
+                        <td align="center">View Month</td>
+                    </tr>
+                    </table>
+                </button>
+                <button class="btnStandar" id="btnNewFolder" onClick="klikBtnPrint();" style="width:60px;height:29px;" title="Print Subordinate's Activity Today">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                        <td align="center"><img src="../picture/Printer-blue-32.png" height="20"/> </td>
+                        <td align="center">Print</td>
+                    </tr>
+                    </table>
+                </button>
+                <button class="btnStandar" id="btnNewFolder" onClick="klikBtnPrintWeekly();" style="width:100px;height:29px;" title="Print Subordinate's Weekly Summary Report">
+                    <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                        <td align="center"><img src="../picture/Printer-blue-32.png" height="20"/> </td>
+                        <td align="center">Weekly Print</td>
+                    </tr>
+                    </table>
+                </button>
+                <div style="position:absolute;margin-left:510px;margin-top:-29px;">
+                	<button id="btnPrev" class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" style="width:29px;height:29px;" type="button" onClick="prevOrNext('prev');" title="Go to Previous Day">
+                    <table class="fontBtnKecil" onMouseOver="this.className='fontBtnKecilHover'" onMouseOut="this.className='fontBtnKecil'" border="0" width="100%" height="100%">
+                        <tr>
+                            <td align="center"><img src="../../picture/Toggle-Left-Alt-blue-32.png" height="20" border="0"/> </td> 
+                        </tr>
+                    </table>
+                 </button>
+                 <button id="btnNext" class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" style="width:29px;height:29px;" type="button" onClick="prevOrNext('next');" title="Go to Next Day">
+                    <table class="fontBtnKecil" onMouseOver="this.className='fontBtnKecilHover'" onMouseOut="this.className='fontBtnKecil'" border="0" width="100%" height="100%">
+                        <tr>
+                            <td align="center"><img id="img" src="../../picture/Toggle-Right-Alt-blue-32.png" height="20" border="0"/> </td> 
+                        </tr>
+                    </table>
+                 </button>
+                </div>
+            </td>
+            <td id="idHalBtnApprove" width="15%">&nbsp;{btnApprove}</td>
+            <td id="idHalStatus" align="right">&nbsp;{status}{statusRevisi}&nbsp;</td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <!-- <tr align="center" style="background-color:#4880FF;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">-->
+        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">
+        	<td width="25%" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onClick="refreshPage();" title="Refresh Page"/></td>
+        	<td width="50%" height="40" id="tdJudulTitle">{judulTitle}</td>
+            <td width="25%" align="right" id="tdBtnBack">&nbsp;{btnBack}</td>
+        </tr>
+        <tr>
+        	<td colspan="3">
+				<!--<iframe width="100%" height="1042" src="{srcMyFolder}" target="iframeHalFolder" name="iframeHalFolder" id="iframeHalFolder" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>-->
+                <iframe width="100%" height="344" src="{srcMyFolder}" target="iframeHal" name="iframeHal" id="iframeHal" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+</body>

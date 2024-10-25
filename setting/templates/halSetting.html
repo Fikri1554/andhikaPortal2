@@ -1,0 +1,69 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+function loadUrl(newLocation)
+{
+window.location = newLocation;
+return false;
+}
+</script>
+
+<div class="archivesContainer">
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td height="35">
+    <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT -->
+    	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+        <tr>
+            <td>&nbsp;&nbsp;<span class="teksMyFolder" style="color:#369;">SETTING</span>&nbsp;{halaman2}&nbsp;</td>
+        </tr>
+        </table>
+    
+    </td>
+</tr>
+
+<tr>
+	<td>
+        {btnUser}
+        {btnLogHistory}
+        {btnCustomSub}
+        {btnOtherApp}
+        {btnKpiSetting}
+        {btnConvertFold}
+         &nbsp;
+        <form name="formUser" method="post" action="../setting/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanUser" />
+        </form>
+        <form name="formLoghistory" method="post" action="../setting/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanHistory" />
+        </form>
+        <form name="formSubCustom" method="post" action="../setting/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanSubCustom" />
+        </form>
+        <form name="formOtherApp" method="post" action="../setting/">
+            <input type="hidden" id="aksi" name="aksi" value="otherApp" />
+        </form>
+        <form name="formKpiSetting" method="post" action="../setting/">
+            <input type="hidden" id="aksi" name="aksi" value="kpiSetting" />
+        </form>
+        <form name="formConvertFold" method="post" action="../setting/">
+            <input type="hidden" id="aksi" name="aksi" value="convertFold" />
+        </form>
+        <form name="formLogout" method="post" action="../archives/index.php">
+            <input type="hidden" id="aksi" name="aksi" value="logout" />
+        </form>
+        
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+    </td>
+</tr>
+
+</table>
+
+</div>

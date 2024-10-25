@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<link href="../css/button.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+
+
+<script>
+
+</script>
+<body bgcolor="#F8F8F8">
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr><td height="5"></td></tr>
+<tr>
+	<td align="center" valign="top" height="210" bgcolor="#FFFFFF" class="tdMyFolder">
+    	<table cellpadding="0" cellspacing="5" width="100%" class="formInput" style="cursor:default;">
+        <tr valign="top">
+        	<td width="10%">Note</td>
+            <td width="90%">
+            	<textarea class="elementDefault" id="notes" name="notes" style="width:96%;height:150px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+        	<td colspan="2" align="center">
+            	<button type="submit" class="btnStandar" id="btnAdd" onClick="parent.submitNotes(document.getElementById('notes').value);" title="Save Item">
+                    <table height="24">
+                      <tr>
+                        <td align="center" width="20"><img src="../picture/disk-black.png"/></td>
+                        <td align="left">OK&nbsp;</td>
+                      </tr>
+                    </table>
+                </button>
+                <button id="btnCancel" class="btnStandar"  onClick="parent.tutup();" title="Cancel Edit Item">
+                    <table id="tblAdd" height="24">
+                        <tr>
+                            <td align="center" width="20"><img src="../picture/door-open-out.png"></td>
+                            <td align="left">Cancel&nbsp;</td>
+                        </tr>
+                    </table>
+                </button>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+</table>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="css/cssSpj.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen"></LINK>
+<SCRIPT type="text/javascript" src="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+
+<script>
+function openThickboxWindow(id, aksi)
+{	
+	document.getElementById('hrefThickbox').href="templates/halReason.php?reportId="+id+"&aksi="+aksi+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=242&width=450&modal=true";
+
+	document.getElementById('hrefThickbox').click();
+}
+
+function detailSpj(reportReviseId,halaman)
+{
+	$('#iframeDetilForm').attr("src","templates/halDetilRevise.php?reportReviseId="+reportReviseId+"&halaman="+halaman);
+}
+
+function btnAksi(status, userJenisSpj)
+{
+	if(userJenisSpj == "admin")
+	{
+		$('#btnPrint').attr('className','spjBtnStandar');
+		$('#btnPrint').removeAttr('disabled','disabled');
+	}
+}
+
+function refresh(left, right)
+{
+	if(left == "Y")
+	{
+		$('#iframeForm').attr("src","templates/halReportListHist.php");
+	}
+	if(right == "Y")
+	{
+		$('#iframeDetilForm').attr("src","templates/halSelectData.html");
+	}
+	refreshBtn();
+	$('#status').html('');
+}
+
+function refreshBtn()
+{
+	$('#btnPrint').attr('className','spjBtnStandarDis');
+	$('#btnPrint').attr('disabled','disabled');
+}
+
+function klikTr(urutan)
+{
+	setTimeout(function()
+	{
+		window.frames['iframeForm'].document.getElementById('tr'+urutan).click();
+	},200);
+}
+
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeForm').height ; // 404
+	var heightFrameDetail = document.getElementById('iframeDetilForm').height ; // 436
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	var heightFrameDetailPlus = parseInt(heightFramePlus) + 30; // selisih tinggi 2 frame
+	var heightFrameDetailMin = parseInt(heightFrameMin) + 30; // selisih tinggi 2 frame
+	
+	if(status == "down")
+	{
+		$("#iframeForm").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeForm').height = heightFramePlus;
+		$("#iframeDetilForm").animate(
+			{
+				height: heightFrameDetailPlus
+				
+			}, 1000);
+		document.getElementById('iframeDetilForm').height = heightFrameDetailPlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 404)
+		{
+			$("#iframeForm").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeForm').height = heightFrameMin;
+			$("#iframeDetilForm").animate(
+				{
+					height: heightFrameDetailMin
+				}, 1000);
+			document.getElementById('iframeDetilForm').height = heightFrameDetailMin;
+			
+			if(heightFrameMin == 404)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function close()
+{
+	var answer  = confirm("Are you sure want to EXIT WITHOUT SAVE?");
+	if(answer)
+	{
+		exit();
+	}
+	else
+	{	return false;	}
+	
+}
+
+function exit()
+{
+	tb_remove(false);
+}
+
+function printReport()
+{
+	alert('Print Document on Landscape Position, please.');
+	$('#submitPrintReport').click();
+}
+
+</script>
+<div id="loaderImg" style="visibility:visible;" class="pleaseWait">
+    <div class="isiPleaseWait tabelBorderAll">
+    	&nbsp;Please Wait...&nbsp;<img src="picture/loading (115).gif" height="12"/>&nbsp;
+    </div>
+</div>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<input type="hidden" id="detilId"/>
+<input type="hidden" id="trActive"/>
+<input type="hidden" id="tipeUser" value="{tipeUser}"/>
+<input type="hidden" id="userIdLogin" value="{userIdLogin}"/>
+
+<form method="post" action="halPrint.php" name="formPrintAct" id="formPrintAct" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=yes');" style="width:100px;position:absolute;">
+<input type="submit" id="submitPrintReport" style="display:none;"/>
+<input type="hidden" id="reportReviseId" name="reportReviseId"/>
+<input type="hidden" id="hal" name="hal" value="reportRevise"/>
+</form>
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN REQUEST NEW ITEM -->
+        <tr>
+        	<td height="485" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="2px"></td></tr>
+                <tr>
+                	<td width="30%" class="" valign="top" align="left">
+<!-- ############# ISI HALAMAN REQUEST LIST -->
+                        <table cellpadding="0" cellspacing="0" width="100%" style="margin-left:3px;">
+                        <tr>
+                        	<td colspan="2" align="left">
+                                <!--<button class="spjBtnStandar" id="btnNewFolder" onclick="openThickboxWindow('','newSpj');" style="width:93px;height:29px;" title="Write A New Stop Card">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                    <tr>
+                                        <td align="center"><img src="../picture/Document-blue-32.png" height="20"/> </td>
+                                        <td align="center">New Form</td>
+                                    </tr>
+                                    </table>
+                                </button>--><!--<span style="font-size:12px;font-family:Comic Sans MS;color:#060;font-weight:100;" id="report"></span>-->
+                            </td>
+                        </tr>
+                        <tr><td colspan="2" height="9px"></td></tr>
+                        <tr>
+                        	<td colspan="2" align="left" style="font-family:Tahoma;font-size:11px;" height="17px">
+                        	</td>
+                        </tr>
+                        <tr><td colspan="2" height="4px"></td></tr>
+                        
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" align="left">&nbsp;<img src="../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refresh('Y','Y');$('#report').html('');" title="Refresh Page"/></td>
+                                    <td width="50%" height="40" align="center">Report List</td>
+                                    <td width="25%" align="right">
+                                    </td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halReportListHist.php" width="100%" height="404" target="iframeForm" name="iframeForm" id="iframeForm" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    
+                    <td width="1%"></td>
+                    
+                    <td width="69%" valign="top" class="">
+<!-- ############# ISI HALAMAN REQUEST DETAIL -->
+                      <table cellpadding="0" cellspacing="0" width="99.3%">
+                        <tr class="fontMyFolderList">
+                        	<td width="25%">
+                            	<span style="font-weight:bold;color:#0066FF;text-decoration:underline;font-size:14px;">Revise</span>
+                            </td>
+                            <td width="1%" id="idReAprv">&nbsp;
+                            	
+                            </td>
+                            <td width="74%" align="right">
+                                <span style="font-size:12px;font-family:Comic Sans MS;color:#060;font-weight:100;" id="report"></span>
+                                <button type="button" id="btnPrint" class="spjBtnStandarDis" onclick="printReport(); return false;" style="width:62px;height:28px;" title="Print Report History" disabled>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="right" width="22"><img src="picture/printer.png" height="16"/> </td>
+                                        <td align="center">Print</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td colspan="3" height="2px"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tabelBorderTopNull" style="border-width:thick;border-color:#FF9D3C;">
+                                <iframe src="templates/halSelectData.html" width="100%" height="436" target="iframeDetilForm" name="iframeDetilForm" id="iframeDetilForm" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>	
+                        </table>
+                    </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

@@ -1,0 +1,176 @@
+<script type="text/javascript">
+function klikBtnDoSearching()
+{
+	var paramText = document.getElementById('paramText').value;
+	var folderFile = document.getElementById('folderFile').value;
+	
+	if(paramText.replace(/ /g,"") == "")
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" />&nbsp;Please type some text!";
+		return false;
+	}
+	document.getElementById('errorMsg').innerHTML = "&nbsp;";
+	
+	document.getElementById('iframeHalFolder').src = "";
+	document.getElementById('iframeHalFolder').src = "templates/halSearchList.php?aksi=cariStandar&paramText="+paramText+"&folderFile="+folderFile;
+	
+	document.getElementById('srcIframeSek').value = "templates/halSearchList.php?aksi=cariStandar&paramText="+paramText+"&folderFile="+folderFile;
+
+	document.getElementById('paramText').value = "";
+	document.getElementById('folderFile').value = "folder";
+}
+
+function klikBtnUnauthorized()
+{
+	var paramText = document.getElementById('paramText').value;
+	var folderFile = document.getElementById('folderFile').value;
+	
+	if(paramText.replace(/ /g,"") == "")
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" />&nbsp;Please type some text!";
+		return false;
+	}
+	document.getElementById('errorMsg').innerHTML = "&nbsp;";
+	
+	document.getElementById('iframeHalFolder').src = "";
+	document.getElementById('iframeHalFolder').src = "templates/halSearchList.php?aksi=cariUnauthorized&paramText="+paramText+"&folderFile="+folderFile;
+	
+	document.getElementById('srcIframeSek').value = "templates/halSearchList.php?aksi=cariUnauthorized&paramText="+paramText+"&folderFile="+folderFile;
+
+	document.getElementById('paramText').value = "";
+	document.getElementById('folderFile').value = "folder";
+}
+
+function openThickboxWindow(id, aksi)
+{
+	if(aksi == "openOwnFolder")
+	{
+		loadUrl('../index.php?aksi=openSearchOwnFolder&ide='+id); return false;
+	}
+	if(aksi == "openSubordinateFolder")
+	{
+		loadUrl('../index.php?aksi=openSearchSubordinateFolder&ide='+id); return false;
+	}	
+	if(aksi == "openShareFolder")
+	{
+		loadUrl('../index.php?aksi=openSearchShareFolder&ide='+id); return false;
+	}
+	if(aksi == "detilOwnFile")
+	{
+		document.getElementById('hrefThickbox').href="templates/halDetailFile.php?aksi=detilCariFile&ide="+id+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+		document.getElementById('hrefThickbox').click();
+	}
+	if(aksi == "editOwnFile")
+	{
+		document.getElementById('hrefThickbox').href="templates/halTambahFile.php?aksi=editCariFile&ide="+id+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+		document.getElementById('hrefThickbox').click();
+	}
+	if(aksi == "deleteOwnFile")
+	{
+		var answer  = confirm('Are you sure want to delete?');
+		if(answer)
+		{
+			document.getElementById('iframeHalFolder').src = "";
+			document.getElementById('iframeHalFolder').src = "templates/halFileList.php?aksi=deleteCariFile&ide="+id;
+			
+			var srcIframeSek = document.getElementById('srcIframeSek').value;
+			document.getElementById('iframeHalFolder').src = srcIframeSek;
+		}
+		else
+		{	return false;	}
+	}
+}
+
+function openPdf(filePdf)
+{
+	if(detectBrowser() == "MSIE")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+	if(detectBrowser() == "Firefox")
+	{
+		window.showModalDialog("halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+}
+
+function refreshPage()
+{
+	var srcIframeSek = document.getElementById('srcIframeSek').value;
+	document.getElementById('iframeHalFolder').src = srcIframeSek;
+}
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+<input type="hidden" id="srcIframeSek" name="srcIframeSek" style="width:100%;"/>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td>
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        <tr><td id="idHalTeksLvl" height="20"><span id="errorMsg" class="errorMsg">&nbsp;</span></td></tr>
+        <tr>
+            <td valign="bottom">
+            &nbsp;
+            <input type="text" class="elementDefault" id="paramText" size="70" style="height:16px;color:#333;">
+            &nbsp;
+            <select class="elementMenu" id="folderFile" name="folderFile" title="Choose Type">
+                <option value="folder">Folder</option>
+                <option value="file">File</option>
+            </select>
+            &nbsp;
+            <button class="btnStandar" type="button" onclick="klikBtnDoSearching();" style="width:50px;height:29px;" title="Go Searching">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td align="center" width="25"><img src="../picture/Arrow-Right-blue-32.png" height="20"/> </td>
+                    <td align="left">GO</td>
+                  </tr>
+                </table>
+            </button>
+            <button class="btnStandar" type="button" onclick="klikBtnUnauthorized();" style="width:95px;height:29px;" title="Search Not Shared Folder/file">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td align="center" width="25"><img src="../picture/Lock-blue-32.png" height="20"/> </td>
+                    <td align="left">Not Shared</td>
+                  </tr>
+                </table>
+            </button>
+            <button class="btnStandar" type="button" onclick="" style="width:130px;height:29px;" disabled>
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                      <td align="center" width="25"><img src="../picture/Gears-blue-32.png" height="20"/> </td>
+                      <td align="left">Advanced Search</td>
+                    </tr>
+                  </table>
+              </button>
+            
+              &nbsp;
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+        	<td width="25%" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refreshPage();" title="Refresh Page"/></td>
+        	<td width="50%" height="40">:: SEARCH RESULT ::</td>
+            <td width="25%">&nbsp;</td>
+        </tr>
+        <tr>
+        	<td colspan="3">
+				<iframe width="100%" height="344" target="iframeHalFolder" name="iframeHalFolder" id="iframeHalFolder" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

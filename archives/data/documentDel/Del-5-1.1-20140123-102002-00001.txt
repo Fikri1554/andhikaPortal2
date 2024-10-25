@@ -1,0 +1,964 @@
+-- phpMyAdmin SQL Dump
+-- version 2.10.1
+-- http://www.phpmyadmin.net
+-- 
+-- Host: localhost
+-- Generation Time: Jul 17, 2009 at 12:16 PM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.5
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+-- 
+-- Database: `rekrutmen`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `login`
+-- 
+
+CREATE TABLE `login` (
+  `userId` tinyint(4) NOT NULL auto_increment,
+  `userName` varchar(256) NOT NULL,
+  `userFullNm` char(30) NOT NULL,
+  `userPass` varchar(256) NOT NULL,
+  `userJenis` varchar(64) NOT NULL,
+  `userInit` varchar(5) NOT NULL COMMENT 'inisial nama user',
+  `lastLogin` varchar(64) NOT NULL default '0000-00-00 00:00:00',
+  `status` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`userId`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+-- 
+-- Dumping data for table `login`
+-- 
+
+INSERT INTO `login` (`userId`, `userName`, `userFullNm`, `userPass`, `userJenis`, `userInit`, `lastLogin`, `status`) VALUES 
+(2, 'administrator', 'administrator', '200ceb26807d6bf99fd6f4f0d1ca54d4', '21232f297a57a5a743894a0e4a801fc3', 'admin', '2009-07-17 09:56:52', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `mainmenu`
+-- 
+
+CREATE TABLE `mainmenu` (
+  `id_mMenu` tinyint(2) NOT NULL auto_increment,
+  `nama_mMenu` varchar(64) NOT NULL,
+  `tipe_mMenu` tinyint(2) NOT NULL,
+  `menuUp` varchar(128) NOT NULL,
+  `menuDn` varchar(128) NOT NULL,
+  PRIMARY KEY  (`id_mMenu`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+-- 
+-- Dumping data for table `mainmenu`
+-- 
+
+INSERT INTO `mainmenu` (`id_mMenu`, `nama_mMenu`, `tipe_mMenu`, `menuUp`, `menuDn`) VALUES 
+(1, 'File', 1, 'file_up.png', 'file_dn.png'),
+(2, 'tabel', 1, 'tabel_up.png', 'tabel_dn.png'),
+(3, 'laporan', 1, 'lap_up.png', 'lap_dn.png');
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `mstpersonal`
+-- 
+
+CREATE TABLE `mstpersonal` (
+  `idperson` int(6) unsigned zerofill NOT NULL default '000000',
+  `fname` char(30) NOT NULL COMMENT 'First Name',
+  `mname` char(30) default NULL COMMENT 'middle Name',
+  `lname` char(30) default NULL COMMENT 'last Name',
+  `nationalid` char(3) NOT NULL COMMENT 'Nationality',
+  `ctryOfOrgn` char(3) NOT NULL,
+  `dob` date NOT NULL default '0000-00-00' COMMENT 'Date of Birth',
+  `pob` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Place of Birth',
+  `wght` tinyint(3) NOT NULL COMMENT 'Weight',
+  `hght` tinyint(3) NOT NULL COMMENT 'Height',
+  `shoesz` tinyint(3) NOT NULL COMMENT 'Shoes size',
+  `collar` decimal(5,2) NOT NULL,
+  `chest` decimal(5,2) NOT NULL,
+  `waist` decimal(5,2) NOT NULL,
+  `Insdleg` decimal(5,2) NOT NULL,
+  `cap` decimal(5,2) NOT NULL,
+  `clothszid` set('','S','M','L','XL','XXL') NOT NULL COMMENT 'Clothes size',
+  `sweaterszid` set('','S','M','L','XL','XXL') NOT NULL COMMENT 'Sweater size',
+  `boilerszid` set('','S','M','L','XL','XXL') NOT NULL COMMENT 'Boiler size',
+  `maritalstsid` char(2) NOT NULL COMMENT 'Marital Status',
+  `gender` set('Male','Female') NOT NULL,
+  `wname` char(30) NOT NULL COMMENT 'Wife''s Name',
+  `religion` set('','Christian','Catholic','Buddha','Moeslem','Hindu','Others') NOT NULL COMMENT 'Religion',
+  `paddress` char(240) NOT NULL COMMENT 'Primary Address',
+  `pcity` char(3) NOT NULL COMMENT 'city permanent address',
+  `pnrstport` char(3) NOT NULL COMMENT 'nearest airport',
+  `ppostcode` char(16) NOT NULL COMMENT 'post code',
+  `pctryid` smallint(3) NOT NULL COMMENT 'country permanent address',
+  `telpno` char(20) NOT NULL,
+  `faxno` char(20) NOT NULL,
+  `mobileno` char(30) NOT NULL COMMENT 'Mobile',
+  `email` char(40) NOT NULL,
+  `ssn` char(50) NOT NULL COMMENT 'Social Security – Number',
+  `ssnctryid` char(3) NOT NULL default '000' COMMENT 'Social Security – Issuing Country',
+  `ptn` char(30) NOT NULL COMMENT 'Personal Tax – Number',
+  `ptnctryid` char(3) NOT NULL default '000' COMMENT 'Personal Data – Issuing Country',
+  `applyfor` char(40) NOT NULL COMMENT 'Post Applied For',
+  `vesselfor` char(40) NOT NULL,
+  `lower_rank` tinyint(1) NOT NULL COMMENT 'Willing to accept lower rank',
+  `availdt` date NOT NULL COMMENT 'Available from',
+  `conmthEmail` tinyint(1) NOT NULL COMMENT 'Contact Method Email',
+  `conmthFax` tinyint(1) NOT NULL COMMENT 'Contact Method Fax',
+  `conmthMob` tinyint(1) NOT NULL COMMENT 'Contact Method Mobile Phone',
+  `conmthHom` tinyint(1) NOT NULL COMMENT 'Contact Method Home Phone',
+  `conmthPost` tinyint(1) NOT NULL COMMENT 'Contact Method Post',
+  `famfullname` char(254) NOT NULL COMMENT 'Full Name of Nominee',
+  `famrelateid` set('','Spouse','Partner','Child','Parent','Grand Parent','Other Relative') NOT NULL COMMENT 'family relationship',
+  `famgender` set('Male','Female') NOT NULL,
+  `famntnid` tinyint(3) unsigned zerofill NOT NULL default '000',
+  `famaddrs` char(240) NOT NULL,
+  `famcityid` smallint(3) unsigned zerofill NOT NULL default '000',
+  `famposcode` char(10) NOT NULL,
+  `famctryid` smallint(3) unsigned zerofill NOT NULL default '000',
+  `famemail` char(40) NOT NULL,
+  `norek` char(32) NOT NULL,
+  `golDrh` set('-','A','B','O','AB') NOT NULL,
+  `eyecol` char(128) NOT NULL,
+  `famtelp` char(30) NOT NULL,
+  `fammobile` char(30) NOT NULL,
+  `somedrsn` tinyint(1) NOT NULL,
+  `undergone` tinyint(1) NOT NULL,
+  `probdtl` char(50) NOT NULL,
+  `fathernm` char(128) NOT NULL COMMENT 'nama ayah',
+  `mothernm` char(128) NOT NULL COMMENT 'nama ibu',
+  `remarks` char(255) NOT NULL COMMENT 'keterangan',
+  `signplc` char(20) NOT NULL,
+  `signdt` date NOT NULL,
+  `pic` char(255) NOT NULL COMMENT 'foto',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`idperson`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `mstpersonal`
+-- 
+
+INSERT INTO `mstpersonal` (`idperson`, `fname`, `mname`, `lname`, `nationalid`, `ctryOfOrgn`, `dob`, `pob`, `wght`, `hght`, `shoesz`, `collar`, `chest`, `waist`, `Insdleg`, `cap`, `clothszid`, `sweaterszid`, `boilerszid`, `maritalstsid`, `gender`, `wname`, `religion`, `paddress`, `pcity`, `pnrstport`, `ppostcode`, `pctryid`, `telpno`, `faxno`, `mobileno`, `email`, `ssn`, `ssnctryid`, `ptn`, `ptnctryid`, `applyfor`, `vesselfor`, `lower_rank`, `availdt`, `conmthEmail`, `conmthFax`, `conmthMob`, `conmthHom`, `conmthPost`, `famfullname`, `famrelateid`, `famgender`, `famntnid`, `famaddrs`, `famcityid`, `famposcode`, `famctryid`, `famemail`, `norek`, `golDrh`, `eyecol`, `famtelp`, `fammobile`, `somedrsn`, `undergone`, `probdtl`, `fathernm`, `mothernm`, `remarks`, `signplc`, `signdt`, `pic`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(000001, 'Suryatmaji', '', '', '001', '000', '1958-06-26', 110, 0, 0, 0, '0.00', '0.00', '0.00', '0.00', '0.00', '', 'L', 'L', '2', 'Male', 'Luna Maya', 'Moeslem', 'Jl. Kebon Bawang V No 9 Tanjung Priok Jakarta Utara', '031', '031', '', 1, '+6221 43911820', '+6221 43911821', '-', '-', '-', '000', '-', '000', 'Ch Enginer', '', 1, '2009-01-09', 0, 0, 0, 1, 1, 'Istrinya', 'Spouse', 'Male', 000, 'Alamatnya', 000, '', 000, '', '', '', '', '', '', 0, 0, '', '', '', '', '', '0000-00-00', '000001_Suryatmaji.jpg', '', 'admin-20090706-9:11', 0),
+(000002, 'HALOMOAN', '', 'SILAEN', '013', '008', '1956-06-25', 112, 100, 100, 100, '100.99', '200.00', '300.00', '400.00', '500.05', '', 'S', 'XL', '2', 'Male', 'Luna Maya', '', 'JL KEBON BAWANG V NO 09 TANJUNG PRIOK JAKARTA UTARA', '001', '002', '15414', 6, '', '111111111', '081310527898', 'a@andhika.com', '22222222', '002', '33333333', '007', 'MASTER', '', 1, '2010-06-10', 1, 0, 0, 1, 0, '', '', 'Female', 000, '', 000, '', 000, '', '128-222222', 'A', '', '', '', 0, 0, '', '', '', '', '', '0000-00-00', '000002_tes.png', '', 'admin-20090710-10:39', 0),
+(000003, 'oskar', 'makaringas', '', '013', '007', '1955-05-27', 111, 0, 0, 0, '0.00', '0.00', '0.00', '0.00', '0.00', '', 'XXL', 'XL', '2', 'Male', '', 'Others', 'Jl Kebon Bawang v No 09 Jakarta Utara', '001', '002', '11111', 7, '', '', '+6281384410458', 'Aes@Andhika-group.com', '', '000', '', '000', 'Master', '', 0, '0000-00-00', 1, 0, 1, 1, 0, '', 'Spouse', 'Male', 000, '', 000, '', 000, '', '', '', '', '', '', 0, 0, '', 'nama ayah', 'nama ibu', 'keterangan tambahan', '', '0000-00-00', '000003_Oskar Makangiras.jpg', 'admin-20090617-11:37', 'admin-20090706-15:57', 0),
+(000004, 'SUDARTO', '', '', '000', '000', '1967-09-03', 113, 73, 127, 42, '0.00', '0.00', '0.00', '0.00', '0.00', 'XL', 'XL', 'S', '1', 'Male', 'ELLYNE DWI POESPASARI', '', 'Jl Kebon Bawang V No 9 Tanjung Priok Jakarta Utara 14320', '000', '000', '', 0, '+6221 43911820', '', '', '', '', '000', '', '000', 'MASTER', 'MT. SUNRISE SAKURA', 0, '0000-00-00', 0, 0, 0, 0, 0, '', '', '', 000, '', 000, '', 000, '', '', '-', 'BLACK', '', '', 0, 0, '', '', '', '', '', '0000-00-00', '000004_sudarto.jpg', 'admin-20090713-10:34', 'admin-20090716-8:56', 0),
+(000005, 'WAHYONO', '', 'ADHI', '013', '000', '1969-08-23', 000, 0, 0, 0, '0.00', '0.00', '0.00', '0.00', '0.00', '', '', '', '1', 'Male', '', '', 'JL Kebon Bawang V No 09 Tanjung Priuk Jakarta Utara', '000', '000', '', 0, '+6281229466065', '', '+628562573899', 'Aes@Andhika-group.com', '', '000', '', '000', 'MASTER', '', 0, '0000-00-00', 0, 0, 0, 0, 0, '', '', '', 000, '', 000, '', 000, '', '', '-', '', '', '', 0, 0, '', '', '', '', '', '0000-00-00', '000005_000002_tes.png', 'admin-20090716-10:17', 'admin-20090716-11:03', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `submenu`
+-- 
+
+CREATE TABLE `submenu` (
+  `id_sMenu` smallint(3) NOT NULL,
+  `id_mMenu` tinyint(2) NOT NULL,
+  `nama_sMenu` varchar(128) NOT NULL,
+  `urutan` tinyint(2) NOT NULL,
+  `aksi_sMenu` varchar(256) NOT NULL,
+  `menuUp` varchar(128) NOT NULL,
+  PRIMARY KEY  (`id_sMenu`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `submenu`
+-- 
+
+INSERT INTO `submenu` (`id_sMenu`, `id_mMenu`, `nama_sMenu`, `urutan`, `aksi_sMenu`, `menuUp`) VALUES 
+(11, 1, 'Ganti Password', 1, '3115a76289fcc557d5c23228fb6e6db6', 'file_up.png'),
+(13, 1, 'Logout', 3, 'f24f62eeb789199b9b2e467df3b1876b', 'file_up.png'),
+(21, 2, 'Personal', 1, '0be5a6c82893ecaa8bb29bd36831e457', 'tabel_up.png'),
+(22, 2, 'Kota', 2, '65c64fab22dde9f04e63ee946a075a30', 'tabel_up.png'),
+(24, 2, 'Type Vessel', 4, '372524c8135abc7c9ccadeac80de80ca', 'tabel_up.png'),
+(31, 3, 'Laporan', 1, 'cf6cac79fd281b10550238b1e859f906', 'lap_up.png'),
+(12, 1, 'User', 2, '675cd8a52061be29384e807a99db9237', 'file_up.png'),
+(23, 2, 'Negara', 3, '5a19c4a4e4b4f39add0ed639c6c55366', 'tabel_up.png');
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblfamily`
+-- 
+
+CREATE TABLE `tblfamily` (
+  `idfm` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `fmrel` set('Spouse','Child') NOT NULL,
+  `fmsex` tinyint(1) NOT NULL default '0' COMMENT 'Child Male / Female     fmsex6 1-> M; 2-> F',
+  `fmfname` char(30) NOT NULL COMMENT 'First Name',
+  `fmlname` char(30) NOT NULL COMMENT 'Last Name',
+  `fmdob` date NOT NULL COMMENT 'Date of Birth',
+  `fmpassno` char(20) NOT NULL COMMENT 'Passport No.',
+  `fmissdt` date NOT NULL COMMENT 'Issued Date',
+  `fmplc` char(30) NOT NULL COMMENT 'Place',
+  `fmexpdt` date NOT NULL COMMENT 'Expired Date',
+  `fmvisa` set('USA','Canada','Brazil','Schengen','UK','Other') NOT NULL,
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblfamily`
+-- 
+
+INSERT INTO `tblfamily` (`idfm`, `idperson`, `fmrel`, `fmsex`, `fmfname`, `fmlname`, `fmdob`, `fmpassno`, `fmissdt`, `fmplc`, `fmexpdt`, `fmvisa`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'Child', 2, 'superman', 'batman', '2009-05-18', '11111', '2009-05-19', 'JAKARTA', '2009-05-20', 'USA', '', 'admin-20090623-11:44', 0),
+(002, 000002, 'Spouse', 1, 'aaaaaaab', 'asdasdasdas', '2009-05-04', '2343243', '0000-00-00', 'surabaya', '2009-05-30', 'Other', '', 'admin-20090623-12:05', 0),
+(003, 000002, 'Child', 1, 'sponge', 'bob', '2009-06-22', '55555555', '2009-06-23', 'merauke', '2009-06-24', 'Canada', '', 'admin-20090623-12:07', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblill`
+-- 
+
+CREATE TABLE `tblill` (
+  `idexp` char(2) NOT NULL,
+  `idperson` char(6) NOT NULL,
+  `illdtl` char(100) NOT NULL COMMENT 'Details of ilness / accidents',
+  `illdt` date NOT NULL COMMENT 'Date',
+  `illTreat` char(50) NOT NULL COMMENT 'Therapy / Treatment',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblill`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblkota`
+-- 
+
+CREATE TABLE `tblkota` (
+  `KdKota` tinyint(3) unsigned zerofill NOT NULL default '000' COMMENT 'Kode Kota',
+  `NmKota` varchar(50) NOT NULL COMMENT 'Nama Kota',
+  `AddUsrDt` varchar(20) NOT NULL COMMENT 'Informasi Penambah Data',
+  `UpdUsrDt` varchar(20) NOT NULL COMMENT 'Informasi Pengubah Data',
+  `Deletests` tinyint(1) NOT NULL default '0' COMMENT 'status jika 1, true',
+  PRIMARY KEY  (`KdKota`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblkota`
+-- 
+
+INSERT INTO `tblkota` (`KdKota`, `NmKota`, `AddUsrDt`, `UpdUsrDt`, `Deletests`) VALUES 
+(001, 'AMBON', '', 'admin-20090702-13:46', 0),
+(002, 'AMBON, MALUKU', '', '', 0),
+(003, 'BAGAN SIAPIAPI, RIAU', '', '', 0),
+(004, 'BALIKPAPAN', '', 'admin-20090701-10:47', 0),
+(005, 'BALIKPAPAN (KALIMANTAN TIMUR)', '', '', 0),
+(006, 'BANDA ACEH, NANGGROE ACEH DARUSSALAM', '', '', 0),
+(007, 'BANDAR LAMPUNG', '', '', 0),
+(008, 'BANJARMASIN ', '', 'admin-20090630-14:54', 0),
+(009, 'BANJARMASIN - KALIMANTAN SELATAN', '', '', 0),
+(010, 'BATAM', '', '', 0),
+(011, 'BEKASI BARAT', '', '', 0),
+(012, 'BELAWAN', '', '', 0),
+(013, 'BELAWAN - MEDAN', '', '', 0),
+(014, 'BELAWAN SUMATERA UTARA', '', '', 0),
+(015, 'BENGKULU', '', '', 0),
+(016, 'BIAK - IRIAN JAYA', '', '', 0),
+(017, 'BINTAN UTARA, RIAU', '', '', 0),
+(018, 'BIRING''ARE-PANGKEP SULAWESI SELATAN', '', '', 0),
+(019, 'BITUNG - SULAWESI UTARA', '', '', 0),
+(020, 'BLINYU BANGKA, SUMATERA SELATAN', '', '', 0),
+(021, 'BONTANG', '', '', 0),
+(022, 'BONTANG, KALIMANTAN TIMUR', '', '', 0),
+(023, 'CILEGON, BANTEN', '', '', 0),
+(024, 'CIREBON', '', '', 0),
+(025, 'DENPASAR', '', '', 0),
+(026, 'DENPASAR, BALI', '', '', 0),
+(027, 'DILI, TIMOR TIMUR', '', '', 0),
+(028, 'DUMAI, RIAU', '', '', 0),
+(029, 'GORONTALO, SULAWESI UTARA', '', '', 0),
+(030, 'GRESIK, JAWA TIMUR', '', '', 0),
+(031, 'JAKARTA', '', '', 0),
+(032, 'JAKARTA BARAT', '', '', 0),
+(033, 'JAKARTA PUSAT', '', '', 0),
+(034, 'JAKARTA SELATAN', '', '', 0),
+(035, 'JAKARTA TIMUR', '', '', 0),
+(036, 'JAKARTA UTARA', '', '', 0),
+(037, 'JAKARTA, UTARA', '', '', 0),
+(038, 'JAMBI', '', '', 0),
+(039, 'JAWA TIMUR', '', '', 0),
+(040, 'JAYAPURA SELATAN, PAPUA', '', '', 0),
+(041, 'KALIMANTAN BARAT', '', '', 0),
+(042, 'KELAPA GADING ,JAKARTA UTARA', '', '', 0),
+(043, 'KENDARI, SULAWESI UTARA', '', '', 0),
+(044, 'KETAPANG, KALIMANTAN BARAT', '', '', 0),
+(045, 'KODYA SAMBAS - KALIMANTAN BARAT', '', '', 0),
+(046, 'LAMPUNG SELATAN', '', '', 0),
+(047, 'LHOKSEUMAWE, ACEH', '', '', 0),
+(048, 'LHOSEUMAWE, ACEH UTARA', '', '', 0),
+(049, 'MAKASSAR', '', '', 0),
+(050, 'MALUKU TENGGARA', '', '', 0),
+(051, 'MANADO', '', '', 0),
+(052, 'MANADO, SULAWESI UTARA', '', '', 0),
+(053, 'MEDAN', '', '', 0),
+(054, 'MEDAN SUMATERA UTARA', '', '', 0),
+(055, 'MERAK - BANTEN', '', '', 0),
+(056, 'MERAUKE', '', '', 0),
+(057, 'MERAUKE - PAPUA', '', '', 0),
+(058, 'NUNUKAN, KALIMANTAN TIMUR', '', '', 0),
+(059, 'PADANG', '', '', 0),
+(060, 'PADANG SELATAN, KOTA PADANG', '', '', 0),
+(061, 'PADANG, SUMATERA BARAT', '', '', 0),
+(062, 'PALEMBANG', '', '', 0),
+(063, 'PALEMBANG, SUMATERA SELATAN', '', '', 0),
+(064, 'PALU, SULAWESI TENGAH', '', '', 0),
+(065, 'PANJANG SELATAN, BANDAR LAMPUNG', '', '', 0),
+(066, 'PANJANG, BANDAR LAMPUNG', '', '', 0),
+(067, 'PARE-PARE, SULAWESI SELATAN', '', '', 0),
+(068, 'PEKAN BARU', '', '', 0),
+(069, 'PEKAN BARU, RIAU', '', '', 0),
+(070, 'PEKANBARU', '', '', 0),
+(071, 'PEKANBARU, RIAU', '', '', 0),
+(072, 'PEUNAYONG, BANDA ACEH', '', '', 0),
+(073, 'PONTIANAK', '', '', 0),
+(074, 'PONTIANAK, KALIMANTAN BARAT', '', '', 0),
+(075, 'PULAU BATAM', '', '', 0),
+(076, 'PULAU BATAM, RIAU', '', '', 0),
+(077, 'RENGAT, RIAU', '', '', 0),
+(078, 'RIAU', '', '', 0),
+(079, 'SABANG', '', '', 0),
+(080, 'SAMARINDA', '', '', 0),
+(081, 'SAMARINDA, KALIMANTAN TIMUR', '', '', 0),
+(082, 'SEKUPANG, BATAM', '', '', 0),
+(083, 'SELAT PANJANG', '', '', 0),
+(084, 'SELAT PANJANG, RIAU', '', '', 0),
+(085, 'SEMARANG, JAWA TENGAH', '', '', 0),
+(086, 'SIBOLGA, SUMATERA UTARA', '', '', 0),
+(087, 'SINGKAWANG, KALIMANTAN BARAT', '', '', 0),
+(088, 'SORONG', '', '', 0),
+(089, 'SORONG IRIAN JAYA', '', '', 0),
+(090, 'SUMATERA UTARA', '', '', 0),
+(091, 'SURABAYA', '', '', 0),
+(092, 'SURABAYA, JAWA TIMUR', '', '', 0),
+(093, 'TANGERANG, BANTEN', '', '', 0),
+(094, 'TANJUNG BALAI ASAHAN, RIAU', '', '', 0),
+(095, 'TANJUNG BALAI KARIMUN, RIAU', '', '', 0),
+(096, 'TANJUNG PANDAN, BELITUNG', '', '', 0),
+(097, 'TANJUNG PINANG', '', '', 0),
+(098, 'TANJUNG PINANG, RIAU', '', '', 0),
+(099, 'TANJUNG PRIOK, JAKARTA UTARA', '', '', 0),
+(100, 'TANJUNG UBAN - BINTAN', '', '', 0),
+(101, 'TANJUNG UBAN UTARA , RIAU', '', '', 0),
+(102, 'TARAKAN, KALIMANTAN TIMUR', '', '', 0),
+(103, 'TEMBILAHAN, RIAU', '', '', 0),
+(104, 'TERNATE', '', '', 0),
+(105, 'TERNATE - MALUKU UTARA', '', '', 0),
+(106, 'TUAL, MALUKU TENGGARA', '', '', 0),
+(107, 'UJUNG PANDANG', '', '', 0),
+(108, 'UJUNG PANDANG, SULAWESI SELATAN', '', '', 0),
+(111, 'Morotai', 'admin-20090703-16:49', '', 0),
+(110, 'Kediri', '', '', 0),
+(000, '-', '', '', 0),
+(112, 'SIGUMPAR', 'admin-20090709-14:30', '', 0),
+(113, 'KISARAN', 'admin-20090713-10:38', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tbllang`
+-- 
+
+CREATE TABLE `tbllang` (
+  `idlang` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `language` char(64) NOT NULL,
+  `grade` char(64) NOT NULL,
+  `AddUsrDt` char(20) NOT NULL,
+  `UpdUsrDt` char(20) NOT NULL,
+  `Deletests` tinyint(1) NOT NULL default '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tbllang`
+-- 
+
+INSERT INTO `tbllang` (`idlang`, `idperson`, `language`, `grade`, `AddUsrDt`, `UpdUsrDt`, `Deletests`) VALUES 
+(001, 000003, 'English', 'good', '', 'admin-20090709-10:26', 0),
+(002, 000003, 'Indonesia', 'very good', 'admin-20090709-10:09', 'admin-20090709-10:26', 0),
+(001, 000002, 'English', 'very good', 'admin-20090709-10:11', '', 0),
+(001, 000004, 'Read and Write', 'Good', 'admin-20090715-15:11', 'admin-20090715-15:21', 0),
+(002, 000004, 'Speak and Listen', 'Good', 'admin-20090715-15:22', 'admin-20090715-15:50', 0),
+(003, 000004, 'Other Languages', 'None', 'admin-20090715-15:32', 'admin-20090715-15:50', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblmed`
+-- 
+
+CREATE TABLE `tblmed` (
+  `idexp` char(2) NOT NULL,
+  `idperson` char(6) NOT NULL,
+  `medvsl` char(30) NOT NULL COMMENT 'Name of Vessel',
+  `meddt` date NOT NULL COMMENT 'Date of Occurance',
+  `medplc` char(20) NOT NULL COMMENT 'Place of Occurance',
+  `meddesc` char(100) NOT NULL COMMENT 'Brief Description of illness/injury/accident',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblmed`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblnegara`
+-- 
+
+CREATE TABLE `tblnegara` (
+  `KdNegara` int(3) unsigned zerofill NOT NULL default '000' COMMENT 'Kode Negara',
+  `NmNegara` char(50) NOT NULL COMMENT 'Nama Negara',
+  `AddUsrDt` char(20) NOT NULL COMMENT 'Informasi Penambah Data',
+  `UpdUsrDt` char(20) NOT NULL COMMENT 'Informasi Pengubah Data',
+  `Deletests` tinyint(1) NOT NULL COMMENT 'status jika TRUE maka hapus',
+  PRIMARY KEY  (`KdNegara`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblnegara`
+-- 
+
+INSERT INTO `tblnegara` (`KdNegara`, `NmNegara`, `AddUsrDt`, `UpdUsrDt`, `Deletests`) VALUES 
+(002, 'Indonesia', '', 'admin-20090706-10:05', 0),
+(001, 'Panama', '', 'admin-20090714-15:04', 0),
+(003, 'HONDURAS', '', '', 0),
+(004, 'SINGAPORE', '', '', 0),
+(005, 'LIBERIA', '', '', 0),
+(006, 'THAILAND', '', '', 0),
+(007, 'CAMBOJA', '', '', 0),
+(008, 'BELIZE', '', 'admin-20090702-13:46', 0),
+(009, 'MARSHALL ISLAND', '', '', 0),
+(010, 'MALAYSIA', '', '', 0),
+(011, 'ST.V & G', '', '', 0),
+(012, 'SINGAPURA', '', '', 0),
+(000, '-', '', '', 0),
+(014, 'National', 'admin-20090714-14:32', '', 0),
+(013, 'INDONESIAN', 'admin-20090703-16:50', 'admin-20090709-14:30', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblpersonaldoc`
+-- 
+
+CREATE TABLE `tblpersonaldoc` (
+  `idperdoc` int(3) unsigned zerofill NOT NULL default '000',
+  `idperson` int(6) unsigned zerofill NOT NULL default '000000',
+  `doctp` char(40) NOT NULL COMMENT 'Type of Documents',
+  `docissctryid` int(3) unsigned zerofill NOT NULL default '000' COMMENT 'Issued Country',
+  `docno` char(20) NOT NULL COMMENT 'Number',
+  `docissdt` date NOT NULL COMMENT 'Issued Date',
+  `docexpdt` date NOT NULL COMMENT 'Expiration Date',
+  `docissplc` char(40) NOT NULL COMMENT 'Issued Place',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblpersonaldoc`
+-- 
+
+INSERT INTO `tblpersonaldoc` (`idperdoc`, `idperson`, `doctp`, `docissctryid`, `docno`, `docissdt`, `docexpdt`, `docissplc`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'Seaman Book', 000, 'V 043234', '2008-03-04', '2011-03-04', 'SEACOM', 'admin-20090618-12:26', 'admin-20090710-11:14', 0),
+(002, 000002, 'Passport', 000, 'R.680382', '2008-03-28', '2013-03-28', 'IMMIGRATION', 'admin-20090618-12:26', 'admin-20090710-17:06', 0),
+(001, 000001, 'US Visa C1/D', 000, '', '0000-00-00', '0000-00-00', '', 'admin-20090618-12:30', '', 0),
+(002, 000001, 'Passport', 002, 'R.461861', '2008-02-06', '2013-02-06', 'TANJUNG PRIOK, JAKARTA', 'admin-20090706-9:11', '', 0),
+(001, 000003, 'Passport', 000, 'A 304211', '2005-06-15', '2010-06-15', 'Jakarta', 'admin-20090706-9:12', 'admin-20090706-9:48', 0),
+(002, 000003, 'Seaman''s book', 000, 'M 033064', '2007-07-06', '0000-00-00', 'Jakarta', '', 'admin-20090706-9:52', 0),
+(003, 000001, 'Seaman''s book', 002, 'S. 06158', '2004-12-28', '2009-12-06', 'JAKARTA', 'admin-20090706-10:04', '', 0),
+(004, 000002, 'Certificate of Competency', 000, '', '0000-00-00', '0000-00-00', 'SEACOM', 'admin-20090710-11:20', '', 0),
+(005, 000002, 'Certificate of Endorsement', 000, '', '0000-00-00', '2013-02-26', 'SEACOM', 'admin-20090710-13:44', '', 0),
+(001, 000004, 'Passport', 014, 'A 571791', '2005-11-18', '2010-11-18', '', 'admin-20090715-8:33', '', 0),
+(002, 000004, 'Seaman''s Book', 014, 'W 031130', '2009-04-13', '2012-04-12', '', 'admin-20090715-8:34', '', 0),
+(001, 000005, 'International Passport', 000, 'R 069185', '2006-06-06', '2011-06-06', 'SEMARANG', 'admin-20090716-10:58', 'admin-20090716-11:13', 0),
+(002, 000005, 'Seaman Book', 000, 'B 393871', '2005-08-18', '2010-08-15', 'SEMARANG', 'admin-20090716-11:25', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblrefcmp`
+-- 
+
+CREATE TABLE `tblrefcmp` (
+  `idref` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `refcmp` char(40) NOT NULL COMMENT 'Name of Company',
+  `refpic` char(30) NOT NULL COMMENT 'Name of Person to Contact',
+  `refaddress` char(100) NOT NULL COMMENT 'Address',
+  `refctryid` int(3) unsigned zerofill NOT NULL COMMENT 'Country',
+  `reftelp` char(30) NOT NULL COMMENT 'Telephone',
+  `refAktifsts` set('0','1','2') NOT NULL default '0',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblrefcmp`
+-- 
+
+INSERT INTO `tblrefcmp` (`idref`, `idperson`, `refcmp`, `refpic`, `refaddress`, `refctryid`, `reftelp`, `refAktifsts`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'PT ANDHINI EKAKARYA SEJAHTERA', 'CAPT. EDY SUKMONO', 'JL. KEBON BAWANG V NO 9 TG. PRIOK, JAKARTA 14320', 002, '+62-21-439-11820', '1', '', 'admin-20090702-9:06', 0),
+(002, 000002, 'PT ANDHINI EKAKARYA SEJAHTERA', 'HADJID', 'JL. KEBON BAWANG V NO 9 TG. PRIOK, JAKARTA 14320', 002, '+62-21-439-11820', '2', '', 'admin-20090703-10:30', 0),
+(002, 000004, '', 'CAPT EDY SUKMONO', '', 000, '', '1', 'admin-20090716-9:22', 'admin-20090716-9:46', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg1`
+-- 
+
+CREATE TABLE `tblreg1` (
+  `idrg1` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg1doc` char(40) NOT NULL COMMENT 'Description of Cert / Course',
+  `rg1issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg1docno` char(20) NOT NULL COMMENT 'Number',
+  `rg1issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg1expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg1issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg1issby` char(30) NOT NULL COMMENT 'Issued by',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg1`
+-- 
+
+INSERT INTO `tblreg1` (`idrg1`, `idperson`, `rg1doc`, `rg1issctryid`, `rg1docno`, `rg1issdt`, `rg1expdt`, `rg1issplc`, `rg1issby`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'Personal Training Record Reg I/14', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090625-09:56', 0),
+(002, 000002, 'Medical Fitness Cert Reg I/9', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090624-11:44', 'admin-20090625-09:56', 0),
+(001, 000004, 'MEFA', 000, '6200064503080108', '2008-06-16', '0000-00-00', '', '', 'admin-20090715-10:14', 'admin-20090715-11:39', 0),
+(002, 000004, 'MECA', 001, '6200064503080108', '0000-00-00', '2008-06-16', '', '', 'admin-20090715-13:34', '', 0),
+(003, 000004, 'STCW', 000, '123', '0000-00-00', '0000-00-00', '', '', 'admin-20090715-14:59', 'admin-20090715-15:00', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg2`
+-- 
+
+CREATE TABLE `tblreg2` (
+  `idrg2` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg2doc` char(40) NOT NULL COMMENT 'Description of Cert / Course',
+  `rg2issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg2docno` char(20) NOT NULL COMMENT 'Number',
+  `rg2issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg2expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg2issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg2issby` char(30) NOT NULL COMMENT 'Issued by',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg2`
+-- 
+
+INSERT INTO `tblreg2` (`idrg2`, `idperson`, `rg2doc`, `rg2issctryid`, `rg2docno`, `rg2issdt`, `rg2expdt`, `rg2issplc`, `rg2issby`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'Personal Survival Techniques', 002, '6200502939010303', '2003-07-22', '0000-00-00', 'Semarang', 'Sea Communication', '', 'admin-20090625-09:58', 0),
+(002, 000002, 'Elementary First Aid', 002, '6200502939010303', '2003-07-22', '0000-00-00', 'Semarang', 'Sea Communication', '', 'admin-20090625-09:59', 0),
+(003, 000002, 'Fire Fighting & Fire Prevention', 002, '6200502939010303', '2003-07-22', '0000-00-00', 'Semarang', 'Sea Communication', 'admin-20090625-09:59', '', 0),
+(004, 000002, 'Personal Safety & Social Resp', 002, '6200502939010303', '2003-07-22', '0000-00-00', 'Semarang', 'Sea Communication', 'admin-20090625-10:14', '', 0),
+(001, 000003, 'Basic Safety Training', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090709-11:08', '', 0),
+(001, 000004, 'Basic Safety Course', 000, '6200064503010108', '2008-06-16', '0000-00-00', '', '', 'admin-20090715-10:02', 'admin-20090715-11:39', 0),
+(001, 000005, 'Basic Safety Training', 000, '6200040561010307', '2007-08-03', '0000-00-00', 'SEMARANG', '', 'admin-20090716-11:33', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg3`
+-- 
+
+CREATE TABLE `tblreg3` (
+  `idrg3` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg3doc` char(40) NOT NULL COMMENT 'Description of Cert / Course',
+  `rg3issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg3docno` char(20) NOT NULL COMMENT 'Number',
+  `rg3issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg3expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg3issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg3issby` char(30) NOT NULL COMMENT 'Issued by',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg3`
+-- 
+
+INSERT INTO `tblreg3` (`idrg3`, `idperson`, `rg3doc`, `rg3issctryid`, `rg3docno`, `rg3issdt`, `rg3expdt`, `rg3issplc`, `rg3issby`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'Fast Rescue Boats', 002, '43243432423423', '2009-06-08', '2009-06-09', 'Jakarta', 'Sea Communication', 'admin-20090624-17:48', 'admin-20090624-17:50', 0),
+(001, 000003, 'SCRB', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090709-11:31', '', 0),
+(002, 000003, 'Advance Fire Fighting', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090709-11:31', '', 0),
+(003, 000003, 'Medical First Aid', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090709-11:32', '', 0),
+(004, 000003, 'Medical Care', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090709-11:33', '', 0),
+(001, 000004, 'Advance Fire Figthing', 000, '6200064503060108', '2008-06-16', '0000-00-00', '', '', 'admin-20090715-10:05', '', 0),
+(001, 000005, 'Medidal First Aid', 000, '6200040561070307', '2007-08-03', '0000-00-00', 'SEMARANG', '', 'admin-20090716-13:30', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg4`
+-- 
+
+CREATE TABLE `tblreg4` (
+  `idrg4` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg4doc` char(40) NOT NULL default '&nbsp;' COMMENT 'Description of Cert / Course',
+  `rg4issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg4docno` char(20) NOT NULL COMMENT 'Number',
+  `rg4issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg4expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg4issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg4issby` char(30) NOT NULL COMMENT 'Issued by',
+  `rg4license` set('-','COC','Endorsement') NOT NULL,
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg4`
+-- 
+
+INSERT INTO `tblreg4` (`idrg4`, `idperson`, `rg4doc`, `rg4issctryid`, `rg4docno`, `rg4issdt`, `rg4expdt`, `rg4issplc`, `rg4issby`, `rg4license`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'DECK OFFICER CLASS I (ANT I)', 002, '11111111111111111', '2002-06-18', '0000-00-00', 'Jakarta', 'Sea Communication', 'COC', 'admin-20090624-17:54', 'admin-20090710-9:07', 0),
+(002, 000002, '', 013, '2222222222', '2009-07-06', '2009-07-07', 'Jakarta', 'Sea Communication', 'Endorsement', 'admin-20090706-10:44', 'admin-20090706-13:32', 0),
+(001, 000003, 'Deck Officer Class I', 000, '6200067902N10101', '2001-09-08', '0000-00-00', 'Sea Communication', '', 'COC', 'admin-20090706-12:01', '', 0),
+(002, 000003, 'Deck Officer Class I', 000, '6200067902NA0101', '2006-08-25', '2011-08-25', 'Sea Communication', '', 'Endorsement', 'admin-20090706-12:02', '', 0),
+(001, 000004, 'D / O Class I', 014, '6200064503N10105', '2005-11-30', '0000-00-00', '', '', 'COC', 'admin-20090714-13:47', 'admin-20090714-14:34', 0),
+(002, 000004, 'D / O Class I', 014, '6200064503N10105', '2005-12-09', '2010-12-09', '', '', 'Endorsement', 'admin-20090714-14:30', 'admin-20090714-14:34', 0),
+(003, 000004, 'RENEW', 001, '6200064503N10105', '0000-00-00', '0000-00-00', '', '', 'COC', 'admin-20090714-14:35', 'admin-20090714-14:35', 0),
+(004, 000004, 'RENEW', 001, '6200064503NA0105', '0000-00-00', '0000-00-00', '', '', 'Endorsement', 'admin-20090714-14:36', '', 0),
+(001, 000005, 'Deck Officer Class I', 000, '6200040561N10205', '2005-12-29', '0000-00-00', 'SEMARANG', '', 'COC', 'admin-20090716-13:37', '', 0),
+(002, 000005, 'Endorsement', 000, '6200040561NA0205', '2006-01-05', '0000-00-00', 'SEMARANG', '', '-', 'admin-20090716-13:38', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg5`
+-- 
+
+CREATE TABLE `tblreg5` (
+  `idrg5` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg5doc` char(40) NOT NULL COMMENT 'Description of Cert / Course',
+  `rg5issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg5docno` char(20) NOT NULL COMMENT 'Number',
+  `rg5issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg5expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg5issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg5issby` char(30) NOT NULL COMMENT 'Issued by',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg5`
+-- 
+
+INSERT INTO `tblreg5` (`idrg5`, `idperson`, `rg5doc`, `rg5issctryid`, `rg5docno`, `rg5issdt`, `rg5expdt`, `rg5issplc`, `rg5issby`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'ARPA (Reg II/1 + Solas)', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090625-12:06', '', 0),
+(001, 000004, 'ARPA', 000, '6200064503020108', '2008-06-16', '0000-00-00', '', '', 'admin-20090715-10:08', '', 0),
+(001, 000005, 'Radar Observer', 000, '6200040561030307', '2007-08-03', '0000-00-00', 'SEMARANG', '', 'admin-20090716-13:41', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg6`
+-- 
+
+CREATE TABLE `tblreg6` (
+  `idrg6` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg6doc` char(40) NOT NULL COMMENT 'Description of Cert / Course',
+  `rg6issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg6docno` char(20) NOT NULL COMMENT 'Number',
+  `rg6issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg6expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg6issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg6issby` char(30) NOT NULL COMMENT 'Issued by',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg6`
+-- 
+
+INSERT INTO `tblreg6` (`idrg6`, `idperson`, `rg6doc`, `rg6issctryid`, `rg6docno`, `rg6issdt`, `rg6expdt`, `rg6issplc`, `rg6issby`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'GMDSS (Main Issuing Authority', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090625-12:06', '', 0),
+(001, 000004, 'GMDSS', 000, '6200064503210108', '0000-00-00', '0000-00-00', '', '', 'admin-20090715-10:09', '', 0),
+(001, 000005, 'GMDSS', 000, '6200040561210307', '2007-08-03', '0000-00-00', 'SEMARANG', '', 'admin-20090716-13:44', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg7`
+-- 
+
+CREATE TABLE `tblreg7` (
+  `idrg7` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg7lvltipe` set('','Oil','Chemical','Gas') NOT NULL,
+  `rg7doc` char(254) NOT NULL COMMENT 'Description of Cert / Course',
+  `rg7para` set('','Para 1','Para 2','Para 3','Incharge','Asst.') NOT NULL,
+  `rg7lvl` set('','Incharge','Asst.') NOT NULL,
+  `rg7issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg7docno` char(20) NOT NULL COMMENT 'Number',
+  `rg7issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg7expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg7issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg7issby` char(30) NOT NULL COMMENT 'Issued by',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg7`
+-- 
+
+INSERT INTO `tblreg7` (`idrg7`, `idperson`, `rg7lvltipe`, `rg7doc`, `rg7para`, `rg7lvl`, `rg7issctryid`, `rg7docno`, `rg7issdt`, `rg7expdt`, `rg7issplc`, `rg7issby`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'Oil', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090626-16:30', 0),
+(002, 000002, 'Chemical', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090626-16:30', 0),
+(003, 000002, 'Gas', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090626-17:51', 0),
+(004, 000002, 'Oil', 'Tanker Familiarisation', 'Para 1', '', 002, '6200037479100102', '2002-06-24', '0000-00-00', 'Jakarta', 'Sea Communication', '', 'admin-20090626-16:31', 0),
+(005, 000002, 'Chemical', 'Tanker Familiarisation', 'Para 1', '', 002, '6200037479100102', '2002-06-24', '0000-00-00', 'Jakarta', 'Sea Communication', '', 'admin-20090626-16:42', 0),
+(006, 000002, 'Gas', 'Tanker Familiarisation', 'Para 1', '', 002, '6200037479100102', '2002-06-24', '0000-00-00', 'Jakarta', 'Sea Communication', '', '', 0),
+(007, 000002, 'Oil', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(008, 000002, 'Chemical', 'Special Tanker Safety', 'Para 2', '', 002, '6200502939110102', '2002-07-15', '0000-00-00', 'Jakarta', 'Sea Communication', '', 'admin-20090626-16:43', 0),
+(009, 000002, 'Gas', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(001, 000001, 'Oil', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(002, 000001, 'Chemical', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(003, 000001, 'Gas', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(004, 000001, 'Oil', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(005, 000001, 'Chemical', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(006, 000001, 'Gas', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(007, 000001, 'Oil', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(008, 000001, 'Chemical', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(009, 000001, 'Gas', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(001, 000003, 'Oil', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(002, 000003, 'Chemical', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(003, 000003, 'Gas', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(004, 000003, 'Oil', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(005, 000003, 'Chemical', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(006, 000003, 'Gas', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(007, 000003, 'Oil', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(008, 000003, 'Chemical', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(009, 000003, 'Gas', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0),
+(001, 000004, 'Oil', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090713-10:34', '', 0),
+(002, 000004, 'Chemical', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090713-10:34', '', 0),
+(003, 000004, 'Gas', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090713-10:34', '', 0),
+(004, 000004, 'Oil', 'Tanker Familiarisation', 'Para 1', '', 000, '6200035191090108', '2008-06-27', '2007-05-08', '', '', '', 'admin-20090715-13:32', 0),
+(005, 000004, 'Chemical', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090713-10:34', '', 0),
+(006, 000004, 'Gas', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090713-10:34', '', 0),
+(007, 000004, 'Oil', 'Special Tanker Safety', 'Para 2', '', 000, '6200064503100108', '2008-06-16', '0000-00-00', '', '', '', 'admin-20090715-10:11', 0),
+(008, 000004, 'Chemical', 'Special Tanker Safety', 'Para 2', '', 000, '6200064503110108', '2008-06-16', '0000-00-00', '', '', '', 'admin-20090715-10:11', 0),
+(009, 000004, 'Gas', 'Special Tanker Safety', 'Para 2', '', 000, '6200064503120102', '2002-06-24', '0000-00-00', '', '', '', 'admin-20090715-10:11', 0),
+(001, 000005, 'Oil', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090626-16:30', 0),
+(002, 000005, 'Chemical', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090626-16:30', 0),
+(003, 000005, 'Gas', 'Endorsement', '', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090626-17:51', 0),
+(004, 000005, 'Oil', 'Tanker Familiarisation', 'Para 1', '', 000, '6200040561090307', '2007-08-03', '0000-00-00', 'SEMARANG', '', '', 'admin-20090716-14:37', 0),
+(005, 000005, 'Chemical', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090716-13:52', 0),
+(006, 000005, 'Gas', 'Tanker Familiarisation', 'Para 1', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090716-13:53', 0),
+(007, 000005, 'Oil', 'Special Tanker Safety', 'Para 2', '', 000, '6200040561100708', '2008-02-14', '0000-00-00', 'JAKARTA', '', '', 'admin-20090716-14:44', 0),
+(008, 000005, 'Chemical', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090716-14:43', 0),
+(009, 000005, 'Gas', 'Special Tanker Safety', 'Para 2', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblreg8`
+-- 
+
+CREATE TABLE `tblreg8` (
+  `idrg8` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `rg8doc` char(40) NOT NULL COMMENT 'Description of Cert / Course',
+  `rg8type` set('','Pax','RoPax') NOT NULL,
+  `rg8issctryid` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Issued Country',
+  `rg8docno` char(20) NOT NULL COMMENT 'Number',
+  `rg8issdt` date NOT NULL COMMENT 'Issued Date',
+  `rg8expdt` date NOT NULL COMMENT 'Expired Date',
+  `rg8issplc` char(30) NOT NULL COMMENT 'Issued Place',
+  `rg8issby` char(30) NOT NULL COMMENT 'Issued by',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblreg8`
+-- 
+
+INSERT INTO `tblreg8` (`idrg8`, `idperson`, `rg8doc`, `rg8type`, `rg8issctryid`, `rg8docno`, `rg8issdt`, `rg8expdt`, `rg8issplc`, `rg8issby`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, 'Crowd Management', '', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090625-16:05', 0),
+(002, 000002, 'Pax Safety, Cargo Safety & Hull Integrit', 'RoPax', 000, '', '0000-00-00', '0000-00-00', '', '', '', 'admin-20090626-15:19', 0),
+(003, 000002, 'Crisis Mgmnt & Human Behaviour', '', 000, '', '0000-00-00', '0000-00-00', '', '', 'admin-20090625-16:06', '', 0),
+(001, 000004, 'Safety Officer', '', 000, 'N / A', '0000-00-00', '0000-00-00', '', '', 'admin-20090715-10:12', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblscl`
+-- 
+
+CREATE TABLE `tblscl` (
+  `idscl` tinyint(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `yearscl` char(64) NOT NULL,
+  `namescl` char(128) NOT NULL,
+  `crsfin` char(128) NOT NULL,
+  `AddUsrDt` char(20) NOT NULL,
+  `UpdUsrDt` char(20) NOT NULL,
+  `Deletests` tinyint(1) NOT NULL default '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblscl`
+-- 
+
+INSERT INTO `tblscl` (`idscl`, `idperson`, `yearscl`, `namescl`, `crsfin`, `AddUsrDt`, `UpdUsrDt`, `Deletests`) VALUES 
+(001, 000004, '2009', 'MERCHANT MARINE ACADEMY', '', '', 'admin-20090715-13:49', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblseaexp`
+-- 
+
+CREATE TABLE `tblseaexp` (
+  `idexp` int(3) unsigned zerofill NOT NULL,
+  `idperson` int(6) unsigned zerofill NOT NULL,
+  `cmpexp` char(30) NOT NULL COMMENT 'Company',
+  `vslexp` char(30) NOT NULL COMMENT 'Vessel Name',
+  `flagexp` char(20) NOT NULL COMMENT 'Flag',
+  `typeexp` tinyint(3) unsigned zerofill NOT NULL COMMENT 'Type',
+  `grtexp` int(11) NOT NULL COMMENT 'GRT',
+  `dwtexp` int(11) NOT NULL COMMENT 'DWT',
+  `hpexp` int(11) NOT NULL COMMENT 'HP',
+  `meexp` char(20) NOT NULL COMMENT 'Main Engine',
+  `rankexp` char(10) NOT NULL COMMENT 'Rank',
+  `fmdtexp` date NOT NULL COMMENT 'Date From',
+  `todtexp` date NOT NULL COMMENT 'Date To',
+  `reasonexp` char(255) NOT NULL COMMENT 'remarks',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblseaexp`
+-- 
+
+INSERT INTO `tblseaexp` (`idexp`, `idperson`, `cmpexp`, `vslexp`, `flagexp`, `typeexp`, `grtexp`, `dwtexp`, `hpexp`, `meexp`, `rankexp`, `fmdtexp`, `todtexp`, `reasonexp`, `addusrdt`, `updusrdt`, `deletests`) VALUES 
+(001, 000002, '', 'MT.TASCO 2', '', 014, 3293, 0, 0, '', 'MASTER', '2008-05-11', '2009-03-23', '', '', 'admin-20090710-10:38', 0),
+(002, 000002, '', 'MT.RETALINK III', '', 014, 4048, 0, 0, '', 'MASTER', '2006-04-19', '2008-01-30', '', 'admin-20090630-08:58', 'admin-20090710-9:40', 0),
+(003, 000002, '', 'BARGE SAPTA-1', '', 015, 3383, 0, 0, '', 'MASTER', '2005-02-02', '2005-12-06', '', 'admin-20090706-13:59', 'admin-20090710-9:49', 0),
+(004, 000002, '', 'MT.VICTORY PRIMA', '', 014, 3570, 0, 0, '', 'MASTER', '2003-12-20', '2004-12-20', '', 'admin-20090706-14:02', 'admin-20090710-9:53', 0),
+(001, 000003, 'PT Humpuss Intermoda Transport', 'Griya Asmat', 'Indonesia', 014, 14525, 0, 0, 'B & W', 'Master', '2008-09-09', '2009-02-27', '', 'admin-20090706-15:18', 'admin-20090706-15:36', 0),
+(001, 000001, 'ASM Singapore', '', 'ANDHIKA ANDHINI', 004, 2737, 4042, 2400, 'HANSHIN', 'C/E', '1996-05-23', '1997-07-18', '', 'admin-20090706-15:23', '', 0),
+(002, 000003, 'Sampta Ship Management', 'Maju Jaya', 'Singapore', 014, 10884, 0, 0, 'Akasaka', 'Master', '2008-01-09', '2008-08-29', '', 'admin-20090706-15:54', '', 0),
+(003, 000003, 'PT Scorpa Pranedya', 'Pranedya Tritya', 'Indonesia', 014, 12666, 0, 0, 'Akasaka', 'C / O', '2007-07-24', '2007-12-30', '', 'admin-20090709-10:45', 'admin-20090709-10:46', 0),
+(001, 000004, 'BAYCORP', 'MT. DANUM', 'MALAYSIA', 016, 4792, 0, 0, '', 'MASTER', '2008-07-29', '2009-01-22', 'VACATION', 'admin-20090713-13:17', 'admin-20090716-9:45', 0),
+(002, 000004, 'RAFFLES', 'MT. THERESA JUPITER', 'SINGAPORE', 016, 10791, 0, 0, '', 'MASTER', '2008-02-01', '2008-06-04', 'VACATION', 'admin-20090716-9:29', 'admin-20090716-9:57', 0),
+(003, 000004, 'HONGLAM', 'MT. STARLING', 'SINGAPORE', 016, 5256, 0, 0, '', 'MASTER', '2007-04-20', '2008-01-16', 'VACATION', 'admin-20090716-9:49', 'admin-20090716-9:57', 0),
+(001, 000005, 'PETROJAYA MARINE SDN BHD', 'HARTAMAS', '', 014, 3606, 0, 0, 'HANSHIN', 'MASTER', '2008-03-13', '2008-09-13', '', 'admin-20090716-16:30', '', 0),
+(002, 000005, 'SHELL TANKER BV ROTTERDAM', 'ENTALINA', '', 014, 9850, 0, 0, 'MITSUBISHI', '2 / O', '1995-12-20', '1996-08-02', '', 'admin-20090717-9:23', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tbltype`
+-- 
+
+CREATE TABLE `tbltype` (
+  `KdType` tinyint(3) unsigned zerofill NOT NULL default '000' COMMENT 'Kode Type',
+  `NmType` varchar(5) NOT NULL COMMENT 'Nama Type',
+  `DefType` varchar(50) NOT NULL COMMENT 'Definisi Type',
+  `AddUsrDt` varchar(20) NOT NULL COMMENT 'Informasi Penambah Data',
+  `UpdUsrDt` varchar(20) NOT NULL COMMENT 'Informasi Pengubah Data',
+  `Deletests` tinyint(1) NOT NULL default '0' COMMENT 'status jika 1, true',
+  PRIMARY KEY  (`KdType`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tbltype`
+-- 
+
+INSERT INTO `tbltype` (`KdType`, `NmType`, `DefType`, `AddUsrDt`, `UpdUsrDt`, `Deletests`) VALUES 
+(001, '-', '', '', 'admin-20090630-14:09', 0),
+(002, 'B/C', 'Bulk Carrier', '', '', 0),
+(003, 'CON', 'Cellular Container', '', '', 0),
+(004, 'CHM', 'Chem Carrier IMO I-II', '', '', 0),
+(005, 'CH3', 'Chem Carrier IMO III', '', '', 0),
+(006, 'DRG', 'Dredgers', '', '', 0),
+(007, 'DP', 'Dynamic Positioning', '', '', 0),
+(008, 'FSH', 'Fishing Vsl', '', '', 0),
+(009, 'FSO', 'FloatingStorageOffldg', '', '', 0),
+(010, 'FPSO', 'FloatgProdStorOffldg', '', '', 0),
+(011, 'GCD', 'General Cargo', '', '', 0),
+(012, 'HLV', 'Heavy Lift Vsl', 'admin-20090706-14:07', '', 0),
+(013, 'GAS', '', 'admin-20090706-14:07', '', 0),
+(014, 'TNP', 'Tanker Products', 'admin-20090706-15:32', '', 0),
+(015, 'BRG', 'Barge', 'admin-20090710-9:48', 'admin-20090710-9:49', 0),
+(016, 'CMC', 'CHEMICAL', 'admin-20090713-13:18', '', 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `tblundergo`
+-- 
+
+CREATE TABLE `tblundergo` (
+  `idexp` char(2) NOT NULL,
+  `idperson` char(6) NOT NULL,
+  `optdtl` char(100) NOT NULL COMMENT 'Details of Operation',
+  `optdt` date NOT NULL COMMENT 'Date',
+  `optdisable` char(20) NOT NULL COMMENT 'Period of Disability',
+  `optnowcond` char(30) NOT NULL COMMENT 'Present Condition',
+  `addusrdt` char(20) NOT NULL,
+  `updusrdt` char(20) NOT NULL,
+  `deletests` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `tblundergo`
+-- 
+

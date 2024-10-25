@@ -1,0 +1,194 @@
+<!-- <script type="text/javascript" src="../../js/animatedcollapse.js"></script> -->
+
+<script type="text/javascript">
+function loadUrl(newLocation)
+{
+	window.location = newLocation;
+	return false;
+}
+
+function klikBtnSearch()
+{
+	document.getElementById('hrefThickbox').href="templates/halSearch.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	document.getElementById('hrefThickbox').click();
+}
+
+function klikBtnPass()
+{
+	document.getElementById('hrefThickbox').href="templates/halPassword.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	document.getElementById('hrefThickbox').click();
+}
+
+function klikBtnHelp()
+{
+	if(detectBrowser() == "MSIE")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf=../helpArchives.pdf", '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+	else if(detectBrowser() == "Firefox")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf=../helpArchives.pdf", '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+}
+
+function openPdf(filePdf)
+{
+	if(detectBrowser() == "MSIE")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+	else if(detectBrowser() == "Firefox")
+	{
+		window.showModalDialog("halOpenPdf.php?filePdf="+filePdf, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+}
+//animatedcollapse.addDiv('btnZoom', 'fade=1,height=auto,overflow-y=scroll')
+// animatedcollapse.ontoggle=function($, divobj, state){ //fires each time a DIV is expanded/contracted
+	//$: Access to jQuery
+	//divobj: DOM reference to DIV being expanded/ collapsed. Use "divobj.id" to get its ID
+	//state: "block" or "none", depending on state
+// }
+// animatedcollapse.init()
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<div class="archivesContainer">
+
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr>
+	<td height="35">
+    <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT -->
+    	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+        <tr>
+            <td>&nbsp;&nbsp;<span class="teksMyFolder" style="color:#369;">ARCHIVES</span>&nbsp;{halaman2}&nbsp;</td>
+        </tr>
+        </table>
+    
+    </td>
+</tr>
+
+<tr>
+	<td valign="bottom" class="">
+       &nbsp;
+       <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button" onclick="loadUrl('index.php?aksi=myFolder'); return false;" style="width:100px;height:50px;" title="My Folder and Document">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Archive-blue-32.png" height="25"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">MY FOLDER</td>
+            </tr>
+          </table>
+      </button>
+      &nbsp;
+      <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button" onclick="loadUrl('index.php?aksi=ownShared'); return false;" style="width:100px;height:50px;" title="My Folder and Document which share to others">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Metro-Taskmgr-Blue-32.png" height="25" border="0"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">OWN SHARED</td>
+            </tr>
+          </table>
+      </button>
+      &nbsp;
+      <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button" onclick="loadUrl('index.php?aksi=otherShare'); return false;" style="width:100px;height:50px;" title="Others Folder and Document which shared">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Metro-Taskmgr-Copy-Blue-32.png" height="25" border="0"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">OTHER SHARED</td>
+            </tr>
+          </table>
+      </button>
+      &nbsp;
+      <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button" onclick="loadUrl('index.php?aksi=subordinate'); return false;" style="width:100px;height:50px;" title="My Subordinate Folder and Activities">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Site-Map-blue-32.png" height="25"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">SUBORDINATE</td>
+            </tr>
+          </table>
+      </button>
+      &nbsp;
+      <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button" onclick="loadUrl('index.php?aksi=dailyAct'); return false;" style="width:100px;height:50px;"  title="My Daily Activity">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Presentation-blue-32.png" height="25"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">DAILY ACTIVITY</td>
+            </tr>
+          </table>
+      </button>
+      &nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;
+      <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button" onclick="loadUrl('index.php?aksi=search'); return false;" style="width:100px;height:50px;" title="Search Folder or Document">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Search-blue-32.png" height="25"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">SEARCH</td>
+            </tr>
+          </table>
+      </button>
+      &nbsp;
+      <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button"  onclick="loadUrl('index.php?aksi=password'); return false;" style="width:100px;height:50px;"  title="Change Password">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Safe-blue-32.png" height="25"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">PASSWORD</td>
+            </tr>
+          </table>
+      </button>
+      &nbsp;
+      <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" type="button"  onclick="klikBtnHelp();" style="width:50px;height:50px;" title="Manual Book Pdf">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+            <tr>
+              <td align="center"><img src="../picture/Metro-Help-Blue-32.png" height="25"/> </td> 
+            </tr>
+            <tr>
+              <td align="center">HELP</td>
+            </tr>
+          </table>
+      </button>
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+    </td>
+</tr>
+
+</table>
+
+</div>
+<div class="archivesContainerBottom">
+{btnZoomFrame}
+	<div id="btnZoom" style="display:none;">
+    	<button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" style="width:36px;height:36px;" type="button" onclick="frameSize('down');">
+            <table class="fontBtnKecil" onMouseOver="this.className='fontBtnKecilHover'" onMouseOut="this.className='fontBtnKecil'" border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgDown" src="../../picture/btnDown.png" height="25" border="0"/> </td> 
+                </tr><tr><td>&nbsp;</td></tr>
+            </table>
+         </button>
+         <button class="btnStandarKecil" onMouseOver="this.className='btnStandarKecilHover'" onMouseOut="this.className='btnStandarKecil'" style="width:36px;height:36px;" type="button" onclick="frameSize('up');">
+            <table class="fontBtnKecil" onMouseOver="this.className='fontBtnKecilHover'" onMouseOut="this.className='fontBtnKecil'" border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgUp" src="../../picture/btnUp.png" height="25" border="0"/></td> 
+                </tr><tr><td>&nbsp;</td></tr>
+            </table>
+         </button>
+	</div>
+    <p id="back-top">
+		<a href="#top"><span></span>Back to Top</a>
+	</p>
+</div>

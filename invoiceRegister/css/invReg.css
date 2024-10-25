@@ -1,0 +1,505 @@
+@charset "utf-8";
+/* CSS Document */
+.wrap
+{
+	position:relative;
+	width:1000px;
+	margin:0 auto;
+	
+	left:50%;
+	margin-left:-500px;
+}
+
+.kotakInvReg
+{
+	position:absolute;
+	
+	width: 998px;
+	height:543px;
+	margin-top:40px;
+	
+	left:50%;
+	margin-left:-499px;
+
+	background-color: #F9F9F9;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #CCC;
+	overflow:hidden;
+}
+
+.kotakTableCari
+{
+	position:absolute;
+	
+	width:340px;
+	height:150px;
+	top:86px;
+	left:585px;
+	
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #CCC;
+
+	
+	padding:5px;
+	
+	z-index:1;
+}
+
+.contactAdminContainer
+{
+	position:absolute;
+	
+	width: 995px;
+  	margin: 0 auto; 
+	height:543px;
+	margin-top:40px;
+	
+	left:50%;
+	margin-left:-498px;
+	
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #999;
+
+	background:url(../picture/Not-Allowed-994_555.jpg) no-repeat 50% 0;
+}
+
+.namaAplikasi
+{
+	position:absolute;
+	right:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+	top:46px;
+	text-align:center;
+	width:180px;
+	
+	cursor:default;
+	color:#369;
+	font-weight:bold;
+	font-size:15px;
+	font-family:Arial;
+	
+	background-color:#F2FAFF;
+	border: solid 1px #369;
+	
+	z-index:1;
+}
+
+.namaPage
+{
+	position:absolute;
+	width:200px;
+	top:60px;
+	left:420px;
+	
+	text-align:left;
+	font-weight:bold;
+	font-size:13px;
+	font-family:Arial;
+	text-decoration:underline;
+	
+	border: solid 0px #369;
+	
+	z-index:1;
+}
+
+.kotakBtnAtas
+{
+	position:absolute;
+	border: solid 0px #999;
+	top:5px;
+	left:5px;
+	width:994px;
+	height:56px;
+	text-align:left;
+}
+
+.kotakBtnAtas span
+{
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
+
+}
+
+.kotakBtnTengah
+{
+	position:absolute; 
+	top:40px; 
+	left:5px; 
+	width:990px; 
+ 	vertical-align:top;
+ 
+	text-align:left;
+	/*border: solid 1px #CCC;	*/
+}
+
+.fontSpanBatch
+{
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
+	vertical-align:middle;
+}
+
+.kotakSortBy
+{
+	position:absolute; 
+	border: solid 0px #CCC; 
+	top:45px; 
+	right:5px; 
+	
+	text-align:right;
+	/*border: solid 1px #CCC; 	*/
+}
+
+.pleaseWait
+{
+	position:absolute;
+	margin:0 auto;
+	width:100%;
+	
+	top:40px;
+	z-index:10;
+}
+
+.pleaseWait2
+{
+	position:absolute;
+	margin:0 auto;
+	width:98%;
+	height:30px;
+	
+	top:0px;	
+	z-index:10;
+}
+
+.pleaseWait3
+{
+	position:absolute;
+	margin:0 auto;
+	width:99%;
+	
+	top:0px;	
+	z-index:10;
+}
+
+.isiPleaseWait
+{
+	width:200px;
+	margin: 0 auto;
+	
+	padding-left-right: 4px;
+	padding-top: 7px;
+
+	color:#333;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:12px;
+	height:30px;
+	background-color:#F2FAFF;
+
+	-webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.kotakIframe
+{
+	position:absolute; 
+	border: solid 1px #CCC; 
+	top:80px; 
+	left:5px; 
+	width:986px; 
+	height:455px;
+ 
+	text-align:left;
+}
+
+.kotakIframeCariIncoming
+{
+	position:absolute; 
+	border: solid 1px #CCC; 
+	top:148px; 
+	left:8px; 
+	width:848px; 
+	height:365px;
+ 
+	text-align:left;	
+
+}
+
+.kotakTeksMap
+{
+	position:absolute; 
+	border: solid 0px #CCC; 
+	top:62px; 
+	left:5px; 
+	
+	text-align:left;
+}
+
+.kotakTeksMap a
+{
+	color:#369;
+	font-family:tahoma;
+	font-size:10px;
+}
+
+.divIframeInc
+{
+	width:983px;
+	overflow:scroll; 
+	overflow-y:hidden; 
+	-ms-overflow-y:hidden; 
+	top: expression(offsetParent.scrollTop);
+}
+
+.divIframeInc table
+{
+	background-color:#8A8A8A;
+	color:#F9F9F9;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:11px;
+}
+
+.divIframeCariInc
+{
+	width:848px;
+	overflow:scroll; 
+	overflow-y:hidden; 
+	-ms-overflow-y:hidden; 
+	top: expression(offsetParent.scrollTop);
+}
+
+.loader 
+{
+	position:absolute;
+	left: 0px;
+	top:0px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background: url('../picture/loading (124).gif') 50% 50% no-repeat rgb(249,249,249);
+}
+
+.inputType
+{
+	color:#333;
+	font-family:Arial;
+	font-size:11px;
+}
+
+.errorMsgOld
+{
+	/*border: solid 1px #ccc;*/
+	text-align:left;
+	margin-left:10px;
+	margin-right:10px;
+	margin-bottom:10px;
+	font-size:12px;
+	font-family:"Comic Sans MS";
+	color:#900;
+	font-weight:100;
+	position:static;
+	text-decoration:blink;
+}
+
+.errorMsgInv
+{
+	border-style:dashed;
+	border-color:#FF9B9B;
+	border-width:1px;
+	background-color:#FFE1E1;
+
+	text-align:left;
+	font-weight:100;
+	color:#900;
+	font-size:12px;
+	font-family:"Comic Sans MS";
+}
+
+.errorMsgInv img
+{
+	position:relative;
+	top:2px;
+	left:2px;
+}
+
+.gayaKalender
+{
+	position:relative;
+	top:4px;
+	cursor: pointer; 
+	border: 1px solid red;
+	
+	-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    		box-sizing: border-box;
+}
+
+.gayaKalender:hover
+{
+	background-color:red;
+}
+
+.spanKalender
+{
+	position:relative;
+	top:3px;
+	font-size:11px;
+	font-family:'Arial Narrow';
+	font-weight:bold;
+	color:#666;
+}
+
+.tabelDetailCari
+{
+	
+}
+
+.tabelDetailCari a
+{
+	color:#555;
+	
+}
+
+.tabelDetailCari td
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:dotted;
+	letter-spacing:1px;
+	
+	height:15px;
+	font-size:11px;
+	color:#485a88;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+/* DIBAWAH INI DIGUNAKAN UNTUK MENCOBA AUTO COMPLETE */
+.elementMenuaaa
+{
+	/*height:22px;*/
+	vertical-align:middle;
+	font-family:tahoma;
+	font-size:11px;
+    padding:2px;
+
+    border-radius:2px;
+    border: solid 1px #A4B97F;
+    /*background-color: #f5f5f5;*/
+	background-color:#FFF;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.menuAutoComplete
+{
+	width:200px;
+	height:20px;
+	line-height:20px;
+
+	padding-left:0px;
+	border: 1px solid #3D9970;
+	border-radius:0px;
+	background-color:#FFF;
+	
+	z-index:2;
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+}
+
+.divElementInput2
+{
+	background: #FFF url(../picture/menu-arrow-down-2.jpg) no-repeat 50% center;
+	
+	height:19px;
+	line-height:19px;
+	cursor:pointer;
+	
+	border: solid 1px #A4B97F;
+	border-left:0px;
+}
+
+.divElementInput2:hover
+{
+	background: #FFF url(../picture/menu-arrow-down-2-hover.jpg) no-repeat 50% center;
+}
+
+.elementInput2
+{
+	/*background: #FFF url(../picture/menu-arrow-down-2.jpg) no-repeat 98% center;*/
+	
+	height:21px;
+	line-height:20px;
+	border: solid 1px #A4B97F;
+	border-right:0px;
+	
+	font-family:tahoma;
+	font-size:11px;
+	color:#485a88;
+	
+	padding:0px;
+	padding-left:7px;
+	padding-right:20px;
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.menuAutoComplete input[type="text"]
+{
+	font-size:13px;
+	font-family: robotoNormal;
+	text-decoration:none;
+	color:#3D9970;
+	border-width:0px;
+	
+
+	width:340px;
+	height:20px;
+	line-height:20px;
+	vertical-align:middle;	
+	
+	padding-top:0px;
+	padding-left:10px;
+	padding-right:10px;
+	
+	background: #FFF url(../picture/Bullet-Arrow-Down-32.png) no-repeat 95% center;
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.menuAutoComplete input[type="text"]:hover
+{
+	box-shadow: 0 0 5px #3D9970; 
+}
+
+/*.hurufBesar{
+    text-transform:uppercase;
+}
+
+.hurufBesarUbah{
+    text-transform:uppercase;
+}*/
+
+#senderVendor{
+    text-transform:uppercase;
+}
+
+#customer{
+    text-transform:uppercase;
+}

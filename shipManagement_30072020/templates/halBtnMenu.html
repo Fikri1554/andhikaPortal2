@@ -1,0 +1,142 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        //var vn = $("#namaKapal").val();
+        $('#namaKapal').change(function(){
+            // $("#idVesselCode").val($(this).val());
+            var vesselName = $.trim($("#namaKapal option:selected").text());
+            $.post('../shipManagement/class/actionNav.php',
+            { actionSetSessionVessel : $(this).val(),vesselName : vesselName},
+                function(data) 
+                {   
+                },
+            "json"
+            );
+            // vn = $(this).val();
+            // if (vn == "0" || vn == "00") 
+            // {
+            //     $("#idPlannMaintenance").css("display","none");
+            //     $("#idBtnDeficiency").css("display","none");
+            //     $("#btnUploadFileExcel").css("display","none");
+            // }else{
+            //     $("#idPlannMaintenance").css("display","");
+            //     $("#idBtnDeficiency").css("display","");
+            //     $("#btnUploadFileExcel").css("display","");
+            // }
+        });
+    });
+</script>
+
+<div class="archivesContainer">
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td height="35">
+    <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT -->
+    	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+        <tr>
+            <td>&nbsp;&nbsp;<span class="teksMyFolder" style="color:#369;font-size: 14px;">SHIP MANAGEMENT</span>&nbsp;&nbsp;{halaman2}&nbsp;{halaman3}&nbsp;</td>
+        </tr>
+        </table>
+    
+    </td>
+</tr>
+
+<tr>
+	<td>
+        <div style="text-align: right;padding:5px 10px 5px 10px;">
+            {selectedNamaKapal}
+        </div>
+        <div id="idNavHome">
+            {btnNavUploadFile}
+            {btnSurveyStatus}
+            {btnPlannMaintenance}
+            {btnDeficiency}
+        </div>
+            
+        <form name="formPlannMaintenance" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanPlannMaintenance" />
+        </form>
+        <form name="formDeficiency" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanDeficiency" />
+        </form>
+        <form name="formAllCompJob" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanAllCompJob" />
+        </form>
+        <form name="formUpdateJobDone" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanUpdateJob" />
+        </form>
+        <form name="formmonthCompRunningHours" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMonthCompRunningHours" />
+            <input type="hidden" id="searchDate" name="searchDate" value="" />
+        </form>
+        <form name="formMasterCompJob" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMasterCompList" />
+        </form>
+        <form name="formMasterJobDesc" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMasterJobDesc" />
+        </form>
+        <form name="formMasterWorkClass" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMasterWorkClass" />
+        </form>
+        <form name="formRoutinJob" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanRoutinJob" />
+        </form>
+        <form name="formMaintenanceReport" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMaintenanceReport" />
+        </form>
+        <form name="formWorkListReport" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanWorkListReport" />
+        </form>
+        <form name="formMaintenanceForecastReport" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMaintenanceForecastReport" />
+        </form>
+        <form name="formSurveyStatus" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanSurveyStatus" />
+        </form>
+        <form name="formMstVesselSurveyStatus" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMstVesselSurveyStatus" />
+        </form>
+        <form name="formMstPicSurveyStatus" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMstPicSurveyStatus" />
+        </form>
+        <form name="formMstCertSurveyStatus" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanMstCertSurveyStatus" />
+        </form>
+        <form name="formCertSurveyStatus" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanCertSurveyStatus" />
+        </form>
+        <form name="formHome" method="post" action="../shipManagement/">
+        </form>
+        <form name="formReportSurveyStatus" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanReportSurveyStatus" />
+        </form>
+        <form name="formUploadFileExcel" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanUploadFileExcel" />
+        </form>
+        <form name="formUploadExcelNoon" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanUploadExcelNoon" />
+        </form>
+        <form name="formUploadExcelOil" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanUploadExcelOil" />
+        </form>
+        <form name="formUploadSummaryConsSpeed" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanUploadSummaryConsSpeed" />
+        </form>
+        <form name="formUploadSummaryCargoTrace" method="post" action="../shipManagement/">
+            <input type="hidden" id="aksi" name="aksi" value="halamanUploadSummaryCargoTrace" />
+        </form>
+    </td>
+</tr>
+
+<tr>
+	<td>
+    	<!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+    </td>
+</tr>
+
+</table>
+
+</div>

@@ -1,0 +1,184 @@
+@charset "utf-8";
+/* CSS Document */
+.wrap
+{
+	position:relative;
+	width:1000px;
+	margin:0 auto;
+	
+	left:50%;
+	margin-left:-500px;
+}
+
+.kotakKonten
+{
+	position:absolute;
+	
+	width: 998px;
+	height:543px;
+	margin-top:40px;
+	
+	left:50%;
+	margin-left:-499px;
+
+	background-color: #F9F9F9;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #CCC;
+	overflow:hidden;
+}
+
+.contactAdminContainer
+{
+	position:absolute;
+	
+	width: 995px;
+  	margin: 0 auto; 
+	height:543px;
+	margin-top:40px;
+	
+	left:50%;
+	margin-left:-498px;
+	
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #999;
+
+	background:url(../picture/Not-Allowed-994_555.jpg) no-repeat 50% 0;
+}
+
+.namaAplikasi
+{
+	position:absolute;
+	right:4px;
+	padding-top:5px;
+	padding-bottom:5px;
+	top:45px;
+	text-align:center;
+	
+	cursor:default;
+	color:#369;
+	font-weight:bold;
+	font-size:15px;
+	font-family:Arial;
+	
+	background-color:#F2FAFF;
+	border: solid 1px #369;
+	
+	z-index:1;
+}
+
+.pleaseWait
+{
+	position:absolute;
+	margin:0 auto;
+	width:100%;
+	
+	top:40px;
+	z-index:10;
+}
+
+.isiPleaseWait
+{
+	width:200px;
+	margin: 0 auto;
+	
+	padding-left-right: 4px;
+	padding-top: 7px;
+
+	color:#333;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:12px;
+	height:30px;
+	background-color:#F2FAFF;
+
+	-webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.kotakIframe1
+{
+	position:absolute;
+	border: solid 0px #CCC;
+	top:63px;
+	left:4px;
+	width:986px;
+	height:470px;
+	text-align:left;
+}
+
+.kotakBtnAtas
+{
+	position:absolute;
+	border: solid 0px #999;
+	top:4px;
+	left:4px;
+	width:994px;
+	height:56px;
+	text-align:left;
+}
+
+.kotakBtnTengah
+{
+	position:absolute; 
+	top:33px; 
+	left:4px; 
+	width:700px; 
+ 	vertical-align:top;
+ 
+	text-align:left;
+	border: solid 0px #CCC;
+}
+
+.kotakInfoNotif
+{
+	position:absolute;
+	right:170px;
+	top:4px;
+	width:354px;
+    height:55px;
+    padding-left:2px;
+    padding-right:2px;
+
+	text-align:left;
+	color:#F9F9F9;
+	font-weight:bold;
+	font-size:11px;
+	font-family:Arial;
+	
+	background-color:#008CBA;
+    border: solid 1px #369;
+    
+    -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.tabelDetailInfo a
+{
+	color:#333;
+}
+
+.tabelDetailInfo span
+{
+	color:#888;
+	font-size:11px;
+}
+
+.tabelDetailInfo td
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:dotted;
+	letter-spacing:1px;
+	
+	height:15px;
+	font-size:11px;
+	color:#485a88;
+	font-weight:bold;
+	font-family:Arial;
+}

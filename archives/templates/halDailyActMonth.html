@@ -1,0 +1,284 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../js/animatedcollapse.js"></script>
+<script>
+function rubahDate(empNo, userIdSelect)
+{
+	//alert(empNo+" / "+userIdSelect);
+	document.getElementById('monthTxt').style.fontWeight = 'normal';
+	document.getElementById('dailyTxt').style.fontWeight = 'bold';
+	
+	var tahun = document.getElementById('tahun').value;
+	var bulan = document.getElementById('bulan').value.split("-");
+	var bulan2 = bulan[0];
+	var bulan3 = bulan[1];
+	
+	document.getElementById('idDivAnimateLoading').innerHTML="<img style='vertical-align:bottom;' height='18' src='../../picture/ajax-loader23.gif'/>&nbsp;&nbsp;<b>( Please Wait )</b>";
+	setTimeout(function()
+	{
+		animatedcollapse.hide('jason');
+		animatedcollapse.hide('btnZoom');
+		$("#iframeHal").animate({height: 390}, 500);
+		document.getElementById('iframeHal').height = 390;
+	},500);
+	
+	document.getElementById('iframeHal').src = "";
+	document.getElementById('iframeHal').src = "templates/halCalendarContainer.php?month="+bulan2+"-"+tahun+"&empNo="+empNo+"&userIdSelect="+userIdSelect;
+}
+
+function monthlyUrl(empNo)
+{
+	document.getElementById('dailyTxt').style.fontWeight = 'normal';
+	document.getElementById('monthTxt').style.fontWeight = 'bold';
+	
+	var tahun = document.getElementById('tahun').value;
+	var bulan = document.getElementById('bulan').value.split("-");
+	var bulan2 = bulan[0];
+
+	$("#iframeHal").animate({height: 290}, 500);
+	document.getElementById('iframeHal').height = 290;
+	animatedcollapse.show('jason');
+	animatedcollapse.show('btnZoom');
+	document.getElementById('idDivAnimateLoading').innerHTML= "<img style='vertical-align:bottom;' height='18' src='../../picture/ajax-loader23.gif'/>&nbsp;&nbsp;<b>( Please Wait )</b>";
+	//document.getElementById('btnZoom').innerHTML = '{btnZoomFrame}';
+	
+	document.getElementById('iframeHal').src = "";
+	document.getElementById('iframeHal').src = "templates/halMonthlyActList.php?empNo="+empNo+"&bulan="+bulan2+"&tahun="+tahun;
+}
+function clickBtnHari(empNo, dateAct)
+{
+	document.getElementById('hrefThickbox').href="templates/halSubordinateJobList.php?empNo="+empNo+"&dateAct="+dateAct+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	
+	document.getElementById('hrefThickbox').click();
+}
+
+function showJobList(divName, isiJob, Source)
+{
+	if (Source=="1"){ 
+	if (document.layers) document.layers['popUpJobList'].visibility = "show" 
+	else if (document.all) document.all['popUpJobList'].style.visibility = "visible" 
+	else if (document.getElementById) document.getElementById('popUpJobList').style.visibility = "visible" 
+	} 
+	else 
+	if (Source=="0"){ 
+	if (document.layers) document.layers['popUpJobList'].visibility = "hide" 
+	else if (document.all) document.all['popUpJobList'].style.visibility = "hidden" 
+	else if (document.getElementById) document.getElementById('popUpJobList').style.visibility = "hidden" 
+	} 
+	
+	//var isiJobb = "<tr bgcolor=#F2FBFF><td height=20>1.&nbsp;Andhika Portal - Modul Folder Windows Explorer</td></tr><tr bgcolor=#DDF0FF><td height=20>2.&nbsp;Install Modul QHSE & SURVEY di Andhika Portal &#34;aaa&#34; &#39;bbb&#39;</td></tr><tr bgcolor=#F2FBFF><td height=20>3.&nbsp;Andhika Portal - Modul Folder Windows Explorer</td></tr>";
+	
+	 document.getElementById(divName).innerHTML = "<table cellspacing=0 border=0 width=100% bgcolor=#E1EDFF style=color:#333;font-family:Arial;font-size:12px;>"
+								+isiJob
+                                +"</table>";
+}
+// === start == Animated Collapsible DIV
+animatedcollapse.addDiv('jason', 'fade=1,height=auto,overflow-y=scroll')
+animatedcollapse.addDiv('btnZoom', 'fade=1,height=auto,overflow-y=scroll')
+animatedcollapse.ontoggle=function($, divobj, state){ //fires each time a DIV is expanded/contracted
+	//$: Access to jQuery
+	//divobj: DOM reference to DIV being expanded/ collapsed. Use "divobj.id" to get its ID
+	//state: "block" or "none", depending on state
+}
+animatedcollapse.init()
+// === end of == Animated Collapsible DIV
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeHal').height ;
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	if(status == "down")
+	{
+		$("#iframeHal").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeHal').height = heightFramePlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 290)
+		{
+			$("#iframeHal").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeHal').height = heightFrameMin;
+			
+			if(heightFrameMin == 290)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+function openThickboxWindow(id, aksi, dateAct)
+{
+	var empNo = document.getElementById('empNo').value;
+	document.getElementById('hrefThickbox').href="templates/halMonthlyAct.php?empNo="+empNo+"&idactivity="+id+"&halaman="+aksi+"&dateAct="+dateAct+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	
+	document.getElementById('hrefThickbox').click();
+}
+function cari(paramCari)
+{
+	var empNo = document.getElementById('empNo').value;
+	var tahun = document.getElementById('tahun').value;
+	var bulan = document.getElementById('bulan').value.split("-");
+	var bulan2 = bulan[0];
+	var bulan3 = bulan[1];
+	
+	if(paramCari.replace(/ /g,"") == "")
+	{	document.getElementById('aksi').value = "";	}
+	else
+	{	document.getElementById('aksi').value = "cari";	}
+	var aksi = document.getElementById('aksi').value;
+
+	document.getElementById('iframeHal').src = "";
+	document.getElementById('iframeHal').src = "templates/halMonthlyActList.php?empNo="+empNo+"&bulan="+bulan2+"&tahun="+tahun+"&aksi="+aksi+"&paramCari="+paramCari;
+
+}
+</script>
+
+<style>
+.kotakPopUpJob
+{
+	position:absolute;
+	width: 995px;
+	margin-top:12px;
+	
+	left:50%;
+	margin-left:-499px;
+
+	/*background-color: #F9F9F9;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #CCC;
+	overflow:hidden;
+	height:300px;*/
+}
+
+#popUpJobList
+{ 
+	position:inherit; 
+	visibility:hidden; 
+	border:solid 1px #CCC; 
+	padding:1px; 
+	background-color:#FFF;
+	bottom:10;
+	right:0px;
+	margin-right:0px;
+	width:500px;
+}
+</style>
+
+<div class="kotakPopUpJob">
+	<div id="popUpJobList"></div>
+</div>
+
+
+<input type="hidden" id="empNo" value="{empNo}"/>
+<a class="thickbox" id="hrefThickbox"></a>
+              
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+	<td id="idHalTeksLvl">
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        <tr>
+        	<td height="20" colspan="3">&nbsp;
+            <style>
+			/*
+			#popUpJobListaa
+			{ 
+				position:inherit; 
+				visibility:hidden; 
+				border:solid 1px #CCC; 
+				padding:1px; 
+				background-color:#FFF;
+				bottom:10;
+				right:10px;
+				margin-right:10px;
+				width:500px;
+			}
+			*/
+			</style>
+			<div id="popUpJobListaaa">
+				&nbsp;
+			</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" align="left">
+            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select class="elementMenu" id="tahun" name="tahun" title="Choose Date">
+                    {menuTahun}
+                </select>
+                <select class="elementMenu" id="bulan" name="bulan" title="Choose Month">
+                    {menuBulan}
+                </select>
+                <button class="btnStandar" onclick="rubahDate('{empNo}', '{userIdSelect}');" style="width:65px;height:29px;" title="Display Calendar Activity">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="right" width="25"><img src="../picture/table_48.png" height="20"/> </td>
+                        <td align="center" id="dailyTxt">Daily</td>
+                      </tr>
+                    </table>
+                </button>
+                <!--<a id="trJudul" href="javascript:animatedcollapse.toggle('jason')"></a>-->
+                <button class="btnStandar" onclick="monthlyUrl('{empNo}');" style="width:80px;height:29px;" title="Display Daily Activity Month List">
+                	<table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    	<tr>
+                        	<td align="right" width="25"><img src="../picture/navigate_48.png" height="20"/></td>
+                            <td align="center" id="monthTxt">Monthly</td>
+                        </tr>
+                    </table>
+                </button>&nbsp;
+                <span style="font-family:sans-serif;font-size:16px;font-weight:bold;color:#333;vertical-align:bottom;">{subordinateName}</span>&nbsp;&nbsp;<span id="idDivAnimateLoading" style="font-family:sans-serif;font-size:16px;font-weight:bold;color:#333;vertical-align:bottom;">&nbsp;{load}</span>
+            </td>
+            <td width="652">&nbsp;</td>
+        </tr>
+        
+        </table>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<div id="jason" style="display:none;margin-top:4px;">
+            <table cellpadding="0" cellspacing="0" width="100%" border="0">
+                <tr align="center" class="barMonthly">
+                	<td width="30%" class="">&nbsp;</td>
+                    <td width="40%" class="">
+                        <span>:: {subordinateLbl} MONTHLY LIST ::</span>
+                    </td>
+                    <td width="30%" class="" align="right">
+                    	<img src="../picture/Search2-32.png" style="vertical-align:middle;"/>
+						<input type="text" class="elementSearch1" id="paramText" size="35" style="height:11px;color:#333;" onfocus="cari(this.value);" onkeyup="cari(this.value);">&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <table cellpadding="0" cellspacing="0" width="100%" border="0">
+                            <tr style="font-family:Arial,sans-serif;font-weight: bold;font-size: 0.9em;height:30px;">
+                                <td width="4%" align="center" class="">No.</td>
+                                <td width="4%" align="center" class="">Date</td>
+                                <td width="30%" align="center" class="">Activity</td>
+                                <td width="4%" align="center" class="">Read</td>
+                                <td width="46%" align="center" class="">Related Info</td>
+                                <td width="12%" align="center" class="">Status</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+	</td>
+</tr>
+<tr>
+	<td valign="top">
+     <iframe width="100%" height="390" src="{srcMyFolder}" target="iframeHal" name="iframeHal" id="iframeHal" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+    </td>
+</tr>
+</table>

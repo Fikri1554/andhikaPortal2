@@ -1,0 +1,370 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="css/cssSpj.css" rel="stylesheet" type="text/css" />
+<link href="css/loading.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen"></LINK>
+<SCRIPT type="text/javascript" src="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+<script type="text/javascript" src="js/loading.js"></script>
+<script type="text/javascript" src="../js/loading.js"></script>
+
+<script>
+function openThickboxWindow(id, aksi)
+{	
+	document.getElementById('hrefThickbox').href="templates/halReason.php?formId="+id+"&aksi="+aksi+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=242&width=450&modal=true";
+
+	document.getElementById('hrefThickbox').click();
+}
+
+function detailSpj(formId,halaman,status)
+{
+	var formId = $('#formId').val();
+	if(status == "")
+	{
+		$('#iframeDetilForm').attr("src","templates/halDetilForm.php?formId="+formId+"&halaman="+halaman);
+	}
+	if(status != "")
+	{
+		$('#iframeDetilForm').attr("src","templates/halDetilForm.php?formId="+formId+"&halaman="+halaman+"&aksi=ubahStatus");
+	}
+}
+
+function btnAksi(status)
+{
+	$('#status').html(status);
+	
+	if(status != "Completed" && status != "Approved")
+	{
+		$('#btnAprv').attr('className','spjBtnStandar');
+		$('#btnAprv').removeAttr('disabled');
+		$('#btnRev').attr('className','spjBtnStandar');
+		$('#btnRev').removeAttr('disabled');
+		$('#btnCancel').attr('className','spjBtnStandar');
+		$('#btnCancel').removeAttr('disabled');
+
+	}
+	if(status == "Completed" || status == "Approved")
+	{
+		$('#btnAprv').attr('className','spjBtnStandarDis');
+		$('#btnAprv').attr('disabled','disabled');
+		$('#btnRev').attr('className','spjBtnStandarDis');
+		$('#btnRev').attr('disabled','disabled');
+		$('#btnCancel').attr('className','spjBtnStandarDis');
+		$('#btnCancel').attr('disabled','disabled');
+	}
+	if(status == "Revise" || status == "Cancel")
+	{
+		if (status == "Cancel") { $('#status').html("Canceled"); }
+		refreshBtn();
+	}
+}
+
+function btnAksiKhusus(status)
+{
+	$('#status').html(status);
+	
+	$('#btnAprv').attr('className','spjBtnStandarDis');
+	$('#btnAprv').attr('disabled','disabled');
+}
+
+function refresh(left, right)
+{
+	if(left == "Y")
+	{
+		$('#iframeForm').attr("src","templates/halFormListAprv.php");
+	}
+	if(right == "Y")
+	{
+		$('#iframeDetilForm').attr("src","templates/halSelectData.html");
+	}
+	refreshBtn();
+	$('#status').html('');
+}
+
+function refreshBtn()
+{
+	$('#btnAprv').attr('className','spjBtnStandarDis');
+	$('#btnAprv').attr('disabled','disabled');
+	$('#btnRev').attr('className','spjBtnStandarDis');
+	$('#btnRev').attr('disabled','disabled');
+	$('#btnCancel').attr('className','spjBtnStandarDis');
+	$('#btnCancel').attr('disabled','disabled');
+}
+
+function report(text)
+{
+	document.getElementById('report').innerHTML = text;
+	
+	setTimeout(function()
+	{
+		document.getElementById('report').innerHTML = "&nbsp;";
+	},10000);
+}
+
+function klikTr(urutan)
+{
+	setTimeout(function()
+	{
+		window.frames['iframeForm'].document.getElementById('tr'+urutan).click();
+	},200);
+}
+
+function spjAprv()
+{
+	var formId = $('#formId').val();trActive
+	var trActive = $('#trActive').val();
+	
+	var answer  = confirm("Are you sure want to Approve?");
+	if(answer)
+	{
+		pleaseWait();
+		$('#iframeForm').attr("src","templates/halFormListAprv.php?aksi=approve&trActive="+trActive+"&formId="+formId);
+	}
+	else
+	{	return false;	}
+}
+
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeForm').height ; // 404
+	var heightFrameDetail = document.getElementById('iframeDetilForm').height ; // 436
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	var heightFrameDetailPlus = parseInt(heightFramePlus) + 32; // selisih tinggi 2 frame
+	var heightFrameDetailMin = parseInt(heightFrameMin) + 32; // selisih tinggi 2 frame
+	
+	if(status == "down")
+	{
+		$("#iframeForm").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeForm').height = heightFramePlus;
+		$("#iframeDetilForm").animate(
+			{
+				height: heightFrameDetailPlus
+				
+			}, 1000);
+		document.getElementById('iframeDetilForm').height = heightFrameDetailPlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 404)
+		{
+			$("#iframeForm").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeForm').height = heightFrameMin;
+			$("#iframeDetilForm").animate(
+				{
+					height: heightFrameDetailMin
+				}, 1000);
+			document.getElementById('iframeDetilForm').height = heightFrameDetailMin;
+			
+			if(heightFrameMin == 404)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function close()
+{
+	var answer  = confirm("Are you sure want to EXIT WITHOUT SAVE?");
+	if(answer)
+	{
+		exit();
+	}
+	else
+	{	return false;	}
+	
+}
+
+function exit()
+{
+	tb_remove(false);
+}
+
+function aksiReason(aksi)
+{
+	exit();
+	
+	var text;
+	if(aksi == "revForm")
+	{
+		var text = "Revision request Successfully submit";
+	}
+	if(aksi == "cancelForm")
+	{
+		var text = "Cancel SPJ Form Successfully submit";
+	}
+	
+	setTimeout(function()
+	{
+		report(text);
+		refresh('Y', 'Y');
+		klikTr($('#trActive').val());
+	},100);
+}
+</script>
+<div id="loaderImg" style="visibility:visible;" class="pleaseWait">
+    <div class="isiPleaseWait tabelBorderAll">
+    	&nbsp;Please Wait...&nbsp;<img src="picture/loading (115).gif" height="12"/>&nbsp;
+    </div>
+</div>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<input type="hidden" id="formId"/>
+<input type="hidden" id="trActive"/>
+<input type="hidden" id="tipeUser" value="{tipeUser}"/>
+<input type="hidden" id="userIdLogin" value="{userIdLogin}"/>
+<!--<tr>
+	<td id="idHalTeksLvl">
+    	
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>-->
+
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN REQUEST NEW ITEM -->
+        <tr>
+        	<td height="485" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="2px"></td></tr>
+                <tr>
+                	<td width="30%" class="" valign="top" align="left">
+<!-- ############# ISI HALAMAN REQUEST LIST -->
+                        <table cellpadding="0" cellspacing="0" width="100%" style="margin-left:3px;">
+                        <tr>
+                        	<td colspan="2" align="left">
+                            </td>
+                        </tr>
+                        <tr><td colspan="2" height="9px"></td></tr>
+                        <tr>
+                        	<td colspan="2" align="left" style="font-family:Tahoma;font-size:11px;">    
+                            	<div style="float:left;">
+                                	<div style="width:15px;height:12px;background-color:#FF464A;float:left;border:1px solid #CCC;">&nbsp;</div>
+                                    &nbsp;Wait Approval&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:15px;height:12px;background-color:#5EFF46;float:left;border:1px solid #CCC;">&nbsp;</div>
+                                    &nbsp;Approved&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:17px;height:17px;float:left;"><img src="picture/hammer.png" width="15px"/></div>
+                                    
+                                	&nbsp;Revise&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:17px;height:17px;float:left;"><img src="picture/minus-circle.png" width="15px"/></div>
+                                    
+                                	Canceled&nbsp;&nbsp;
+                                </div>
+                        	</td>
+                        </tr>
+                        <tr><td colspan="2" height="4px"></td></tr>
+                        
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" align="left">&nbsp;<img src="../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refresh('Y','Y');$('#report').html('');" title="Refresh Page"/></td>
+                                    <td width="50%" height="40" align="center">Form List</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halFormListAprv.php" width="100%" height="404" target="iframeForm" name="iframeForm" id="iframeForm" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    
+                    <td width="1%"></td>
+                    
+                    <td width="69%" valign="top" class="">
+<!-- ############# ISI HALAMAN REQUEST DETAIL -->
+                      <table cellpadding="0" cellspacing="0" width="99.3%">
+                        <tr class="fontMyFolderList">
+                        	<td width="21%">
+                            	<span id="status" style="font-weight:bold;color:#0066FF;text-decoration:underline;font-size:14px;"></span>
+                            </td>
+                            <td width="79%" align="right">
+                            	<span style="font-size:12px;font-family:Comic Sans MS;color:#060;font-weight:100;" id="report"></span>&nbsp;
+                                <button type="button" id="btnAprv" class="spjBtnStandarDis" onclick="spjAprv();" style="width:116px;height:28px;" title="Approved SPJ Request Form" disabled>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="right" width="22"><img src="picture/thumb-up.png" height="16"/> </td>
+                                        <td align="center">Give Approval</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                                <button type="button" id="btnRev" class="spjBtnStandarDis" onclick="openThickboxWindow($('#formId').val(), 'revForm');" style="width:76px;height:28px;" title="Revise SPJ Request Form" disabled>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="right" width="22"><img src="picture/hammer.png" height="16"/> </td>
+                                        <td align="center">Revise</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                                <button type="button" id="btnCancel" class="spjBtnStandarDis" onclick="openThickboxWindow($('#formId').val(), 'cancelForm');" style="width:76px;height:28px;" title="Reject SPJ Request Form" disabled>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                      <tr>
+                                        <td align="right" width="22"><img src="picture/minus-circle.png" height="16"/> </td>
+                                        <td align="center">Cancel</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr><td colspan="3" height="2px"></td></tr>
+                        <!--<tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                        	<td colspan="3" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%">&nbsp;</td>
+                                    <td width="50%" height="40" align="center">Form Detail</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thick;border-color:#5EC058;">
+                                <iframe src="templates/halSelectData.html" width="100%" height="436" target="iframeDetilForm" name="iframeDetilForm" id="iframeDetilForm" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+                            </td>
+                        </tr>	
+                        </table>
+                    </td>
+                </tr>
+
+                </table>
+            
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+
+</table>

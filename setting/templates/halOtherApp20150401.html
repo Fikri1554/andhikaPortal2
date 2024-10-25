@@ -1,0 +1,236 @@
+<script type="text/javascript">
+function pilihBtnAdd()
+{
+	document.getElementById('errorMsg').innerHTML = "&nbsp;";
+	
+	var userId = document.getElementById('userId').value; // USERID USER YANG AKAN DIBERIKAN HAK AKSES
+	var appName = document.getElementById('menuApp').value; 
+	if(userId == 00000)
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;Please select user";
+		document.getElementById('userId').focus();
+		return false;
+	}
+	if(appName == "none")
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;Please select other application";
+		document.getElementById('menuApp').focus();
+		return false;
+	}
+	
+	ajaxOtherApp("cekUserApp", "idUserAppAdaTidak");
+	
+	var delay=250//0.4 seconds	
+	setTimeout(function()
+	{
+		var userAppAdaTidak = document.getElementById('userAppAdaTidak').value;
+		if(userAppAdaTidak == "ada")
+		{
+			document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;User access for this application already exists";
+			document.getElementById('menuApp').focus();
+			return false;
+		}
+		
+		var answer  = confirm("Are you sure want to add?");
+		if(answer)
+		{
+			document.getElementById('iframehalOtherAppYes').src = "";
+			document.getElementById('iframehalOtherAppYes').src = "templates/halOtherAppYesList.php?aksi=addOtherApp&userId="+userId+"&appName="+appName;
+		}
+		else
+		{	return false;	}
+	},delay);
+}
+
+function pilihUserHaveAccess(userIdSelect, idApp)
+{
+	document.getElementById('userId').value = "00000"; //menu user
+	document.getElementById('userId').disabled = true;
+	document.getElementById('menuApp').value = "none"; //menu application
+	document.getElementById('menuApp').disabled = true;
+	
+	document.getElementById('btnAdd').disabled = true;
+	document.getElementById('btnAdd').className = 'btnStandarDisabled';
+	document.getElementById('btnRemove').disabled = false;
+	document.getElementById('btnRemove').className = 'btnStandar';
+	
+	document.getElementById('userIdSelect').value = userIdSelect;
+	document.getElementById('idApp').value = idApp;
+	
+	/*document.getElementById('superiorNm').innerHTML = userIdNm;
+	document.getElementById('userIdSelect').value = userIdSelect;
+	
+	ajaxSubCustom("pilihUserHaveAccess", "idHalMenuUserSubCustom_Subordinate");
+	document.getElementById('btnAddSub').disabled = false;
+	document.getElementById('btnAddSub').className = 'btnStandar';
+	document.getElementById('btnRemoveSub').disabled = true;
+	document.getElementById('btnRemoveSub').className = 'btnStandarDisabled';
+	
+	document.getElementById('iframeHalSubCustom').src = "";
+	document.getElementById('iframeHalSubCustom').src = "templates/halSubCustomList.php?aksi=showSubCustom&userId="+userIdSelect;*/
+}
+
+function refreshPage()
+{
+	document.getElementById('errorMsg').innerHTML = "&nbsp;";
+	
+	document.getElementById('userId').value = "00000"; //menu user
+	document.getElementById('userId').disabled = false;
+	document.getElementById('menuApp').value = "none"; //menu application
+	document.getElementById('menuApp').disabled = false;
+	
+	document.getElementById('btnAdd').disabled = false;
+	document.getElementById('btnAdd').className = 'btnStandar';
+	document.getElementById('btnRemove').disabled = true;
+	document.getElementById('btnRemove').className = 'btnStandarDisabled';
+	
+	document.getElementById('iframehalOtherAppYes').src = "";
+	document.getElementById('iframehalOtherAppYes').src = "templates/halOtherAppYesList.php";
+	
+}
+
+function pilihBtnRemove()
+{
+	var answer  = confirm("Are you sure want to remove?");
+	if(answer)
+	{
+		var idApp = document.getElementById('idApp').value;
+		var userIdSelect = document.getElementById('userIdSelect').value;
+
+		document.getElementById('iframehalOtherAppYes').src = "";
+		document.getElementById('iframehalOtherAppYes').src = "templates/halOtherAppYesList.php?aksi=removeOtherApp&idApp="+idApp+"&userId="+userIdSelect;
+	}
+	else
+	{	return false;	}
+}
+
+function ajaxOtherApp(aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekUserApp")
+	{
+		var userId = document.getElementById('userId').value;
+		var appName = document.getElementById('menuApp').value; 
+		
+		var parameters="halaman="+aksi+"&userId="+userId+"&appName="+appName;
+	}
+	
+	mypostrequest.open("POST", "halPostSetting.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+</script>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td id="idHalTeksLvl">
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN SUBORDINATE CUSTOM -->
+        <tr>
+        	<td height="437" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="5"></td></tr>
+                <tr>
+                	<td width="42%" class="" valign="top" align="center">
+<!-- ############# ISI HALAMAN USER YANG AKAN DIBERIKAN HAK SUBORDINATE CUSTOM -->
+                        <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr>
+                            <td valign="top" align="left" height="30"><span id="idHalMenuUserOtherApp">{menuUserOtherApp}</span>&nbsp;</td>
+                        </tr>
+                        <tr>
+                        	<td valign="top" align="left" height="30">
+                            <span id="idHalMenuOtherApp">
+                            <select class="elementMenu" id="menuApp" name="menuApp" style="width:270px;height:29px;" title="Choose Other Application">
+                            	<option value="none">-- PLEASE SELECT APPLICATION --</option>
+                                <option value="atkrequest" >ATK REQUEST</option>
+                                <option value="budget" >BUDGET APPLICATION</option>
+                                <option value="invoiceRegister" >INVOICE REGISTER</option>
+                                <option value="qhse" >QHSE APPLICATION</option>
+                                 <option value="safir" >SAFIR APPLICATION</option>
+                                <option value="survey" >SATISFACTION SURVEY</option>
+                           	</select>
+                            </span>
+                            <button class="btnStandar" id="btnAdd" type="button" style="width:55px;height:28px;" onclick="pilihBtnAdd();" title="Add Choosen User for Have Access">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td align="center"><img src="../picture/Button-Add-blue-32.png" height="20"/> </td>
+                                    <td align="center">Add</td>
+                                  </tr>
+                                </table>
+                            </button>
+                            <button class="btnStandarDisabled" id="btnRemove" type="button" style="width:75px;height:29px;" onclick="pilihBtnRemove();" disabled title="Remove User Access">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td align="center"><img src="../picture/Button-Cross-blue-32.png" height="20"/> </td>
+                                    <td align="center">Remove</td>
+                                  </tr>
+                                </table>
+                            </button>
+                            <div id="idUserAppAdaTidak"><input type="hidden" id="userAppAdaTidak" name="userAppAdaTidak"></div>
+                            <input type="hidden" id="idApp" name="idApp">
+                            </td>
+                        </tr>
+                        <tr><td align="left" id="errorMsg" class="errorMsg">&nbsp;</td></tr>
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refreshPage();" title="Refresh Page"/></td>
+                                    <td width="50%" height="40">User have access</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halOtherAppYesList.php" width="100%" height="304" target="iframehalOtherAppYes" name="iframehalOtherAppYes" id="iframehalOtherAppYes" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    <td width="1%" class="tabelBorderRightJust" style="border-right-width:thin;border-right-style:dashed;border-color:#999;">&nbsp;</td>
+                    <td width="1%" class="">&nbsp;</td>
+                    <td class="" valign="top">
+&nbsp;
+                    </td>
+                </tr>
+
+                </table>
+            
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+
+</table>

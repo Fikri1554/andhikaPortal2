@@ -1,0 +1,223 @@
+<script>
+function openThickboxWindow(id, aksi, hal)
+{
+	if(hal == "btnNewAtk")
+	{
+		document.getElementById('hrefThickbox').href="templates/halNewItem.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(hal == "btnQtyMaster")
+	{
+		document.getElementById('hrefThickbox').href="templates/halQtyMaster.php?aksi="+aksi+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(hal == "editItem")
+	{
+		document.getElementById('hrefThickbox').href="templates/halEditItem.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(hal == "addStock")
+	{
+		document.getElementById('hrefThickbox').href="templates/halAddStock.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(hal == "newReq")
+	{
+		document.getElementById('hrefThickbox').href="templates/halRequest.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+
+function thickboxNote()
+{
+	document.getElementById('hrefThickbox').href="templates/halNote.html?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=242&width=450&modal=true";
+	document.getElementById('hrefThickbox').click();
+}
+
+function imgThickbox(itemId, qty)
+{	
+	document.getElementById('hrefThickbox').href="templates/halZoomItem.php?itemId="+itemId+"&qty="+qty+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=452&width=475&modal=true";
+	document.getElementById('hrefThickbox').click();
+}
+
+function tutup()
+{
+	tb_remove(false);
+}
+
+function submitNotes(notes)
+{
+	tutup();
+	setTimeout(function(){	
+		window.frames['iframeCart'].submitOrder(notes); // call child function
+	},200);
+}
+
+function deleteItem ()
+{
+	var answer  = confirm("Are you sure want to delete?");
+	if(answer)
+	{
+		document.getElementById('iframeUser').src = "";
+		document.getElementById('iframeUser').src = "templates/userList.php?aksi=deleteUser&userId="+userId;
+	}
+	else
+	{	return false;	}
+}
+
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeCart').height ;
+	var heightRightFrame = document.getElementById('iframeProduct').height ;
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	if(status == "down")
+	{
+		$("#iframeCart").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		$("#iframeProduct").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeCart').height = heightFramePlus;
+		window.frames['iframeCart'].document.getElementById('divCart').style.height = heightFramePlus-26;
+		$('#divCartHeight').val(heightFramePlus-26);
+		
+		document.getElementById('iframeProduct').height = heightFramePlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame && heightRightFrame != 395)
+		{
+			$("#iframeCart").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			$("#iframeProduct").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeCart').height = heightFrameMin;
+			window.frames['iframeCart'].document.getElementById('divCart').style.height = heightFrameMin-26;
+			$('#divCartHeight').val(heightFrameMin-26);
+		
+			document.getElementById('iframeProduct').height = heightFrameMin;
+			
+			if(heightFrameMin == 395)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function refreshPage()
+{
+	document.getElementById('iframeCart').src = "templates/halCartList.php";
+	//refreshHeigthDiv();
+	/*if($('#divCartHeight').val() != "")
+	{
+		setTimeout(function()
+		{
+			window.frames['iframeCart'].document.getElementById('divCart').style.height = $('#divCartHeight').val();
+		},200);
+	}*/
+}
+function refreshHeigthDiv()
+{
+	if($('#divCartHeight').val() != "")
+	{
+		window.frames['iframeCart'].document.getElementById('divCart').style.height = $('#divCartHeight').val();
+	}
+}
+
+function cariAtk()
+{
+	var paramText = document.getElementById('paramText').value ;
+	//alert(paramText);
+	
+	document.getElementById('iframeProduct').src = "templates/halItem.php?paging=1&paramText="+paramText;
+}
+
+function deleteCart(id)
+{
+	document.getElementById('iframeCart').src = "";
+	document.getElementById('iframeCart').src = "templates/halCartList.php?aksi=delete&itemId="+id;
+}
+
+function actionDisplay(tdDisp)
+{
+	var paramText = $('#paramText').val();
+	
+	if(tdDisp == "Show All&nbsp;")
+	{
+		document.getElementById('iframeProduct').src='templates/halItem.php?page=all&paramText='+paramText;
+		$('#tdDisp').html('Show default&nbsp;');
+		//$('#btnDisp').css('width','70px');
+	}
+	if(tdDisp == "Show default&nbsp;")
+	{
+		document.getElementById('iframeProduct').src='templates/halItem.php?page=1&paramText='+paramText;
+		$('#tdDisp').html('Show All&nbsp;');
+		//$('#btnDisp').css('width','75px');
+	}
+}
+
+//$(document).ready(function() {
+	$("#paramText").keyup(function(event){
+		if(event.keyCode == 13){
+			$("#btnCari").click();
+		}
+	});
+//});
+</script>
+<input type="hidden" id="divCartHeight"/>
+<a class="thickbox" id="hrefThickbox"></a>
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr>
+	<td class="batasTitik" height="5"></td>
+</tr>
+<tr>
+	<td height="5"></td>
+</tr>
+<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0" style="color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">
+		<tr align="center" style="background-color:#666;">
+			<td width="27%" height="40" align="center" style="background-color:#7A7A7A;">.: CART :.</td>
+            <td align="center" id="tdJudulTitle" style="position:relative;">:: OFFICE STATIONERY ::
+                <div style="position:absolute;right:5px;top:6px;">
+                    <button class="btnStandar" id="btnDisp" onclick="actionDisplay($('#tdDisp').html());" title="Display All Item">
+                          <table height="25">
+                            <tr>
+                              <td align="center" width="20"><img src="picture/application-tile.png"/> </td> 
+                              <td align="left" id="tdDisp">Show All&nbsp;</td>
+                            </tr>
+                          </table>
+                      </button>
+                  </div> 
+            </td>
+		</tr>
+        
+		<tr>
+			<td colspan="2">
+                <table  cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+                <tr>
+                    <td width="27%" style="border-right:dotted 1px #000;" class="tabelBorderAll">
+                        <iframe width="100%" height="395" src="templates/halCartList.php" target="iframeCart" name="iframeCart" id="iframeCart" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                    </td>
+                    <td width="73%"><!-- right side -->
+                        <iframe width="100%" height="395" src="templates/halItem.php?page=1" target="iframeProduct" name="iframeProduct" id="iframeProduct" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                </td>
+                
+                </tr>
+                </table>
+    		</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>

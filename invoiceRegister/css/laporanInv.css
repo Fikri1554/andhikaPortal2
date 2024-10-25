@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+
+body 
+{
+	font-family:Arial;
+	font-size:10px;
+	
+	
+}
+.wrapLandscape
+{
+	position:relative;
+	/*width: 210mm;
+	height: 297mm;*/
+	width: 1122px;
+	height: 860px;
+
+	margin:0 auto;
+	border: solid 1px #ccc;
+	/*overflow: auto;*/
+}
+
+.tabelDetailLap
+{
+	
+}
+
+.tabelDetailLap a
+{
+	color:#555;
+	font-style:italic;
+}
+
+.tabelDetailLap td
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:dotted;
+	letter-spacing:1px;
+	
+	height:20px;
+	font-size:10px;
+	color:#485a88;
+	font-weight:bold;
+	font-family:Arial;
+	
+	
+}

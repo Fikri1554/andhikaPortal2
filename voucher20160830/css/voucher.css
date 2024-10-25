@@ -1,0 +1,182 @@
+@charset "utf-8";
+/* CSS Document */
+.wrap
+{
+	position:relative;
+	width:1000px;
+	margin:0 auto;
+	
+	left:50%;
+	margin-left:-500px;
+}
+
+.kotakVoucher
+{
+	position:absolute;
+	
+	width: 998px;
+	height:543px;
+	margin-top:40px;
+	
+	left:50%;
+	margin-left:-499px;
+
+	background-color: #F9F9F9;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #CCC;
+	overflow:hidden;
+}
+
+.contactAdminContainer
+{
+	position:absolute;
+	
+	width: 995px;
+  	margin: 0 auto; 
+	height:543px;
+	margin-top:40px;
+	
+	left:50%;
+	margin-left:-498px;
+	
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #999;
+
+	background:url(../picture/Not-Allowed-994_555.jpg) no-repeat 50% 0;
+}
+
+.namaAplikasi
+{
+	position:absolute;
+	right:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+	top:46px;
+	text-align:center;
+	width:120px;
+	
+	cursor:default;
+	color:#369;
+	font-weight:bold;
+	font-size:15px;
+	font-family:Arial;
+	
+	background-color:#F2FAFF;
+	border: solid 1px #369;
+	
+	z-index:1;
+}
+
+.kotakIframe
+{
+	position:absolute; 
+	/*border: solid 1px #CCC; */
+	top:25px; 
+	left:265px; 
+	width:725px; 
+	height:505px;
+ 
+	text-align:left;
+}
+
+.errorMsgInv
+{
+	border-style:dashed;
+	border-color:#FF9B9B;
+	border-width:1px;
+	background-color:#FFE1E1;
+
+	text-align:left;
+	font-weight:100;
+	color:#900;
+	font-size:12px;
+	font-family:"Comic Sans MS";
+}
+
+.errorMsgInv img
+{
+	position:relative;
+	top:2px;
+	left:2px;
+}
+
+.pleaseWait
+{
+	position:absolute;
+	margin:0 auto;
+	width:100%;
+	
+	top:40px;
+	z-index:10;
+}
+
+.isiPleaseWait
+{
+	width:200px;
+	margin: 0 auto;
+	
+	padding-left-right: 4px;
+	padding-top: 7px;
+
+	color:#333;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:12px;
+	height:30px;
+	background-color:#F2FAFF;
+
+	-webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.gayaKalender
+{
+	position:relative;
+	top:4px;
+	cursor: pointer; 
+	border: 1px solid red;
+	
+	-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    		box-sizing: border-box;
+}
+
+.gayaKalender:hover
+{
+	background-color:red;
+}
+
+.spanKalender
+{
+	position:relative;
+	top:3px;
+	font-size:11px;
+	font-family:'Arial Narrow';
+	font-weight:bold;
+	color:#666;
+}
+
+.tabelDetailCari a
+{
+	color:#555;
+	
+}
+
+.tabelDetailCari td
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:dotted;
+	letter-spacing:1px;
+	
+	height:15px;
+	font-size:11px;
+	color:#485a88;
+	font-weight:bold;
+	font-family:Arial;
+}

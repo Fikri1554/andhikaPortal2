@@ -1,0 +1,483 @@
+<script type="text/javascript" src="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+<script type="text/javascript" src="js/voucher.js"></script>
+<script type="text/javascript" src="js/aksi.js"></script>
+<script type="text/javascript">
+window.onload = function()
+{	
+	setup();
+	if($('#yearProcess').val() == '')
+	{	
+		$('#tdYearProc').click();	
+	}
+}
+</script>
+
+<link rel="stylesheet" type="text/css" href="../../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen"></LINK>
+<link href="css/voucher.css" rel="stylesheet" type="text/css" />
+<link href="css/button.css" rel="stylesheet" type="text/css" />
+<link href="css/table.css" rel="stylesheet" type="text/css" />
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<div class="wrap">
+    <div id="loaderImg" style="visibility:visible;" class="pleaseWait">
+    	<div class="isiPleaseWait tabelBorderAll">&nbsp;Please Wait...&nbsp;<img src="picture/loading (115).gif" height="12"/>&nbsp;</div>
+    </div>
+  	<div class="namaAplikasi"> VOUCHER </div>
+</div>
+
+<div class="kotakVoucher">
+	<div style="position:inherit; border: solid 0px #CCC; top:4px; left:5px; text-align:left;">
+        <table width="450" cellpadding="0" cellspacing="0" style="font-family:sans-serif;font-weight:bold;color:#485a88;" class="">
+        <tr align="left">
+            <td width="290" valign="bottom">
+            	<span style="font-size:11px;vertical-align:bottom;" class="">VOUCHER DATA&nbsp;</span>
+                <img style="position:relative;top:5px;left:-7px;" src="picture/arrow-315-medium.png"/>
+            </td>
+            <td width="25" class="">
+                <button class="btnStandar" id="btnCariPrepare" title="" onClick="klikBtnCariVoucherList();">
+                    <table cellpadding="0" cellspacing="0" width="24" height="19">
+                    <tr>
+                        <td align="center" valign="bottom"><img src="picture/magnifier.png" height="14" title="Search by Invoice Number" /></td>
+                    </tr>
+                    </table>
+                </button>
+            </td>
+            <td class="" align="left">
+                <input type="text" id="elementCariVoucher" name="elementCariVoucher" class="elementInput" onKeyUp="ketikElementCariVoucher(this.value);" style="width:118px;margin-left:3px;visibility:hidden;" title="Search by Invoice Number">
+            </td>
+        </tr>
+        </table>
+    </div>  
+    
+    <div id="divYearProcess" style="position:inherit; border: solid 1px #CCC; top:-1px; left:114px;background-color:#FFF;z-index:1;visibility:visible;">
+    <table width="165" height="26" cellpadding="0" cellspacing="0">
+    <tr onMouseOver="this.style.backgroundColor='#D9EDFF';" onmouseout="this.style.backgroundColor='#FFFFFF';">
+        <td id="tdYearProc" onclick="klikYearProcess($('#statusYearProc').val());" align="center" class="" style="font-family:sans-serif;color:#096;font-weight:bold;cursor:pointer;">
+        	<span id="idSpanTrf" style="font-size:12px;">YEAR TO PROCESS &nbsp;<span id="spanYearProcess" style="font-size:16px;text-decoration:underline;">2016</span></span>
+            <input type="hidden" id="yearProcess" name="yearProcess" />
+            <input type="hidden" id="statusYearProc" name="statusYearProc" value="awal" />
+        </td>
+        <!--<td align="center">
+            <select id="currency" name="currency" class="elementMenu" style="width:60px;height:20px;vertical-align:top;">
+                {menuYearProcess}
+             </select>
+         </td>-->
+    </tr>
+    </table>
+</div>
+    
+    <div style="position:inherit; border: solid 0px #CCC; top:20px; left:460px; text-align:left;">
+        <table width="150" cellpadding="0" cellspacing="0" style="font-family:sans-serif;font-weight:bold;color:#485a88;" class="">
+        <tr align="left">
+            <td width="110" valign="bottom"><span style="font-size:11px;vertical-align:bottom;" id="judulAddVoucher">ADD VOUCHER&nbsp;</span>
+                <img style="position:relative;top:5px;left:-7px;" src="picture/arrow-315-medium.png"/>
+            </td>
+        </tr>
+        </table>
+    </div>
+    
+   <!-- <div style="position:inherit;border: solid 0px #CCC;;width:100px;top:26px;left:460px;">
+     	<span style="position:absolute;font:0.7em sans-serif;font-weight:bold;color:#485a88;left:0px;">ADD VOUCHER</span>
+     	<img style="position:absolute;top:-1px;left:78px;" src="picture/arrow-315-medium.png"/>
+     </div>-->
+    
+    <div style="position:inherit; border: solid 0px #CCC; top:4px; left:370px; text-align:left;">
+    	<!--<button class="btnStandar" id="btnSearch" title="SEARCHING DATA" onclick="$('#formCari').submit();return false;">
+            <table width="70" height="19">
+              <tr>
+                <td align="center" valign="bottom" width="20"><img src="picture/magnifier.png" height="14"/> </td>
+                <td align="left">SEARCH</td>
+              </tr>
+            </table>
+        </button>-->
+        <iframe id="iframeCekBalance" width="0" height="0" style="position:absolute;bottom:0px;right:0px;"></iframe>
+    </div>
+    
+	<div id="divIframeVoucherList" style="position:inherit; border: solid 1px #CCC; top:25px; left:5px;text-align:left;width:447px;height:296px;z-index:1;">   
+        <iframe width="100%" height="100%" src="templates/halVoucherList.php?aksi=displayVoucher&pageBatchno=1" target="iframeVoucherList" name="iframeVoucherList" id="iframeVoucherList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes" style="z-index:0;">
+        </iframe>  
+    </div>
+        
+<!-- Paging Display --------------------------------------------------------------------------------- -->
+    <div style="position:absolute; left:5px; top:327px;text-align:left;width:448px;z-index:2;">
+        <table cellpadding="0" cellspacing="0" width="100%" style="font:0.7em sans-serif;font-weight:bold;color:#485a88;" class="">
+        <tr>
+            <td>
+                <button class="btnStandar" id="" title="First Page" onClick="klikBtnPageBatchno('first');return false;">
+                    <table cellpadding="0" cellspacing="0" width="17" height="17">
+                    <tr>
+                        <td align="center" valign="bottom"><img src="picture/control-skip-180.png" height="12" /></td>
+                    </tr>
+                    </table>
+                </button>
+                <button class="btnStandar" id="" title="Previous Page" onClick="klikBtnPageBatchno('previous');return false;">
+                    <table cellpadding="0" cellspacing="0" width="17" height="17">
+                    <tr>
+                        <td align="center" valign="bottom"><img src="picture/control-double-180.png" height="12" /></td>
+                    </tr>
+                    </table>
+                </button>&nbsp;
+                <select id="menuPageBatchno" name="menuPageBatchno" class="elementMenu" style="width:45px;" onChange="klikMenuPageBatchno(this.value);return false;">
+                </select>&nbsp;Of <span id="maxPageBatchno">&nbsp;</span>&nbsp;
+                <button class="btnStandar" id="" title="Next Page" onClick="klikBtnPageBatchno('next');return false;">
+                    <table cellpadding="0" cellspacing="0" width="17" height="17">
+                    <tr>
+                        <td align="center" valign="bottom"><img src="picture/control-double.png" height="12" /></td>
+                    </tr>
+                    </table>
+                </button>
+                <button class="btnStandar" id="" title="Last Page" onClick="klikBtnPageBatchno('last');return false;">
+                    <table cellpadding="0" cellspacing="0" width="17" height="17">
+                    <tr>
+                        <td align="center" valign="bottom"><img src="picture/control-skip.png" height="12" /></td>
+                    </tr>
+                    </table>
+                </button>
+            </td>
+            <td align="right" id="tdTotalRows">Total Rows : 50</td>
+        </tr>
+        </table>
+    </div>
+<!-- END - Paging Display --------------------------------------------------------------------------------- -->
+
+    <div class="kotakIframe"> 
+        <div style="position:inherit; border: solid 1px #CCC; top:0px; left:0px;">
+         	<table width="93" height="281" cellpadding="0" cellspacing="0">
+            <tr><td height="2"></td></tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<button class="btnStandarDis" id="btnRetrieve" title="RETRIEVE VOUCHER DATA" onClick="klikBtnRetrieve();return false;" disabled>
+                        <table width="85" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/arrow-skip.png"/></td>
+                            <td align="left">RETRIEVE</td> 
+                        </tr>
+                        </table>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<!--<button class="btnStandarDis" id="btnBack" title="BACK TO VOUCHER LIST" onClick="backPilihVoucher();return false;" disabled>
+                        <table width="92" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/arrow-return-180-left.png"/></td>
+                            <td align="left">BACK</td> 
+                        </tr>
+                        </table>
+                    </button>-->
+                    <button class="btnStandar" id="btnSearch" title="SEARCHING DATA" onClick="klikBtnSearch();return false;">
+                        <table width="85" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/magnifier.png"/></td>
+                            <td align="left">SEARCH</td> 
+                        </tr>
+                        </table>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<button class="btnStandar" id="btnRefresh" title="REFRESHING PAGE" onClick="klikBtnRefresh();return false;">
+                        <table width="85" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/arrow-circle-315.png"/></td>
+                            <td align="left">REFRESH PAGE</td> 
+                        </tr>
+                        </table>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<button class="btnStandar" id="btnSave" title="SAVE VOUCHER" onClick="pilihBtnSave();return false;">
+                        <table width="85" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/disk-black.png"/></td>
+                            <td align="left">SAVE</td>
+                        </tr>
+                        </table>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<button class="btnStandarDis" id="btnDelete" title="DELETE VOUCHER"  onclick="klikBtnDelete(); return false;" disabled>
+                        <table width="85" height="29">
+                          <tr>
+                            <td align="center" width="20"><img src="picture/cross.png"/> </td>
+                            <td align="left">DELETE</td>
+                          </tr>
+                        </table>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<button class="btnStandarDis" id="btnPrintVoc" title="PRINT VOUCHER" onClick="cekBalanceSebPrint();return false;" disabled>
+                        <table width="85" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/printer.png"/></td>
+                            <td align="left">PRINT VOUCHER</td>
+                        </tr>
+                        </table>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<button class="btnStandarDis" id="btnCheckBalc" title="CHECK BALANCE" onClick="pilihBtnCheckBalance();return false;" disabled>
+                        <table width="85" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/balance.png"/></td>
+                            <td align="left">CHECK BALANCE</td>
+                        </tr>
+                        </table>
+                    </button>
+                    
+                </td>
+            </tr>
+            <tr>
+            	<td height="34" align="center" valign="middle">
+                	<button class="btnStandarDis" id="btnPayTransAcct" title="TRANSFER TO ACCOUNT" onClick="pilihBtnTranstoAcct();return false;" disabled>
+                        <table width="85" height="20">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/document-task.png"/></td>
+                            <td align="left">TRANSFER TO ACCT</td> 
+                        </tr>
+                        </table>
+                    </button>
+                	<!--<button class="btnStandarDis" id="btnAddDesc" title="ADD NEW DESCRIPTION" onclick="pilihBtnAddDesc();return false;" disabled>
+                        <table width="92" height="29">
+                        <tr>
+                            <td align="center" width="20"><img src="picture/blue-document--plus.png"/></td>
+                            <td align="left" style="font-size:9px;">ADD DESCRIPTION</td>
+                        </tr>
+                        </table>
+                    </button>-->
+                </td>
+            </tr>
+            <tr><td height="2"></td></tr>
+            </table>
+        </div>
+		<div style="position:absolute; border: solid 1px #CCC; top:0px; left:98px;background-color:#FFF;">
+        	<form method="post" name="formPrintVoucher" id="formPrintVoucher" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=no, titlebar=no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no');"></form>
+        	<!--<input type="hidden" id="barisTransno" name="barisTransno"/>--> <!-- // ID DARI TR YANG DIPILIH DI IFRAME TRANSNO DATA -->
+        	<input type="hidden" id="aksiSimpanVoucher" name="aksiSimpanVoucher" value="simpanBaruVoucher"/>
+        	<input type="hidden" id="lastSelBank" name="lastSelBank"/>
+        	<input type="hidden" id="idVoucher" name="idVoucher"/>
+            <input type="hidden" id="transferAcct" name="transferAcct"/>
+            <input type="hidden" id="bankCodeFirst" name="bankCodeFirst" value="{bankCodeFirst}"/>
+            <input type="hidden" id="currFirst" name="currFirst" value="{currFirst}"/>
+            <!--<input type="hidden" id="statusBalance" name="statusBalance" value="N"/>-->
+            
+            <input type="hidden" id="batchnoHid" name="batchnoHid"/>
+            <input type="hidden" id="voucherTypeHid" name="voucherTypeHid"/>
+            <input type="hidden" id="paidToHid" name="paidToHid"/>
+            <input type="hidden" id="companyHid" name="companyHid"/>
+            <input type="hidden" id="payTypeHid" name="payTypeHid"/>
+            <input type="hidden" id="bankCodeHid" name="bankCodeHid"/>
+            <input type="hidden" id="voucherHid" name="voucherHid"/>
+            <input type="hidden" id="refHid" name="refHid"/>
+            <input type="hidden" id="chequeNumberHid" name="chequeNumberHid"/>
+            <input type="hidden" id="invNoHid" name="invNoHid"/>
+            <input type="hidden" id="jobNoHid" name="jobNoHid"/>
+            <input type="hidden" id="datePaidHid" name="datePaidHid"/>
+            <input type="hidden" id="currHid" name="currHid"/>
+            <input type="hidden" id="amountHid" name="amountHid"/>
+            <table width="433" height="281" cellpadding="0" cellspacing="0" style="font:0.7em sans-serif;font-weight:bold;color:#485a88;">
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;BATCH NO</td>
+                <td class="elementTeks" id="tdBatchno" style="color:#485a88;font-size:15px;">&nbsp;</td>
+            </tr>
+            <tr valign="middle">
+                <td width="115" height="22" class="">&nbsp;VOUCHER TYPE</td>
+                <td class="elementTeks" id="" style="font-weight:normal;">
+                    <input type="radio" name="voucherType" id="transferVcr" value="T" style="cursor:pointer;" onClick="pilihTeksTransfer();" checked/>
+                    <span id="transferVcrText" onClick="$('#transferVcr').click();" style="cursor:pointer;">&nbsp;&nbsp;TRANSFER</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="voucherType" id="receiveVcr" value="R" style="cursor:pointer;" onClick="pilihTeksReceive();"/>
+                    <span id="receiveVcrText" onClick="$('#receiveVcr').click();" style="cursor:pointer;">&nbsp;&nbsp;RECEIVE</span>
+                </td>
+            </tr>
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;PAID <span id="idSpanPaidFromTo">TO</span></td>
+                <td class="elementTeks" id=""><input type="text" id="paidTo" name="paidTo" class="elementInput" style="width:300px;text-transform:uppercase;" maxlength="70"></td>
+            </tr>
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;COMPANY</td>
+                <td class="elementTeks" id="">
+                	<select id="company" name="company" class="elementMenu" style="width:312px;height:20px;">
+                        <option value="XXX">-- PLEASE SELECT  --</option>
+                        {menuCmp}
+                    </select>
+                </td>
+            </tr>
+            
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;PAYMENT METHOD</td>
+                <td class="elementTeks" id="">
+                    <select id="payMethod" name="payMethod" class="elementMenu" style="width:135px;height:20px;" onChange="klikPayMethod(this.value);return false;">
+                    	<option value="XXX">-- PLEASE SELECT  --</option>
+                        <option value="cheque" {}>CHEQUE</option>
+                        <option value="transfer" {}>TRANSFER</option>
+                        <option value="cash" {}>CASH</option>
+                    </select>
+                </td>
+            </tr>
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;BANK</td>
+                <td class="elementTeks" id="tdBankCode">
+                    <select id="bankCode" name="bankCode" class="elementMenu" style="width:312px;height:20px;" onChange="klikBankMenu(this.value);return false;">
+                    <option value="XXX">-- PLEASE SELECT  --</option>
+                        {bankCode}
+                    </select>
+                </td>
+            </tr>
+             <tr valign="middle">
+                <td height="22" class="">&nbsp;VOUCHER NO</td>
+                <td class="elementTeks" id="">
+                    <input type="text" id="voucher" name="voucher" class="elementInput" style="width:60px;" maxlength="5">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font:1em sans-serif;font-weight:bold;color:#485a88;">REFERENCE NO</span>&nbsp;&nbsp;&nbsp;<input type="text" id="reference" name="reference" class="elementInput" style="width:60px;" maxlength="5" >
+                </td>
+            </tr>
+            
+            <!--<tr valign="middle">
+                <td height="22" class="">&nbsp;REFERENCE NO</td>
+                <td class="elementTeks" id="">
+                    <input type="text" id="reference" name="reference" class="elementInput" style="width:60px;" maxlength="5" >
+                </td>
+            </tr>-->
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;CHEQUE NO</td>
+                <td class="elementTeks" id="">
+                    <input type="text" id="chequeNumber" name="chequeNumber" class="elementInput" style="width:123px;" maxlength="12" >
+                </td>
+            </tr>
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;INVOICE NO</td>
+                <td class="elementTeks" id="">
+                    <input type="text" id="invNo" name="invNo" class="elementInput" style="width:123px;" maxlength="16">
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font:1em sans-serif;font-weight:bold;color:#485a88;">JOB NO</span>&nbsp;&nbsp;&nbsp;<input type="text" id="jobNo" name="jobNo" class="elementInput" style="width:60px;" >
+                </td>
+            </tr>
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;DATE PAID</td>
+                <td class="">
+                     <input type="text" name="datePaid" id="datePaid" class="elementInput" style="width:60px;" />
+                     <img src="../../picture/calendar.gif" class="gayaKalender" title="Select Date" onClick="displayCalendar(document.getElementById('datePaid'),'dd/mm/yyyy',this, '', '', '193', '183');" id="imgCalDatePaid" />&nbsp;<span class="spanKalender">(DD/MM/YYYY)</span>
+                </td>
+            </tr>
+            <tr valign="middle">
+                <td height="22" class="">&nbsp;CURR / AMOUNT</td>
+                <td class="">
+                	<select id="currency" name="currency" class="elementMenu" style="width:60px;height:20px;vertical-align:top;">
+                        <option value="XXX">-</option>
+                        {menuCurrency}
+                     </select> &nbsp;/&nbsp; 
+                     <input type="text" id="amount" name="amount" class="elementInput" style="width:110px;text-align:right;background-color:#EAEAEA;" readonly="readonly">
+                    <button class="btnStandar" id="btnAmountTeks" title="" onClick="pilihBtnAmount($('#amount').val());return false;" style="vertical-align:top;">
+                          <table width="17">
+                          <tr>
+                              <td align="center"><img width="12" src="picture/question-white.png"/></td>
+                          </tr>
+                          </table>
+                      </button>
+                      <span id="spanAmountTeks" style="position:absolute;border:solid 1px #CCC;width:318px;margin-top:20px;margin-left:-323px;background-color:#FF9;visibility:hidden;">&nbsp;</span>
+                      &nbsp;&nbsp;&nbsp;<span id="idSpanDbCr" style="text-decoration:underline;">CR</span>&nbsp;<span id="idSpanDbCr2">/ CREDIT</span>
+                    <div id="idErrorMsg2" style="visibility:hidden;position:absolute;bottom:35px;right:5px;"><img src="../picture/exclamation-red.png"/></div>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td height="25" valign="bottom" colspan="2">
+                    <div id="idErrorMsg" class="errorMsgInv" style="visibility:hidden;margin-left:3px;width:98%"><img src="picture/exclamation-red.png"/>&nbsp;<span>PESAN</span>&nbsp;</div>
+                </td>
+            </tr>
+            <tr><td height="9"></td></tr>
+            </table>
+        </div>
+     </div>
+     
+     <div id="divStatusBlc" style="position:absolute; border: solid 1px #CCC; top:327px; left:460px;background-color:#FFF;z-index:1;visibility:hidden;">
+      <table width="163" height="52" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center" class="" style="font-family:sans-serif;color:#096;font-weight:bold;"><span id="idSpanBalance">&nbsp;</span></td>
+        </tr>
+        </table>
+    </div>
+    <div id="divStatusTrf" style="position:absolute; border: solid 1px #CCC; top:327px; left:460px;background-color:#FFF;z-index:1;visibility:hidden;">
+      <table width="188" height="52" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="38" align="center"><img src="picture/Button-Check-blue-48.png" width="40"></td>
+            <td width="123" align="left" class="" style="font-family:sans-serif;color:#096;font-weight:bold;"><span id="idSpanTrf" style="font-size:16px;">TRANSFERRED TO ACCOUNTING</span></td>
+        </tr>
+        </table>
+    </div>
+     
+     <div style="position:absolute;border-bottom: dotted 1px #666;;width:988px;height:1px;top:351px;left:4px;">&nbsp;</div>
+     <div style="position:absolute;border-bottom: dotted 1px #666;;width:988px;height:1px;top:353px;left:4px;">&nbsp;</div>
+     
+     <div style="position:inherit; border: solid 0px #CCC; top:365px; left:5px; text-align:left;">
+        <table width="150" cellpadding="0" cellspacing="0" style="font-family:sans-serif;font-weight:bold;color:#485a88;" class="">
+        <tr align="left">
+            <td width="110" valign="bottom"><span style="font-size:11px;vertical-align:bottom;" id="judulAddVoucher">DESCRIPTIONS LIST&nbsp;</span>
+                <img style="position:relative;top:5px;left:-7px;" src="picture/arrow-315-medium.png"/>
+            </td>
+        </tr>
+        </table>
+    </div>
+     
+     <div style="position:absolute; border: solid 0px #CCC;top:360px;right:5px;width:500px;height:31px;text-align:right;">
+        	<span style="font:bold 0.7em sans-serif;color:#333;vertical-align: bottom;" id="spanJmlDesc">&nbsp;</span>&nbsp;
+<!--        	<span id="spanBtnEditDesc">-->
+				<button class="btnStandarDis" id="btnAddDesc" title="ADD NEW DESCRIPTION" onClick="pilihBtnAddDesc();return false;" disabled>
+                    <table width="120" height="22">
+                    <tr>
+                        <td align="center" width="20"><img src="picture/blue-document--plus.png"/></td>
+                        <td align="left">ADD DESCRIPTION</td>
+                    </tr>
+                    </table>
+                </button>
+                <button class="btnStandarDis" id="btnEditDesc" title="EDIT DESCRIPTION" onClick="pilihBtnEditDesc();return false;" disabled>
+                      <table width="50" height="22">
+                      <tr>
+                          <td align="center" width="20"><img src="picture/blue-document--pencil.png"/></td>
+                          <td align="left">EDIT</td>
+                      </tr>
+                      </table>
+                </button>
+<!--            </span>-->
+            <button class="btnStandar" id="btnSaveDesc" title="SAVE ALL DESCRIPTION" onClick="pilihBtnSaveDesc();return false;" style="display:none;">
+                  <table width="88" height="22">
+                  <tr>
+                      <td align="center" width="20"><img src="picture/disk-black.png"/></td>
+                      <td align="left">SAVE DESC.</td>
+                  </tr>
+                  </table>
+            </button>
+            <button class="btnStandar" id="btnCancelDesc" title="CANCEL SAVE DESCRIPTION" onClick="pilihBtnCancelSaveDesc($('#idVoucher').val());return false;" style="display:none;">
+                  <table width="60" height="22">
+                  <tr>
+                      <td align="center" width="20"><img src="picture/arrow-return-180-left.png"/></td>
+                    <td align="left">CANCEL</td>
+                  </tr>
+                  </table>
+            </button>
+        	<button class="btnStandarDis" id="btnLargeView" title="ADD NEW DESCRIPTION" onClick="pilihBtnLargeView();return false;" disabled>
+                  <table width="93" height="22">
+                  <tr>
+                      <td align="center" width="20"><img src="picture/blue-document-resize.png"/></td>
+                      <td align="left">LARGE VIEW </td>
+                  </tr>
+                  </table>
+              </button>
+        </div>
+     
+     <div style="position:inherit; border: solid 1px #CCC;top:385px; left:5px;width:986px;height:150px;">
+            <div id="loaderImgDesc" style="visibility:hidden;margin-top:-40px;" class="pleaseWait">
+                <div class="isiPleaseWait tabelBorderAll">&nbsp;Please Wait...&nbsp;<img src="picture/loading (115).gif" height="12"/>&nbsp;</div>
+            </div>
+    		<iframe width="100%" height="100%" src="templates/halDescList.php" target="iframeDescList" name="iframeDescList" id="iframeDescList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+         </div> 
+
+</div>

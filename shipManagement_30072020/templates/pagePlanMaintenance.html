@@ -1,0 +1,30 @@
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery-1.6.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#idBtnDeficiency").css("display","none");
+        $("#idBtnSurveyStatus").css("display","none");
+		var html = $('<button id ="idBtnDeficiency" class="btnStandarKecil" type="button" onclick="formHome.submit();" style="width:80px;height:50px;float:left;margin-left:10px;" title="Home"><table cellpadding="0" cellspacing="0" width="100%" height="100%"><tr><td align="center"><img src="../picture/Application-View-Icons-32.png" height="18"/></td></tr><tr><td align="center" style="font-size:9px;font-weight: bold;">HOME</td></tr></table></button>');
+        $("#idNavHome").append(html);
+	});
+</script>
+
+<div class="archivesContainer" style="padding-bottom: 100px;margin-top:10px;">
+	<div id="btnPM" style="padding: 15px;" align="center">
+		{btnAllCompJob}
+		{btnMonthlyMaintenanceForecast}
+		{btnDueOverDue}
+		{btnUpdateJobsDone}
+		{btnMonthCompRunningHours}
+		{btnMaintenanceReportForm}
+		{btnRoutineJob}
+		<br><br>
+		<span class="teksMyFolder" style="color:#369;text-decoration:underline;">MASTER DATA</span>
+		<br><br>
+		{btnCompMasterList}
+		{btnJobDescription}
+		{btnWorkClassification}
+	</div>
+</div>

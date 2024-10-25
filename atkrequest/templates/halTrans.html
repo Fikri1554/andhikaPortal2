@@ -1,0 +1,525 @@
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../../js/main.js"></script>
+<script src="../js/main.js"></script>
+
+<script language="javascript" type="text/javascript">
+function openThickboxWindowTrans(id, aksi, hal)
+{
+	if(hal == "view")
+	{
+		document.getElementById('hrefThickbox').href="templates/halTransaction.php?halaman="+hal+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeTrans').height ;
+	var heightFrameDetail = document.getElementById('iframeHalTransDetail').height ;
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	var heightFrameDetailPlus = parseInt(heightFramePlus) + 32;
+	var heightFrameDetailMin = parseInt(heightFrameMin) + 32;
+	
+	if(status == "down")
+	{
+		$("#iframeTrans").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeTrans').height = heightFramePlus;
+		$("#iframeHalTransDetail").animate(
+			{
+				height: heightFrameDetailPlus
+				
+			}, 1000);
+		document.getElementById('iframeHalTransDetail').height = heightFrameDetailPlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 301)
+		{
+			$("#iframeTrans").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeTrans').height = heightFrameMin;
+			$("#iframeHalTransDetail").animate(
+				{
+					height: heightFrameDetailMin
+				}, 1000);
+			document.getElementById('iframeHalTransDetail').height = heightFrameDetailMin;
+			
+			if(heightFrameMin == 301)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function ajaxStatus(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekStatusRead")
+	{
+		var parameters="halaman="+aksi+"&transId="+id;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function ajaxFilter(id, aksi, halaman)
+{
+	//alert('ajaxFilter');
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	var tipeUser = document.getElementById('tipeUser').value;
+	var userIdLogin = document.getElementById('userIdLogin').value;
+	var userJenis = "N";
+	var thn = document.getElementById('thn').value;
+	var bln = document.getElementById('bln').value;
+	var tgl = document.getElementById('tgl').value;
+	
+	var ajaxTahun = document.getElementById('ajaxTahun').value;
+	var ajaxBulan = document.getElementById('ajaxBulan').value;
+	var ajaxTanggal = document.getElementById('ajaxTanggal').value;
+	
+	if(tipeUser == "adminAtk")
+	{
+		var userJenis = "Y";
+	}
+
+	if(aksi == "filterTahun")
+	{
+		document.getElementById('ajaxTahun').value = "on";
+		var parameters="halaman="+aksi+"&thn="+id+"&userJenis="+userJenis+"&userIdLogin="+userIdLogin;
+	}
+	if(aksi == "filterBln")
+	{
+		document.getElementById('ajaxBulan').value = "on";
+		var parameters="halaman="+aksi+"&userJenis="+userJenis+"&userIdLogin="+userIdLogin+"&thn="+thn+"&bln="+id+"&ajaxTahun="+ajaxTahun;
+	}
+	if(aksi == "filterTgl")
+	{
+		document.getElementById('ajaxTanggal').value = "on";
+		var parameters="halaman="+aksi+"&userJenis="+userJenis+"&userIdLogin="+userIdLogin+"&thn="+thn+"&bln="+bln+"&tgl="+id+"&ajaxTahun="+ajaxTahun+"&ajaxBulan="+ajaxBulan;
+	}
+	if(aksi == "filterSts" && tipeUser == "adminAtk")
+	{
+		var parameters="halaman="+aksi+"&thn="+thn+"&bln="+bln+"&tgl="+tgl+"&status="+id+"&ajaxTahun="+ajaxTahun+"&ajaxBulan="+ajaxBulan+"&ajaxTanggal="+ajaxTanggal;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function btnDisplay()
+{
+	var fThn = document.getElementById('thn').value;
+	var fBln = document.getElementById('bln').value;
+	var fTgl = document.getElementById('tgl').value;
+	var fSts = document.getElementById('stat').value;
+	
+	var tipeUser = document.getElementById('tipeUser').value;
+	if(tipeUser == "adminAtk")
+	{
+		var fNm = document.getElementById('nama').value;
+		document.getElementById('iframeTrans').src = "templates/halTransList.php?halaman=filter&fThn="+fThn+"&fBln="+fBln+"&fTgl="+fTgl+"&fSts="+fSts+"&fNm="+fNm;
+	}
+	else
+	{
+		document.getElementById('iframeTrans').src = "templates/halTransList.php?halaman=filter&fThn="+fThn+"&fBln="+fBln+"&fTgl="+fTgl+"&fSts="+fSts+"&fNm="+fNm;
+	}
+	document.getElementById('iframeHalTransDetail').src = "";
+}
+
+function cancelSts(status)
+{
+	var transId = document.getElementById('transId').value ;
+	var tipeUser = document.getElementById('tipeUser').value;
+	
+	var answer  = confirm("Are you sure want to "+status+" ?");
+	if(answer)
+	{
+		ajaxStatus(transId, "cekStatusRead", "idStatusRead");
+		
+		setTimeout(function()
+		{
+			var statusRead = document.getElementById('statusRead').value;
+			if(tipeUser != "adminAtk")
+			{
+				if(statusRead != "Unread")
+				{
+					alert('Transaction has been Processed\nCannot cancel it');
+					return false;	
+				}
+			}
+			if(statusRead == "Unread" || tipeUser == "adminAtk")
+			{
+				document.getElementById('iframeTrans').src = "templates/halTransList.php?aksi="+status+"&transId="+transId;
+				
+				document.getElementById('btnCancel').disabled = true;
+				document.getElementById('btnCancel').className = "btnStandarDisabled";
+				document.getElementById('btnReturn').disabled = true;
+				document.getElementById('btnReturn').className = "btnStandarDisabled";
+			}
+   		},500);
+		
+	}
+	else
+	{	return false;	}
+}
+
+function ajaxRefund(tampil, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	var parameters="halaman="+aksi+"&tampil="+tampil;
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function calculate(transId, detilId, editQty)
+{
+	//alert(transId+" / "+detilId+" / "+editQty);
+	document.getElementById('iframeHalTransDetail').src = "templates/halTransDetail.php?halaman=calcQty&transId="+transId+"&detilId="+detilId+"&editQty="+editQty;
+}
+
+function calcRefund(transId, detilId, rfndQty, note)
+{
+	document.getElementById('iframeHalTransDetail').src = "templates/halTransDetail.php?halaman=calcRefund&transId="+transId+"&detilId="+detilId+"&rfndQty="+rfndQty+"&note="+note;
+	//window.frames('iframeHalTransDetail').loadScroll('transDt');
+}
+
+function detailTrans(transId,halaman)
+{
+	/*ajaxStatus(transId, "cekStatusCancel", "idStatusRead");
+	setTimeout(function()
+	{
+		var statusCancel = document.getElementById('statusRead').value;
+		if(statusCancel == 1)
+		{
+			alert('Transaction has been Canceled');
+			return false;	
+		}
+		if(statusCancel == 0)
+		{
+			document.getElementById('iframeHalTransDetail').src = "templates/halTransDetail.php?transId="+transId+"&halaman="+halaman;
+		}
+	},500);*/
+	document.getElementById('iframeHalTransDetail').src = "templates/halTransDetail.php?transId="+transId+"&halaman="+halaman;
+}
+
+function refreshList()
+{
+	document.getElementById('iframeTrans').src = "templates/halTransList.php";
+}
+
+function refreshPage()
+{
+	document.getElementById('iframeTrans').src = "templates/halTransList.php";
+	document.getElementById('iframeHalTransDetail').src = "";
+}
+
+function report(teks)
+{
+	document.getElementById('report').innerHTML = "* Transaction has been "+teks;
+	
+	setTimeout(function()
+	{
+		document.getElementById('report').innerHTML = "&nbsp;";
+	},10000);
+}
+
+function aprvTrans()
+{
+	var transId = document.getElementById('transId').value;
+	var trActive = document.getElementById('trActive').value;
+	var status = document.getElementById('status').innerHTML;
+	
+	var answer  = confirm("Are you sure to Approve ?");
+	if(answer)
+	{
+		if(status == "Refund")
+		{
+			document.getElementById('iframeTrans').src = "templates/halTransList.php?transId="+transId+"&halaman=aprvRefund&trActive="+trActive;
+		}
+		else{
+			document.getElementById('iframeTrans').src = "templates/halTransList.php?transId="+transId+"&halaman=approved&trActive="+trActive;
+		}
+	}
+	else
+	{	return false;	}
+}
+
+function refundTrans()
+{
+	var transId = document.getElementById('transId').value;
+	var trActive = document.getElementById('trActive').value;
+	
+	var answer  = confirm("Are you sure to Refund ?");
+	if(answer)
+	{
+		document.getElementById('iframeTrans').src = "templates/halTransList.php?transId="+transId+"&halaman=refund&trActive="+trActive;
+	}
+	else
+	{	return false;	}
+}
+
+function RcvTrans()
+{
+	var transId = document.getElementById('transId').value;
+	var trActive = document.getElementById('trActive').value;
+	
+	var answer  = confirm("Are you sure to Receive ?");
+	if(answer)
+	{
+		document.getElementById('iframeTrans').src = "templates/halTransList.php?transId="+transId+"&halaman=received&trActive="+trActive;
+	}
+	else
+	{	return false;	}
+}
+
+/*function bukaRefund()
+{
+	var transId = document.getElementById('transId').value;
+	document.getElementById('iframeHalTransDetail').src = "templates/halTransDetail.php?transId="+transId+"&halaman=read&aksi=refund";
+}*/
+</script>
+<table cellpadding="0" cellspacing="0" width="100%">
+<input type="hidden" id="transId"/>
+<input type="hidden" id="trActive"/>
+<input type="hidden" id="ajaxTahun" value="off"/>
+<input type="hidden" id="ajaxBulan" value="off"/>
+<input type="hidden" id="ajaxTanggal" value="off"/>
+<input type="hidden" id="tipeUser" value="{tipeUser}"/>
+<input type="hidden" id="userIdLogin" value="{userIdLogin}"/>
+<tr>
+	<td id="idHalTeksLvl">
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN REQUEST NEW ITEM -->
+        <tr>
+        	<td height="434" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="5"></td></tr>
+                <tr>
+                	<td width="46%" class="" valign="top" align="center">
+<!-- ############# ISI HALAMAN REQUEST LIST -->
+                        <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr align="right">
+                        	<td colspan="2" height="32">
+                            	<select id="thn" class="elementMenu" style="width:63px;height:29px;" title="Choose Year" onchange="ajaxFilter(this.value, 'filterTahun', 'idFilterTahun');">
+                                    <option value="0000">Year</option>
+									{menuThn}
+                                </select>
+                                <span id="idFilterTahun">
+                                    <select id="bln" class="elementMenu" style="width:69px;height:29px;" title="Choose Month" onchange="ajaxFilter(this.value, 'filterBln', 'idFilterBulan');">
+                                        <option value="00">Month</option>
+                                        {menuBln}
+                                    </select>
+                                    <span id="idFilterBulan">
+                                        <select id="tgl" class="elementMenu" style="width:62px;height:29px;" title="Choose Date" onchange="ajaxFilter(this.value, 'filterTgl', 'idFilterTanggal');">
+                                            <option value="00">Date</option>
+                                            {menuTgl}
+                                        </select>
+                                        <span id="idFilterTanggal">
+                                            <select id="stat" class="elementMenu" style="width:93px;height:29px;" title="Choose Status" onchange="ajaxFilter(this.value, 'filterSts', 'idFilterStatus');">
+                                                <option value="all">All Status</option>
+                                                {menuStatus}
+                                            </select>
+                                            <span id="idFilterStatus">
+                                            	{nameTrans}
+                                            </span>
+                                    	</span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td align="left" valign="bottom" style="font-family:Tahoma;font-size:12px;">
+                            	<div style="float:left;">
+                                	<div style="width:19px;height:19px;border:#F00;background-image:url(../../picture/qhse_notif.png);background-repeat:no-repeat;float:left;">&nbsp;</div>Unread&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:14px;height:14px;border:solid 1px #ccc;background-color:#FF464A;float:left;">&nbsp;</div>
+                                    &nbsp;Processed&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:14px;height:14px;border:solid 1px #ccc;background-color:#F5FF46;float:left;">&nbsp;</div>
+                                    &nbsp;Approved&nbsp;&nbsp;
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:14px;height:14px;border:solid 1px #ccc;background-color:#5EFF46;float:left;">&nbsp;</div>
+                                    &nbsp;Completed&nbsp;&nbsp
+                                </div>
+                                <div style="float:left;">
+                                	<div style="width:19px;height:19px;border:#F00;background-image:url(../../picture/arrow-return-180-left.png);background-repeat:no-repeat;float:left;">&nbsp;</div>
+                                	Refund
+                                </div>
+                            </td>
+                        	<td align="right">
+                                <button class="btnStandar" title="Display Item" onclick="btnDisplay();">
+                                    <table height="27">
+                                      <tr>
+                                        <td align="center" width="20"><img src="picture/projection-screen.png"/> </td>
+                                        <td align="left">Display&nbsp;</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                        	<td height="2"></td>
+                        </tr>
+                        
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td colspan="2" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refreshPage();" title="Refresh Page" width="25"/></td>
+                                    <td width="50%" height="40">Transaction List</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halTransList.php" width="100%" height="317" target="iframeTrans" name="iframeTrans" id="iframeTrans" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    
+                    <td width="1%" class="tabelBorderRightJust" style="border-right-width:thin;border-right-style:dashed;border-color:#999;">&nbsp;</td>
+                    
+                    <td width="1%" class="">&nbsp;</td>
+                    
+                    <td width="52%" valign="top" class="">
+<!-- ############# ISI HALAMAN REQUEST DETAIL -->
+                      <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr class="fontMyFolderList">
+                        	<td width="39%">
+                            	Status : <span id="status" style="font-weight:bold;"></span>
+                            </td>
+                            <td width="12%" id="idReAprv">&nbsp;
+                            	
+                            </td>
+                            <td width="49%" align="right">
+                            	{btnRefund}
+                            	{btnApprv}
+                                {btnReceived}
+                                {btnReturn}
+                            	<button id="btnCancel" class="btnStandarDisabled" onclick="cancelSts('cancel'); return false;" title="Cancel Request" disabled>
+                                    <table height="27">
+                                      <tr>
+                                        <td align="center" width="20"><img src="picture/cross.png"/> </td>
+                                        <td align="left">Cancel&nbsp;</td>
+                                      </tr>
+                                    </table>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td colspan="3">
+                            <span id="idStatusRead"><input type="hidden" id="statusRead" name="statusRead"/></span>
+                            
+                            <div style="float:left;font-family:Tahoma;font-size:12px;">
+                            <div style="float:left;text-align:left;margin-bottom:2px;font-size:12px;font-family:Comic Sans MS;color:#060;font-weight:100;" id="report">&nbsp;</div>
+                                {legendTransDt}
+                            </div>
+                        	</td>
+                        </tr>
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                        	<td colspan="3" height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%">&nbsp;</td>
+                                    <td width="50%" height="40">Transaction Detail</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="" width="100%" height="333" target="iframeHalTransDetail" name="iframeHalTransDetail" id="iframeHalTransDetail" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>	
+                        </table>
+                    </td>
+                </tr>
+
+                </table>
+            
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+
+</table>

@@ -1,0 +1,50 @@
+<html>
+<script language="javascript">
+function printpr()
+{
+var OLECMDID = 7;
+/* OLECMDID values:
+* 6 - print
+* 7 - print preview
+* 1 - open window
+* 4 - Save As
+*/
+
+var PROMPT = 1; // 2 DONTPROMPTUSER
+var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
+
+WebBrowser1.ExecWB(OLECMDID, PROMPT); 
+WebBrowser1.outerHTML = "";
+}
+/*if(navigator.userAgent.toLowerCase().indexOf('chrome') > -1){   // Chrome Browser Detected?
+    window.PPClose = false;                                     // Clear Close Flag
+    window.onbeforeunload = function(){                         // Before Window Close Event
+        if(window.PPClose === false){                           // Close not OK?
+            return 'Leaving this page will block the parent window!\nPlease select "Stay on this Page option" and use the\nCancel button instead to close the Print Preview Window.\n';
+        }
+    }                   
+    window.print();                                             // Print preview
+    window.PPClose = true;                                      // Set Close Flag to OK.
+} */
+/*$(function() {
+	$('textarea').each(function() {
+		$(this).height($(this).prop('scrollHeight'));
+	});
+});*/
+$(function() {
+	 $('textarea').height($('textarea').prop('scrollHeight'));
+});
+</script>
+
+<link href="../../css/report.css" rel="stylesheet" type="text/css">
+
+<body onLoad="printpr();" onBlur="this.window.close();">
+<center>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+{isiReport}
+
+</table></center>
+</body>
+</html>

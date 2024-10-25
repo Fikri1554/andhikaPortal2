@@ -1,0 +1,250 @@
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../../css/archives.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../../js/main.js"></script>
+<script src="../js/main.js"></script>
+
+<script>
+function frameSize(status)
+{
+	var heightFrame = document.getElementById('iframeStock').height ;
+	
+	var heightFramePlus = heightFrame*2;
+	var heightFrameMin = heightFrame/2;
+	
+	if(status == "down")
+	{
+		$("#iframeStock").animate(
+			{
+				height: heightFramePlus
+				
+			}, 1000);
+		document.getElementById('iframeStock').height = heightFramePlus;
+	}
+	if(status == "up")
+	{
+		if(heightFrame != 363)
+		{
+			$("#iframeStock").animate(
+				{
+					height: heightFrameMin
+				}, 1000);
+			document.getElementById('iframeStock').height = heightFrameMin;
+			
+			if(heightFrameMin == 363)
+			{
+				$('#back-top').fadeOut();
+			}
+		}
+	}
+}
+
+function openThickboxWindowStock(id, aksi, hal)
+{
+	if(hal == "addStock")
+	{
+		document.getElementById('hrefThickbox').href="templates/halAddStock.php?placeValuesBeforeTB_=savedValues&TB_iframe=true&height=357&width=600&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+function display()
+{
+	var bulan = document.getElementById('bulan').value;
+	if(bulan == "0")
+	{
+		alert('Please Choose Month');
+		document.getElementById('iframeStock').src = "";
+	}
+	if(bulan != "0")
+	{
+		document.getElementById('iframeStock').src = "templates/halStockList.php?yearMonth="+bulan;
+	}
+}
+
+function exit()
+{
+	var bulan = document.getElementById('bulan').value;
+	parent.tb_remove(false);
+	parent.document.getElementById('iframeStock').src = "";
+	parent.document.getElementById('iframeStock').src = "templates/halStockList.php?yearMonth="+bulan;
+}
+
+function report()
+{
+	document.getElementById('report').innerHTML = "New Stock succesfully added";
+	
+	setTimeout(function()
+	{
+		document.getElementById('report').innerHTML = "";
+	},10000);
+}
+
+function ajaxCek(id, aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "cekMonthAdaTidak")
+	{
+		var parameters="halaman="+aksi;
+	}
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+	
+	setTimeout(function()
+	{
+		var cekMonth = document.getElementById('cekMonth').value;
+		if(cekMonth == "tidak")
+		{
+			//loadUrl('index.php?aksi=stockReport');
+			document.getElementById('iframeStock').src="templates/halStockList.php?yearMonth={yearMonth}&halaman=copyLastStock";
+		}
+	},500);
+}
+
+function ajaxMonthBefore(aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	var bln = document.getElementById('bulan').value;
+	var parameters="halaman="+aksi+"&bln="+bln;
+	
+	mypostrequest.open("POST", "halPostFold.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+</script>
+<a class="thickbox" id="hrefThickbox"></a>
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr>
+	<td class="batasTitik" height="5"></td>
+</tr>
+<tr>
+	<td height="5"></td>
+</tr>
+<tr>
+	<td>
+    	&nbsp;<select id="bulan" class="elementMenu" style="width:155px;height:29px;" title="Choose Month" onfocus="ajaxCek('', 'cekMonthAdaTidak', 'idCekMonth');">
+        	<option value="0">-- SELECT MONTH --</option>
+            {optionMonth}
+        </select>
+        <button class="btnStandar" onclick="display();ajaxMonthBefore('monthBefore','idMonthBefore');" title="Display Item">
+            <table height="27">
+              <tr>
+                <td align="center" width="20"><img src="picture/arrow.png"/> </td>
+                <td align="left">GO&nbsp;</td>
+              </tr>
+            </table>
+        </button>
+        <button class="btnStandar" onClick="openThickboxWindowStock('', '', 'addStock');" title="Add Item Stock">
+            <table height="27">
+                <tr>
+                    <td align="center" width="20"><img src="../picture/drawer--plus.png"></td>
+                    <td align="left">Add Stock&nbsp;</td>
+                </tr>
+            </table>
+        </button>
+        &nbsp;
+        </span><span id="report" class="report"></span>
+        <div style="float:right;margin-top:10px;font-family:tahoma;font-size:12px;">
+        	<div style="float:left;">
+                <div style="width:16px;height:14px;border:solid 1px #ccc;background-color:#FF464A;float:left;">&nbsp;</div>
+                &nbsp;Under minimal stock&nbsp;&nbsp;
+            </div>
+            <div style="float:left;">
+                <div style="width:16px;height:14px;border:solid 1px #ccc;background-color:#F5FF46;float:left;">&nbsp;</div>
+                &nbsp;Equal minimal stock&nbsp;&nbsp;
+            </div>
+            <div style="float:left;">
+                <div style="width:16px;height:14px;border:solid 1px #ccc;background-color:#5EFF46;float:left;">&nbsp;</div>
+                &nbsp;Above minimal stock&nbsp;
+            </div>
+        </div>
+        <div id="idCekMonth"><input type="hidden" id="cekMonth" name="cekMonth"/></div>
+    </td>
+</tr>
+<tr>
+	<td height="3"></td>
+</tr>
+<tr>
+	<td>
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr align="center" style="background-color:#666;color:#EFEFEF;font-family:Arial;font-size:18px;font-weight:bold;">
+	<td>
+    <table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0" style="font-size:12px;">
+    <tr>
+        <td width="4%" height="40" align="center" id="tdJudulTitle">No.</td>
+        <td width="40%" align="center">ITEM</td>
+        <td width="6%" height="40" align="center">
+        	<table cellpadding="0" cellspacing="0" border="0" style="font-size:11px;">
+                <tr>
+                    <td align="center">Qty</td>
+                </tr>
+                <tr>
+                    <td align="center">Type</td>
+                </tr>
+			</table>
+        </td>
+        <!--<td width="8%" height="40" align="center">
+        	<table cellpadding="0" cellspacing="0" border="0" style="font-size:11px;">
+                <tr>
+                    <td align="center">PRICE</td>
+                </tr>
+                <tr>
+                    <td align="center">(Rp.)</td>
+                </tr>
+			</table>
+        </td>-->
+        
+        <td width="8%" align="center">MIN STOCK</td>
+        <td width="8%" height="40" align="center">
+        	<table cellpadding="0" cellspacing="0" border="0" style="font-size:11px;">
+                <tr>
+                    <td align="center">Stock</td>
+                </tr>
+                <tr>
+                    <td align="center"><span id="idMonthBefore"><!--{blnDisp}-->Prev Month</span></td>
+                </tr>
+			</table>
+        </td>
+        <td width="5%" align="center">SUPPLY</td>
+        <td width="10%" align="center">DATE</td>
+        <td width="8%" align="left">ITEM OUT</td>
+        <td width="7%" align="center">CURRENT STOCK</td>
+        <td width="4%">&nbsp;</td>
+    </tr>
+    </table>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<iframe width="100%" height="363" src="templates/halStockList.php?yearMonth={yearMonth}" target="iframeStock" name="iframeStock" id="iframeStock" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+    </td>
+</tr>
+</table>
+	</td>
+</tr>
+</table>

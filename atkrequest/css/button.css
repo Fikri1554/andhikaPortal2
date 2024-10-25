@@ -1,0 +1,195 @@
+@charset "utf-8";
+/* CSS Document */
+
+.btnStandar
+{
+	border:#CCC 1px solid;
+	/*border-bottom:0px;*/
+
+	background-color:#EAEAEA;
+	cursor:pointer;
+	
+	font-family:Arial;
+	color:#555;
+	font-weight:bold;
+	font-size:10px;
+	
+	padding:0px;
+}
+
+.btnStandar:hover
+{
+	background-color:#1582f5;
+}
+
+.btnStandarHover
+{
+	border:#CCC 1px solid;
+	background-color:#1582f5;
+	cursor:pointer;
+
+	font-family:Arial;
+	color:#555;
+	font-weight:bold;
+	font-size:10px;
+	
+	padding:0px;
+}
+
+
+.btnStandarDis
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#E9E9E9;
+	cursor:not-allowed;
+	
+	font-family:Arial;
+	color:#CCC;
+	font-weight:bold;
+	font-size:10px;
+	
+	padding:0px;
+}
+
+.btnStandarTabPilih
+{	
+	border:#CCC 1px solid;
+	border-bottom:0px;
+	background-color:#F9F9F9;
+	color:#555;
+	cursor:pointer;
+	
+	font-family:Arial;
+	font-weight:bold;
+	font-size:10px;
+	padding:0px;
+	
+	vertical-align:middle;
+}
+
+
+/*
+.btnStandarTabPilih
+{
+	position:absolute;
+	top:0px;
+	
+	border:#CCC 1px solid;
+	border-bottom:0px;
+	background-color:#F9F9F9;
+	color:#555;
+	cursor:pointer;
+	
+	font-family:Arial;
+	font-weight:bold;
+	font-size:10px;
+	padding:0px;
+}
+
+
+.fontBtnDis
+{
+	font-family:Arial;
+	color:#CCC;
+	font-weight:bold;
+	font-size:10px;
+}
+
+.btnStandarHover
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#1582f5;
+	cursor:pointer;
+}
+
+.fontBtn
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#555;
+	font-weight:bold;
+	font-size:10px;
+}
+
+.fontBtn:hover
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#FFF;
+	font-weight:bold;
+	font-size:10px;
+}
+
+.fontBtnHover
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#FFF;
+	font-weight:bold;
+	font-size:10px;
+}*/
+.elementTeks
+{
+	color:#333;
+	font-family:tahoma;
+	font-size:11px;
+	vertical-align:middle;
+}
+
+.elementTeksKecil
+{
+	color:#333;
+	font-family:tahoma;
+	font-size:10px;
+	vertical-align:middle;
+}
+
+.elementMenu
+{
+	/*height:22px;*/
+	vertical-align:middle;
+	font-family:tahoma;
+	font-size:11px;
+    padding:2px;
+
+    border-radius:2px;
+    border: solid 1px #A4B97F;
+    /*background-color: #f5f5f5;*/
+	background-color:#FFF;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+}
+
+.elementInput
+{
+	height:16px;
+	line-height:18px;
+	
+	font-family:tahoma;
+	font-size:11px;
+	padding-left:4px;
+	padding-right:4px;
+}
+
+.fontBtn
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#555;
+	font-weight:bold;
+	font-size:10px;
+}
+
+.fontBtnHover
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#FFF;
+	font-weight:bold;
+	font-size:10px;
+}

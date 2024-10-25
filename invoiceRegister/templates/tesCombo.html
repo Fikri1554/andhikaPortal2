@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Demo Page for jQuery UI selectmenu</title>
+
+    <link type="text/css" href="../../themes/base/jquery.ui.all.css" rel="stylesheet" />
+    <link type="text/css" href="../../themes/base/jquery.ui.selectmenu.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../ui/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="../../ui/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="../../ui/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="../../ui/jquery.ui.selectmenu.js"></script>
+    <style type="text/css">
+        body {font-size: 62.5%; font-family: "Verdana",sans-serif; }
+        fieldset { border: 0; }
+        label, select, .ui-select-menu { float: left; margin-right: 10px; }
+        select { width: 200px; }
+    </style>
+    <script type="text/javascript">
+        // We need to able to call the original open method, save intoIf you need to call original method
+        var fn_open = $.ui.selectmenu.prototype.open;
+        $.widget("ui.selectmenu", $.extend({}, $.ui.selectmenu.prototype, {
+            open : function() {
+                // Every the selectmenu is opened, unbind some events...
+                this._unbindEvents();
+                fn_open.apply(this, arguments);
+            },
+            _unbindEvents : function() {
+                var el = $(this.list).find('li:has(input.other)').eq(0);
+                // unbind events, we need a different event here...
+                el.unbind('mouseup');
+                el.unbind('mousedown');
+                el.bind('mousedown', function() {
+                    // We need to call focus here explicitly
+                    $(this).find('input.other').eq(0).focus();
+
+                    // Empty field on click...
+                    if ( $(this).find('input.other').eq(0).val() == 'Other...' )
+                         $(this).find('input.other').eq(0).val("");
+                });
+                // Unbind keydown, because otherwise we cannot type in our textfield....
+                this.list.unbind('keydown');
+                // We only need to return false on the mousedown event.
+                this.list.unbind('mousedown.selectmenu mouseup.selectmenu');
+                this.list.bind('mousedown', function() {
+                        return false;
+                });
+            },
+            selectOther : function(el) {
+                var button = $(el);
+
+                // li item contains the index
+                var itemIndex = button.parent().parent().parent().data('index');
+                var changed = itemIndex != this._selectedIndex();
+
+                // Get the value of the input field
+                var newVal = button.prev().val();
+                this.index(itemIndex);
+                // Update the display value in the styled select menu.
+                this.newelement.find('.' + this.widgetBaseClass + '-status').html(newVal);
+
+                // Update the value and html of the option in the original select.
+                $(this.element[0].options[itemIndex]).val(newVal).html(newVal);
+
+                // Call the select, change and close methods
+                var e = jQuery.Event("mouseup");
+                this.select(e);
+                if ( changed )
+                    this.change(e);
+                this.close(e);
+            }
+        }));
+
+        var selectMenu;
+        $(function(){
+            selectMenu = $('select#otherselect').selectmenu({
+                style:'popup',
+                width: 300,
+                format: otherFormatting
+            });
+        });
+
+        function selectOther(el) {
+            // Call our self defined selectOther function.
+            selectMenu.selectmenu('selectOther', el);
+        }
+
+        //a custom format option callback
+        var otherFormatting = function(text){
+
+            // if text contains 'Other' format into Other input box...
+            if ( text == "Other" ) {
+                var button = $('<input type="submit" onclick="selectOther(this)" value="select"/>');
+                var input = $('<input class="other" type="text" value="Other..."/>');
+
+
+                return $('<span/>')
+                    .append(input)
+                    .append(button)[0].outerHTML;
+            }
+
+            return text;
+        }
+    </script>
+</head>
+<body>
+    <h2>Select with Other option input field</h2>
+    <fieldset>
+        <label for="otherselect">Select a value:</label>
+        <select name="otherselect" id="otherselect">
+            <option value="united-states">United States</option>
+            <option value="latvia" selected="selected">Latvia</option>
+            <option value="france">France</option>
+            <option>Other</option>
+        </select>
+    </fieldset>
+    <button onclick="console.log($('#otherselect').val());">Test</button>
+</body>
+</html>

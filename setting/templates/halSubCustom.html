@@ -1,0 +1,334 @@
+<script type="text/javascript">
+function pilihBtnChoose()
+{
+	var userIdHistory = document.getElementById('userId').value;
+	var yearLog = document.getElementById('yearLog').value;
+	if(userIdHistory == "00000")
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\"/>&nbsp;Please select employee name";
+	}
+	else
+	{
+		document.getElementById('errorMsg').innerHTML = "&nbsp;";
+		document.getElementById('iframeHalHistory').src = "";
+		document.getElementById('iframeHalHistory').src = "templates/halHistoryList.php?userIdHistory="+userIdHistory+"&yearLog="+yearLog;
+	}
+}
+
+function pilihBtnAdd()
+{
+	var userId = document.getElementById('userId').value; // USERID USER YANG AKAN DIBERIKAN HAK AKSES
+	document.getElementById('errorMsg').innerHTML = "&nbsp;";
+	if(userId == 00000)
+	{
+		document.getElementById('errorMsg').innerHTML = "<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;Please select user";
+		return false;
+	}
+	
+	var answer  = confirm("Are you sure want to add?");
+	if(answer)
+	{
+		document.getElementById('iframeHalHaveAccess').src = "";
+		document.getElementById('iframeHalHaveAccess').src = "templates/halHaveAccessList.php?aksi=addHaveAccess&userId="+userId;
+		
+		ajaxSubCustom("addUserHaveAccess", "idHalMenuUserSubCustom_Superior");
+	}
+	else
+	{	return false;	}
+}
+
+function pilihUserHaveAccess(userIdSelect, userIdNm)
+{
+	document.getElementById('userId').value = "00000";
+	document.getElementById('userId').disabled = true;
+	document.getElementById('btnAdd').disabled = true;
+	document.getElementById('btnAdd').className = 'btnStandarDisabled';
+	document.getElementById('btnRemove').disabled = false;
+	document.getElementById('btnRemove').className = 'btnStandar';
+	
+	document.getElementById('superiorNm').innerHTML = userIdNm;
+	document.getElementById('userIdSelect').value = userIdSelect;
+	
+	ajaxSubCustom("pilihUserHaveAccess", "idHalMenuUserSubCustom_Subordinate");
+	document.getElementById('btnAddSub').disabled = false;
+	document.getElementById('btnAddSub').className = 'btnStandar';
+	document.getElementById('btnRemoveSub').disabled = true;
+	document.getElementById('btnRemoveSub').className = 'btnStandarDisabled';
+	
+	document.getElementById('iframeHalSubCustom').src = "";
+	document.getElementById('iframeHalSubCustom').src = "templates/halSubCustomList.php?aksi=showSubCustom&userId="+userIdSelect;
+}
+
+function pilihUserSub(idCustomSub)
+{
+	document.getElementById('idCustomSub').value = idCustomSub;
+	document.getElementById('userIdSub').value = "00000";
+	document.getElementById('userIdSub').disabled = true;
+	document.getElementById('btnAddSub').disabled = true;
+	document.getElementById('btnAddSub').className = 'btnStandarDisabled';
+	document.getElementById('btnRemoveSub').disabled = false;
+	document.getElementById('btnRemoveSub').className = 'btnStandar';
+}
+
+function refreshPage()
+{
+	document.getElementById('userId').disabled = false;
+	document.getElementById('btnAdd').disabled = false;
+	document.getElementById('btnAdd').className = 'btnStandar';
+	document.getElementById('btnRemove').disabled = true;
+	document.getElementById('btnRemove').className = 'btnStandarDisabled';
+	
+	document.getElementById('iframeHalHaveAccess').src = "";
+	document.getElementById('iframeHalHaveAccess').src = "templates/halHaveAccessList.php";
+	
+	document.getElementById('superiorNm').innerHTML = "&nbsp;";
+	document.getElementById('userIdSelect').value = "";
+
+	document.getElementById('idCustomSub').value = "";
+	
+	document.getElementById('userIdSub').value = "00000";
+	document.getElementById('userIdSub').disabled = true;
+	document.getElementById('btnAddSub').disabled = true;
+	document.getElementById('btnAddSub').className = 'btnStandarDisabled';
+	document.getElementById('errorMsg2').innerHTML = "&nbsp;";
+	
+	document.getElementById('iframeHalSubCustom').src = "";
+	document.getElementById('iframeHalSubCustom').src = "templates/halSubCustomList.php";
+}
+
+function ajaxSubCustom(aksi, halaman)
+{
+	var mypostrequest=new ajaxRequest()
+	mypostrequest.onreadystatechange=function()
+	{
+		if (mypostrequest.readyState==4)
+		{
+			if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1)
+			{
+				document.getElementById(halaman).innerHTML=mypostrequest.responseText;
+			}
+		}
+	}
+	
+	if(aksi == "pilihUserHaveAccess")
+	{
+		var userIdSelect = document.getElementById('userIdSelect').value;
+		var parameters="halaman="+aksi+"&userIdSelect="+userIdSelect;
+	}
+	if(aksi == "addUserHaveAccess")
+	{
+		var parameters="halaman="+aksi;
+	}
+	
+	mypostrequest.open("POST", "halPostSetting.php", true);
+	mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	mypostrequest.send(parameters);
+}
+
+function pilihBtnAddSub()
+{
+	var userIdSelect = document.getElementById('userIdSelect').value;// USERID USER YANG AKAN DIBERIKAN HAK AKSES
+	var userIdSub = document.getElementById('userIdSub').value; // USERID USER SUBORDINATE YANG AKAN BISA DI AKSES OLEH USERID YANG DIPILIH
+	document.getElementById('errorMsg2').innerHTML = "&nbsp;";
+	if(userIdSub == 00000)
+	{
+		document.getElementById('errorMsg2').innerHTML = "<img src=\"../../picture/exclamation-red.png\" width=\"14\"/>&nbsp;Please select subordinate";
+		return false;
+	}
+	
+	var answer  = confirm("Are you sure want to add?");
+	if(answer)
+	{
+		document.getElementById('iframeHalSubCustom').src = "";
+		document.getElementById('iframeHalSubCustom').src = "templates/halSubCustomList.php?aksi=addSubCustom&userId="+userIdSelect+"&userIdSub="+userIdSub;
+		
+		ajaxSubCustom("pilihUserHaveAccess", "idHalMenuUserSubCustom_Subordinate");
+	}
+	else
+	{	return false;	}
+}
+
+function pilihBtnRemove()
+{
+	var answer  = confirm("Are you sure want to remove?");
+	if(answer)
+	{
+		var userIdSelect = document.getElementById('userIdSelect').value;// USERID USER YANG AKAN DIBERIKAN HAK AKSES
+		
+		document.getElementById('iframeHalHaveAccess').src = "";
+		document.getElementById('iframeHalHaveAccess').src = "templates/halHaveAccessList.php?aksi=removeSubCustom&userId="+userIdSelect;
+		
+		ajaxSubCustom("addUserHaveAccess", "idHalMenuUserSubCustom_Superior");
+	}
+	else
+	{	return false;	}
+}
+
+function pilihBtnRemoveSub()
+{
+	var answer  = confirm("Are you sure want to remove?");
+	if(answer)
+	{
+		var idCustomSub = document.getElementById('idCustomSub').value; 
+		var userIdSelect = document.getElementById('userIdSelect').value;// USERID USER YANG AKAN DIBERIKAN HAK AKSES
+		
+		document.getElementById('iframeHalSubCustom').src = "";
+		document.getElementById('iframeHalSubCustom').src = "templates/halSubCustomList.php?aksi=removeSubCustom&idCustomSub="+idCustomSub+"&userId="+userIdSelect;
+
+		var delay=1000//1 seconds
+		setTimeout(function()
+		{
+			ajaxSubCustom("pilihUserHaveAccess", "idHalMenuUserSubCustom_Subordinate");
+			
+			var userIdNm = document.getElementById('superiorNm').innerHTML;
+			pilihUserHaveAccess(userIdSelect, userIdNm)
+		},delay);
+	}
+	else
+	{	return false;	}
+}
+</script>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td id="idHalTeksLvl">
+    	<!-- ############# TEKS PENUNJUK DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10"></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        
+<!-- ############# ISI HALAMAN SUBORDINATE CUSTOM -->
+        <tr>
+        	<td height="437" colspan="3" valign="top">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                <tr><td height="5"></td></tr>
+                <tr>
+                	<td width="42%" class="" valign="top" align="center">
+<!-- ############# ISI HALAMAN USER YANG AKAN DIBERIKAN HAK SUBORDINATE CUSTOM -->
+                        <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr>
+                            <td valign="bottom" align="left"><span id="idHalMenuUserSubCustom_Superior">{menuUserSubCustom_Superior}</span>&nbsp;
+                            <button class="btnStandar" id="btnAdd" type="button" style="width:55px;height:28px;" onclick="pilihBtnAdd();" title="Add Choosen User for Have Access">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td align="center"><img src="../picture/Button-Add-blue-32.png" height="20"/> </td>
+                                    <td align="center">Add</td>
+                                  </tr>
+                                </table>
+                            </button>
+                            <button class="btnStandarDisabled" id="btnRemove" type="button" style="width:75px;height:29px;" onclick="pilihBtnRemove();" disabled title="Remove User Access">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td align="center"><img src="../picture/Button-Cross-blue-32.png" height="20"/> </td>
+                                    <td align="center">Remove</td>
+                                  </tr>
+                                </table>
+                            </button>
+                            </td>
+                        </tr>
+                        <tr><td align="left" id="errorMsg" class="errorMsg">&nbsp;</td></tr>
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                            <td height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%" align="left">&nbsp;<img src="../../picture/Button-Synchronize-blue-32.png" onMouseOver="this.style.backgroundColor='#FF888B';" onMouseOut="this.style.backgroundColor='#666';" style="cursor: pointer;" onclick="refreshPage();" title="Refresh Page"/></td>
+                                    <td width="50%" height="40">User have access</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halHaveAccessList.php" width="100%" height="335" target="iframeHalHaveAccess" name="iframeHalHaveAccess" id="iframeHalHaveAccess" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    <td width="1%" class="tabelBorderRightJust" style="border-right-width:thin;border-right-style:dashed;border-color:#999;">&nbsp;</td>
+                    <td width="1%" class="">&nbsp;</td>
+                    <td class="" valign="top">
+<!-- ############# ISI HALAMAN SUBORDINATE YANG BISA DIAKSES SECARA CUSTOM -->
+                        <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr class="fontMyFolderList">
+                        	<td height="27" class="tabelBorderRightNull" style="border-width:thin;border-color:#999;background-color:#F7F7F7;">
+                            &nbsp;
+                            <span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Superior</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span id="superiorNm" style="font-weight:bold;">&nbsp;</span>
+                            &nbsp;
+                            <input type="hidden" id="userIdSelect" name="userIdSelect">
+                            <input type="hidden" id="idCustomSub" name="idCustomSub">
+                            </td>
+                        </tr>
+                        <tr><td height="5"></td></tr>
+                        <tr class="fontMyFolderList">
+                        	<td>
+                            &nbsp;&nbsp;<span style="color:#000080;font-weight:bold;font-family:Tahoma;font-size:14px;">Subordinate</span>&nbsp;
+                            <span id="idHalMenuUserSubCustom_Subordinate">
+                            	<select class="elementMenu" id="userIdSub" name="userIdSub" style="width:270px;height:29px;" disabled title="Choose User">
+                            		<option value="00000">-- PLEASE SELECT --</option>
+                                </select>
+                            </span>
+                            <button class="btnStandarDisabled" id="btnAddSub" type="button" style="width:55px;height:28px;" onclick="pilihBtnAddSub();" disabled title="Add Choosen User">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td align="center"><img src="../picture/Button-Add-blue-32.png" height="20"/> </td>
+                                    <td align="center">Add</td>
+                                  </tr>
+                                </table>
+                            </button>
+                            <button class="btnStandarDisabled" id="btnRemoveSub" type="button" style="width:75px;height:29px;" onclick="pilihBtnRemoveSub();" disabled title="Remove Choosen User">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td align="center"><img src="../picture/Button-Cross-blue-32.png" height="20"/> </td>
+                                    <td align="center">Remove</td>
+                                  </tr>
+                                </table>
+                            </button>
+                            </td>
+                        </tr>
+                        <tr><td align="left" id="errorMsg2" class="errorMsg">&nbsp;</td></tr>
+                        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+                        	<td height="40">
+                            
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="25%">&nbsp;</td>
+                                    <td width="50%" height="40">Subordinate Custom List</td>
+                                    <td width="25%">&nbsp;</td>
+                                </tr>
+                                </table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tabelBorderTopNull" style="border-width:thin;">
+                                <iframe src="templates/halSubCustomList.php" width="100%" height="301" target="iframeHalSubCustom" name="iframeHalSubCustom" id="iframeHalSubCustom" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+                            </td>
+                        </tr>	
+                        </table>
+                    </td>
+                </tr>
+
+                </table>
+            
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+
+</table>

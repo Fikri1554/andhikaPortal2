@@ -1,0 +1,72 @@
+INSTALL HRSYS
+--------------------------
+
+1. buka explorer, \\andhika-nas\Source\NewSystems\HRsys\DISK144\DISK1
+2. dobel klik pada file setup.exe, dan jalanakan proses install sampai selesai
+3. copy file dari U:\PUBLIC\UpdateAppl\hrsys.exe ke C:\HRsys dan replace
+4. copy \\andhika-nas\Source\NewSystems\DLL-File\YELLOW.ICO ke C:\Windows
+5. buatkan shortcut ke dekstop dengan nama NewAndhSys
+
+//########################
+pada dasarnya jika sudah melalui proses install HRSYS maka ACCOUNTJKT hanya tinggal dicopykan saja file exe nya sesuai dengan folder yang sudah ditentukan, 
+dan begitu sebaliknya jika ACCOUNTJKT yang terinstall duluan maka HRSYS hanya dicopykan saja file exe nya
+//########################
+
+INSTALL ACCOUNTJKT
+------------------------------------
+
+1. buka explorer, \\andhika-nas\Source\NewSystems\AccountJKT\DISK1
+2. dobel klik pada file setup.exe, dan jalanakan proses install sampai selesai
+3. copy file dari U:\PUBLIC\UpdateAppl\accountjkt.exe ke C:\\ACCOUNTJKT dan replace
+4. copy folder \\andhika-nas\Source\NewSystems\AccountJKT\DATA ke C:\\ACCOUNTJKT dan replace
+5. dobel klik pada \\andhika-nas\Source\NewSystems\AccountJKT\SETMYODBC.REG 
+
+
+
+INSTALL FAKTUR (TIDAK)
+------------------------------------
+
+INSTALL INVOICE REGISTER, PAYMENT, MAIL REGISTER
+------------------------------------------------------------------------------------------
+
+
+1. buka explorer, \\andhika-nas\Source\NewSystems\Voyager\
+2. dobel klik pada setup.exe, dan jalanakan proses install sampai selesai
+3. di dekstop hapus file shortcut ShipMgnt
+
+4. copy file dari \\andhika-nas\Source\NewSystems\Voyager\Invoice.exe ke C:\Program Files\Andhika\
+5. copy file dari \\andhika-nas\Source\NewSystems\Voyager\Mail.exe ke C:\Program Files\Andhika\
+6. copy file dari \\andhika-nas\Source\NewSystems\Voyager\Payment.exe ke C:\Program Files\Andhika\
+7. hapus file ShipMgnt dan VoyagerODBC
+
+
+SETTING INVOICE REGISTER
+---------------------------------------------
+1. buka explorer controlpanel, pilih dan buka BDE administrator
+2. pada tab configuration pilih root dibawahnya : Drivers => Native => MSSQL
+3. pada tab definition cari baris SERVERNAME isi dengan LILY, cari baris USERNAME isi kosong
+4. Menu Object => exit
+5. buka lagi BDE administrator, pilih tab database
+6. pilih root dibawahnya yaitu MSSQL Lookup, kemudian cari baris di kanan USERNAME isi LILY
+7. pilih root dibawahnya yaitu MSSQL Voyager, kemudian cari baris di kanan USERNAME isi LYLY
+
+8. klik kanan pada root Database => New => MSSQL => OK
+9. ganti MSSQL1 jadi MSSQLBridge
+10. pilih MSSQLBridge, disebelah kanan pilih baris DATABASE isi BRIDGE
+
+11. klik kanan pada root Database => New => MSSQL => OK
+12. ganti MSSQL1 jadi DBBridge
+13. pilih DBBridge, disebelah kanan pilih baris DATABASE isi BRIDGE
+
+14. klik pada root Database ANDHIKA, 
+15. secara default SERVER NAME adalah grandpa, ganti jadi LILY
+16. secara default DATABASE adalah kosong, isi dengan VOYAGER
+
+17. klik pada root Database MSSQLLOOKUP 
+18. secara default SERVER NAME adalah grandpa, ganti jadi LILY
+19. secara default DATABASE adalah LOOKUP, ganti jika tidak sesuai
+
+20. klik pada root Database MSSQLVOYAGER 
+21. secara default SERVER NAME adalah grandpa, ganti jadi LILY
+22. secara default DATABASE adalah VOYAGERganti jika tidak sesuai
+

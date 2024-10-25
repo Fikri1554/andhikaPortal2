@@ -1,0 +1,16 @@
+php.ini 
+- max_execution_time = 1000 ;
+- max_input_time = 1000 ;
+- mysql.connect_timeout = 1000 ;
+
+- max_execution_time=0
+- ini_set('max_execution_time', 0);
+
+xampp\phpmyadmin\config.inc.php
+- $cfg['ExecTimeLimit'] = 6000;
+
+xampp\phpMyAdmin\libraries\config.default.php
+- $cfg['ExecTimeLimit'] = 600;
+
+C:\Apache24\htdocs\phpmyadmin\libraries\Config.class.php
+- $cfg['ExecTimeLimit'] = 0;

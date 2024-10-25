@@ -1,0 +1,243 @@
+@charset "utf-8";
+/* CSS Document */
+
+.boxItem
+{
+	float:left;
+	margin: 9px 0 0 10px;
+	width:165px;
+	height:175px;
+	border:solid 1px #1582f5;
+	padding: 2px 2px;
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+		box-sizing: border-box;
+}
+
+.boxItemHover
+{
+	float:left;
+	margin: 9px 0 0 10px;
+	width:165px;
+	height:175px;
+	border:solid 3px #1582f5;
+	
+	cursor:pointer;	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+		box-sizing: border-box;
+}
+
+.borderImg
+{
+	border-bottom-width:1px;
+	border-top-width:1px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-color:#999;
+	border-style:solid;
+}
+
+.boxButton
+{
+	position:absolute;
+	/*top:13px;*/
+	margin-top:-165px;
+	width:159px;
+	height:178px;
+	
+	/*background:#000;*/
+	/*opacity:0.2;
+	/* IE 8 */
+	 /*-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+	/* IE 7 */
+	/*filter: alpha(opacity=20);*/
+}
+
+.btnAtk
+{
+	vertical-align:middle;
+	border:#1582f5 1px solid;
+	border-radius:8px;
+	cursor:pointer;
+
+	background-color:#1582f5;
+	font-family:Arial;
+	font-size:12px;
+	cursor:pointer;	
+	color:#FFF;
+}
+
+.btnAtk:hover
+{
+	vertical-align:middle;
+	border:#1582f5 1px solid;
+	border-radius:8px;
+	cursor:pointer;
+
+	background-color:#f5f5f5;
+	
+	font-family:Arial;
+	font-size:12px;
+	cursor:pointer;	
+	color:#1582f5;
+}
+
+/*
+.btnAtk a
+{
+	font-family:Arial;
+	font-size:12px;
+	cursor:pointer;	
+
+	color:#FFF;
+}
+
+.btnAtk:hover a
+{
+	font-family:Arial;
+	font-size:12px;
+	cursor:pointer;	
+
+	color:#1582f5;
+}
+
+.btnAtkHover
+{
+	vertical-align:middle;
+	border:#1582f5 1px solid;
+	border-radius:8px;
+
+	background-color:#f5f5f5;
+	cursor:pointer;
+	
+	color:#1582f5;
+}
+
+.btnAtk:hover
+{
+	vertical-align:middle;
+	border:#1582f5 1px solid;
+	border-radius:8px;
+
+	background-color:#f5f5f5;
+	cursor:pointer;
+	
+	color:#1582f5;
+}
+
+
+.fontBtnAtk
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#FFF;
+	font-size:12px;
+}
+
+.fontBtnAtk:hover
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#1582f5;
+	font-size:20px;
+}
+
+.fontBtnAtkHover
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#1582f5;
+	font-size:12px;
+}*/
+
+.btnClose
+{
+	width:25px;
+	height:25px;
+}
+
+.btnCloseHover
+{
+	width:27px;
+	height:27px;
+}
+
+.borderTopNull
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#999;
+	border-style:dotted;
+	cursor:default;
+}
+
+.borderTopLeftNull
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:1;
+	border-color:#999;
+	border-style:dotted;
+	cursor:default;
+}
+
+.qtyTd
+{
+	background-color:#1582f5;
+	border:solid 1px #1582f5;color:#FFF;
+	text-align:center;
+	/*height:28px;
+	width:20px;*/
+}
+
+/* pagging */
+div.posPaging {
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;
+}
+div.paging {
+	padding     : 3px;
+	margin      : 3px;
+	text-align  : center;
+	font-family : Tahoma;
+	font-size   : 12px;
+}
+
+div.paging a {
+	padding             : 2px 5px 2px 5px;
+	margin-right        : 2px;
+	border              : 1px solid #2C2C2C;
+	text-decoration     : none; 
+	color               : #FFFFFF;
+	background          : #2C2C2C url('images/image1.gif');
+}
+div.paging a:hover {
+	border           : 1px solid #FFFBF0;
+	color            : #FFFFFF;
+	background       : #808080 url('images/image2.gif');
+}
+div.paging span.current {
+	padding          : 2px 5px 2px 5px;
+	margin-right     : 2px;
+	border           : 1px solid #FFFBF0;
+	font-weight      : bold;
+	color            : #FFFFFF;
+	background       : #808080 url('images/image2.gif');
+}
+div.paging span.disabled {
+	padding      : 2px 5px 2px 5px;
+	margin-right : 2px;
+	border       : 1px solid red;
+	color        : red;
+}
+div.paging span.prevnext {
+  font-weight : bold;
+}
+/* pagging */

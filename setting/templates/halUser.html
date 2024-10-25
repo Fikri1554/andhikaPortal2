@@ -1,0 +1,109 @@
+<script>
+function openThickboxWindow(id, aksi)
+{		
+	if(aksi == "newUser")
+	{
+		document.getElementById('hrefThickbox').href="templates/halTambahUser.php?halaman="+aksi+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	if(aksi == "editUser")
+	{
+		var paramText = document.getElementById('paramText').value;
+		document.getElementById('hrefThickbox').href="templates/halTambahUser.php?halaman="+aksi+"&userId="+id+"&paramText="+paramText+"&placeValuesBeforeTB_=savedValues&TB_iframe=true&height=570&width=900&modal=true";
+	}
+	
+	document.getElementById('hrefThickbox').click();
+}
+
+function exit(yesNo)
+{
+	if(yesNo == "no")
+	{
+		tb_remove(false);
+		document.getElementById('iframeHalUser').src = "";
+		document.getElementById('iframeHalUser').src = "templates/halUserList.php"; 
+	}
+}
+
+function deleteUser(userId)
+{
+	var answer  = confirm("Are you sure want to delete?");
+	if(answer)
+	{
+		document.getElementById('iframeHalUser').src = "";
+		document.getElementById('iframeHalUser').src = "templates/halUserList.php?aksi=deleteUser&userId="+userId;
+	}
+	else
+	{	return false;	}
+}
+
+function cariUser(paramCari)
+{
+	if(paramCari.replace(/ /g,"") == "")
+	{
+		var hal = "";
+	}
+	else
+	{
+		var hal = "cari";
+	}
+	
+	document.getElementById('iframeHalUser').src = "";
+	document.getElementById('iframeHalUser').src = "templates/halUserList.php?halaman="+hal+"&paramCari="+paramCari;
+}
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td id="idHalTeksLvl">
+        <table cellpadding="0" cellspacing="0" width="100%" height="100%">
+        <tr>
+            <td colspan="3" class="batasTitik" height="10">
+            </td>
+        </tr>
+        <tr><td height="20" colspan="3">&nbsp;</td></tr>
+        <tr>
+            <td valign="bottom" width="100">
+                <input type="hidden" id="ideDipilih" name="ideDipilih"/> 
+                &nbsp;&nbsp;<span class="teksLvlFolder">User list</span> <img src="../picture/Arrow-Bottom-Right-32.png" class="gambarPanah"/>
+                
+            </td>
+            <td width="400" align="left">
+            	&nbsp;
+                <button class="btnStandar" type="button" style="width:85px;height:29px;" onclick="openThickboxWindow('','newUser');" title="Create New User">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                      <tr>
+                        <td align="center"><img src="../picture/User-blue-32.png" height="20"/> </td>
+                        <td align="center">New User</td>
+                      </tr>
+                    </table>
+                </button>
+            </td>
+            <td width="652" align="right"><img src="../picture/Search2-32.png" width="25" style="vertical-align:bottom;"/>
+		<input type="text" class="elementSearch" id="paramText" size="41" style="height:16px;color:#333;" onfocus="cariUser(this.value);" onkeyup="cariUser(this.value);">&nbsp;</td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr><td height="5"></td></tr>
+
+<tr>
+	<td>
+    	<!-- ############# IFRAME BERISI DOKUMEN -->
+    	<table cellpadding="0" cellspacing="0" width="100%">
+        <tr align="center" style="background-color:#666;color:#EFEFEF;font-family:sans-serif;font-size:18px;font-weight:bold;">
+        	<td width="25%">&nbsp;</td>
+        	<td width="50%" height="40">User list</td>
+            <td width="25%">&nbsp;</td>
+        </tr>
+        <tr>
+        	<td colspan="3">
+				<iframe width="100%" height="344" src="templates/halUserList.php" target="iframeHalUser" name="iframeHalUser" id="iframeHalUser" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>

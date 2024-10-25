@@ -1,0 +1,98 @@
+<html>
+<script language="javascript">
+function printpr()
+{
+var OLECMDID = 7;
+/* OLECMDID values:
+* 6 - print
+* 7 - print preview
+* 1 - open window
+* 4 - Save As
+*/
+
+var PROMPT = 1; // 2 DONTPROMPTUSER
+var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
+
+WebBrowser1.ExecWB(OLECMDID, PROMPT); 
+WebBrowser1.outerHTML = "";
+} 
+</script>
+
+<link href="../../css/report.css" rel="stylesheet" type="text/css">
+
+<body onLoad="printpr();" onBlur="this.window.close();">
+<center>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<!-- START == JUDUL ===============================================================================-->
+<tr>
+	<td>
+    	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td><span class="style1">SAFETY OBSERVATION LOG SHEET</span></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+<tr><td height="25">&nbsp;</td></tr>
+
+<tr>
+	<td valign="top">
+    	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="style2">
+    		<tr>
+            	<td width="4%">&nbsp;NAME</td>
+                <td width="74%">: {userName}</td>
+                <td width="12%" align="right">&nbsp;CREATED DATE</td>
+                <td width="10%" align="right">: {createdDate}</td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr><td height="25">&nbsp;</td></tr>
+<!-- END OF == JUDUL ===============================================================================-->
+
+<tr>
+	<td>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelBorderLeftRightNull">
+    <tr>
+    <td width="60%" valign="top">
+<!-- START == OBSERVATION CEKLIST ===============================================================================-->
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr >
+                <td align="center" style="font-size:12px;color:#666;" colspan="3">
+                    <br/><b>DAFTAR PENGAMATAN / <em>OBSERVATION CHECKLIST</em></b><br/>&nbsp;
+                </td>
+            </tr>
+            <tr valign="bottom" class="style5">
+                <td width="53%">
+                    &nbsp;<img src="../../picture/check-black.png" width="12" style="vertical-align:middle;"/> Beri tanda bila tidak aman
+                </td>	
+                <td align="right" colspan="2">
+                    Beritahu bila aman <img src="../../picture/check-black.png" width="12" style="vertical-align:middle;"/>
+                </td>
+            </tr>
+            {isiCardList}
+        </table>
+<!-- END OF == OBSERVATION CEKLIST ===============================================================================-->
+    </td>
+    <td width="40%" valign="top" class="tabelBorderLeftJust">
+<!-- START == OBSERVATION REPORT ===============================================================================-->
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center" style="font-size:12px;color:#666;" colspan="3">
+                    <br/><b>LAPORAN PENGAMATAN /<em>OBSERVATION REPORT</em></b><br/>&nbsp;
+                </td>
+            </tr>
+            {isiCardComment}
+        </table>
+<!-- END OF == OBSERVATION REPORT ===============================================================================-->
+    </td></tr>
+    </table>
+    </td>
+    
+</tr>
+</table>
+
+</center>
+</body>
+</html>

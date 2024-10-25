@@ -1,0 +1,219 @@
+<!DOCTYPE html> 
+<link href="../css/news.css" rel="stylesheet" type="text/css" />
+<link href="../css/main.css" rel="stylesheet" type="text/css" />
+<link href="../css/atkRequest.css" rel="stylesheet" type="text/css" />
+<link href="../css/archives.css" rel="stylesheet" type="text/css" />
+<link href="../css/idleTimeOut.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../js/jquery-1.4.3.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+<script src="../js/jquery.idletimer.js" type="text/javascript"></script>
+<script src="../js/jquery.idletimeout.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() 
+{
+	/*$.idleTimeout('#idletimeout', '#idletimeout a', 
+	{
+		idleAfter: document.getElementById('idleAfter').value,
+		pollingInterval: 2,
+		keepAliveURL: 'keepalive.php',
+		serverResponseEquals: 'OK',
+		onTimeout: function()
+		{
+			$(this).slideUp();
+			window.location = "../../archives/index.php?aksi=noRespon";
+		},
+		onIdle: function()
+		{
+			$(this).slideDown(); // show the warning bar
+		},
+		onCountdown: function( counter )
+		{
+			$(this).find("span").html( counter ); // update the counter
+		},
+		onResume: function()
+		{
+			$(this).slideUp(); // hide the warning bar
+		},
+		onAbort: function()
+		{
+			
+		}
+	});*/
+});
+
+function loadUrl(newLocation)
+{
+	window.location = newLocation;
+	return false;
+}
+
+function tutup()
+{
+	tb_remove(false);
+}
+
+function klikBtnTes()
+{
+	document.getElementById('iframeCart').src = "templates/halCartList.php?aksi=notifDekstop";
+}
+
+function klikBtnHelp()
+{
+	var pdfFile = "";
+	var tipeUser = document.getElementById('tipeUser').value;
+	if(tipeUser == "userAtk")
+	{
+		var pdfFile = "../ATK Request Manual Book User Rev 1.0.pdf";
+	}
+	if(tipeUser == "adminAtk")
+	{
+		var pdfFile = "../ATK Request Manual Book Admin Rev 1.0.pdf";
+	}
+	
+	if(detectBrowser() == "MSIE")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf="+pdfFile, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+	else if(detectBrowser() == "Firefox")
+	{
+		window.showModalDialog("templates/halOpenPdf.php?filePdf="+pdfFile, '_blank', 'resizable=1;dialogWidth:'+(screen.width - 400)+'px; dialogHeight:'+(screen.height - 100)+'px;status:0; center:yes');
+	}
+}
+</script>
+
+<div class="archivesContainer">
+<div id="idletimeout">
+Anda akan log off dalam hitungan  <span><!-- countdown place holder --></span>&nbsp;detik karena tidak aktif.
+<a id="idletimeout-resume" href="#">Klik di sini untuk membatalkan</a>.
+</div>
+<input type="hidden" id="idleAfter" value="{idleAfter}">
+<input type="hidden" id="tipeUser" name="tipeUser" value="{tipeUser}"/>
+<input type="hidden" id="cari" />
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" border="0">
+<tr>
+	<td height="35" colspan="2">
+    <!-- ############# TABEL SEARCHING, BUTTON PROFILE, BUTTON LOGOUT -->
+    	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+        <tr>
+            <td>
+            &nbsp;&nbsp;<span class="teksMyFolder" style="color:#369;" onclick="loadUrl('../atkrequest/?aksi=atkRequest');" onmouseover="this.style.cursor='pointer'" title="ATK Request Home">ATK REQUEST</span> > <span id="hal" class="teksMyFolder" style="color:#369;text-decoration:underline;">{halaman}</span></td>
+            <td align="right">
+            	<!--<button class="btnStandar" type="button"  onclick="klikBtnHelp();" style="width:65px;height:30px;" title="Manual Book Pdf">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                    <tr>
+                      <td align="right"><img src="../picture/Metro-Help-Blue-32.png" height="17"/> </td> 
+                      <td align="left">&nbsp;HELP</td>
+                    </tr>
+                  </table>
+              </button>-->
+            	<button class="btnStandar" onclick="klikBtnHelp();" title="Manual Book Pdf">
+                  <table height="27">
+                    <tr>
+                      <td align="center" width="20"><img src="../picture/question-white.png"/> </td> 
+                      <td align="left">Help&nbsp;</td>
+                    </tr>
+                  </table>
+              </button>&nbsp;
+              
+      		</td>
+        </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+	<td width="57%" valign="bottom">
+       &nbsp;{btnAtkReq}{btnBack}
+        <!--<img src="../picture/Search2-32.png" width="25" style="vertical-align:bottom;"/>
+        <input type="text" class="elementSearch" id="paramText" size="41" onclick=";" onfocus="" onkeyup="" placeholder="Search . . ." title="Search Item">
+       
+		<select id="category" class="elementMenu" style="width:170px;height:29px;" title="Choose Category">
+        	<option value="0">-- ALL CATEGORY --</option>
+            <option value="ATK" selected="selected"> ATK </option>
+        </select>
+        
+        <button class="btnStandar" onclick="loadUrl('index.php?aksi=atkRequest'); return false;" style="width:48px;height:29px;" title="Display Item">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+              <tr>
+                <td align="right" width="22"><img src="../picture/Arrow-Right-blue-32.png" height="20"/> </td>
+                <td align="center">GO</td>
+              </tr>
+            </table>
+        </button>-->
+    </td>
+    <td width="43%" align="right">
+    	{btnQtyMaster}
+    	{btnNewAtk}
+        {btnMaster}
+        {btnStock}
+        <!--<button class="btnStandar" onclick="loadUrl('index.php?aksi=request'); return false;" style="width:78px;height:29px;" title="Request Not Existing Item">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+          <tr>
+            <td align="right" width="20"><img src="../picture/Gnome-Applications-Other-32.png" height="17"/> </td>
+            <td align="center">Request</td>
+          </tr>
+        </table>
+        </button>
+        <button class="btnStandar" onclick="loadUrl('index.php?aksi=trans'); return false;" style="width:93px;height:29px;" title="Transaction History">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+          <tr>
+            <td align="right" width="20"><img src="../picture/File-Complete-32.png" height="17"/> </td>
+            <td align="center">Transaction</td>
+          </tr>
+        </table>
+        </button>
+        -->
+        <button class="btnStandar" onclick="loadUrl('index.php?aksi=request'); return false;" title="Request Not Existing Item">
+            <table height="27">
+            <tr>
+                <td align="center" width="20"><img src="picture/pencil-ruler.png"/></td>
+                <td align="left">Request&nbsp;</td>
+            </tr>
+            </table>
+        </button>               
+        <button class="btnStandar" onclick="loadUrl('index.php?aksi=trans'); return false;" title="Transaction History">
+        <table height="27">
+          <tr>
+            <td align="center" width="20"><img src="picture/clipboard-task.png"/> </td>
+            <td align="left">Transaction&nbsp;</td>
+          </tr>
+        </table>
+        </button>&nbsp;
+    </td>
+</tr>
+<!--<tr>
+	<td class="batasTitik" height="5" colspan="2"></td>
+</tr>
+<tr>
+	<td height="5" colspan="2"></td>
+</tr>-->
+
+<tr>
+	<td colspan="2">
+	<!-- INCLUDE BLOCK : CONTENT_BAWAH -->
+	</td>
+</tr>
+
+</table>
+</div>
+<div class="archivesContainerBottom">
+	<div id="btnZoom" style="margin-top:-2px;">
+    	<button class="btnZoom" style="width:36px;height:20px;border-radius:0px;" type="button" onclick="frameSize('down');">
+            <table border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgDown" src="../picture/control-270.png" border="0"/> </td> 
+                </tr>
+            </table>
+         </button><button class="btnZoom" style="width:36px;height:20px;border-radius:0px;" type="button" onclick="frameSize('up');">
+            <table border="0" width="100%" height="100%">
+                <tr>
+                    <td align="center"><img id="imgUp" src="../picture/control-090.png" border="0"/></td> 
+                </tr>
+            </table>
+         </button>
+	</div>
+    <p id="back-top">
+		<a href="#top"><span></span>Back to Top</a>
+	</p>
+</div>
+</html>

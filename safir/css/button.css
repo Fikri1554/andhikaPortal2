@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.btnLogin
+{
+	width:100px;
+	height:40px;
+    text-decoration:none;
+	vertical-align:middle;
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
+	color:#999;
+	background-color:#f5f5f5;
+	
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border-radius:4px;
+    border: solid 1px #ccc;
+    padding:0.3em 0.5em; 
+	
+	background-image:url(../picture/menubg.gif);
+}
+
+.btnLogin:hover
+{
+/*	background-color:#1582f5;
+	cursor:pointer;
+	color:#EFEFEF;
+	font-weight:bold;*/
+	cursor:pointer;
+	color:#333;
+	background-image:url(../picture/menubgover.gif);
+}
+
+.btnLogin:active
+{
+	background-color:#36F;
+	cursor:pointer;
+}
+
+.btnStandar
+{
+	vertical-align:middle;
+	border:#CCC 1px solid;
+	 border-radius:4px;
+
+	background-color:#EAEAEA;
+	cursor:pointer;
+}
+
+.btnStandarDis
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#E9E9E9;
+	cursor:not-allowed;
+}
+
+.btnStandarHover
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#1582f5;
+	cursor:pointer;
+}
+
+.fontBtn
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#555;
+	font-weight:bold;
+	font-size:10px;
+}
+
+.fontBtnHover
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#FFF;
+	font-weight:bold;
+	font-size:10px;
+}
+
+.fontBtnDis
+{
+	font-family:Arial;
+	color:#CCC;
+	font-weight:bold;
+	font-size:10px;
+}
+
+.btnStandarKabur
+{
+	vertical-align:middle;
+	border:#CCC 1px solid;
+	border-radius:4px;
+
+	background-color:#EAEAEA;
+	cursor:pointer;
+	
+	opacity:0.8;
+	filter: alpha(opacity=80);
+}
+
+.fontBtnKabur
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#555;
+	font-weight:bold;
+	font-size:10px;
+	
+	opacity:0.8;
+	filter: alpha(opacity=80);
+}

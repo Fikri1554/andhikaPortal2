@@ -1,0 +1,148 @@
+<script type="text/javascript" src="js/paymentAdvance.js"></script>
+<script type="text/javascript" src="js/incoming.js"></script>
+
+<link href="css/paymentAdvance.css" rel="stylesheet" type="text/css" />
+<link href="css/button.css" rel="stylesheet" type="text/css" />
+<link href="css/table.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    window.onload = function () {
+        var userJenis = "{userJenis}";
+        if (userJenis != "admin") { document.oncontextmenu = function () { return false; }; }
+
+        { disBtnPaymentReq }
+        { disBtnPaymentConfirm }
+        { disBtnPaymentCheck }
+        { disBtnPaymentApprove }
+        { disBtnPaymentRelease }
+        { disBtnPaymentPrepare }
+        { disBtnPaymentVoucher }
+    }
+    function downLoadManualBook() {
+
+    }
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<div class="wrap">
+    <div class="namaAplikasi">PAYMENT & ADVANCE</div>
+</div>
+
+<div class="kotakPaymentAdv">
+
+    <div class="kotakBtnAtas">
+        <form method="post" action="index.php" id="formPaymentReq">
+            <input type="hidden" id="halaman" name="halaman" value="halPaymentRequest" />
+        </form>
+        <form method="post" action="index.php" id="formConfirmPayment">
+            <input type="hidden" id="halaman" name="halaman" value="halConfirmPayment" />
+        </form>
+        <form method="post" action="index.php" id="formCheckPayment">
+            <input type="hidden" id="halaman" name="halaman" value="halCheckPayment" />
+        </form>
+        <form method="post" action="index.php" id="formApprovePayment">
+            <input type="hidden" id="halaman" name="halaman" value="halApprovePayment" />
+        </form>
+        <form method="post" action="index.php" id="formReleasePayment">
+            <input type="hidden" id="halaman" name="halaman" value="halReleasePayment" />
+        </form>
+        <form method="post" action="index.php" id="formPrepareForPayment">
+            <input type="hidden" id="halaman" name="halaman" value="halPrepareForPayment" />
+        </form>
+        <form method="post" action="index.php" id="formVoucher">
+            <input type="hidden" id="halaman" name="halaman" value="halVoucher" />
+        </form>
+
+        <button class="btnStandarDis" id="btnPaymentReq" title="PAYMENT REQUEST"
+            onclick="$('#formPaymentReq').submit();return false;" disabled>
+            <table width="110" height="28">
+                <tr>
+                    <td align="center" width="20"><img src="picture/documents-stack.png" /></td>
+                    <td align="left">PAYMENT REQ.</td>
+                </tr>
+            </table>
+        </button>
+        <button class="btnStandarDis" id="btnPaymentConfirm" title="CONFIRM"
+            onclick="$('#formConfirmPayment').submit();return false;">
+            <table width="77" height="28">
+                <tr>
+                    <td align="center" width="20"><img src="picture/hourglass--pencil.png" /></td>
+                    <td align="left">CONFIRM</td>
+                </tr>
+            </table>
+        </button>
+        <button class="btnStandarDis" id="btnPaymentCheck" title="CHECK"
+            onclick="$('#formCheckPayment').submit();return false;" disabled>
+            <table width="77" height="28">
+                <tr>
+                    <td align="center" width="20"><img src="picture/tick.png" /></td>
+                    <td align="left">CHECK</td>
+                </tr>
+            </table>
+        </button>
+        <button class="btnStandarDis" id="btnPaymentApprove" title="APPROVE"
+            onclick="$('#formApprovePayment').submit();return false;" disabled>
+            <table width="77" height="28">
+                <tr>
+                    <td align="center" width="20"><img src="picture/document-task.png" /></td>
+                    <td align="left">APPROVE</td>
+                </tr>
+            </table>
+        </button>
+        <button class="btnStandarDis" id="btnPaymentRelease" title="RELEASE"
+            onclick="$('#formReleasePayment').submit();return false;" disabled>
+            <table width="81" height="28">
+                <tr>
+                    <td align="center" width="20"><img src="picture/thumb-up.png" /></td>
+                    <td align="left">RELEASE</td>
+                </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnPaymentPrepareForPayment" title="PREPARE FOR PAYMENT"
+            onclick="$('#formPrepareForPayment').submit();return false;" disabled>
+            <table width="130" height="28">
+                <tr>
+                    <td align="center" width="20"><img src="picture/document--arrow.png" /> </td>
+                    <td align="left">PREPARE VOUCHER</td>
+                </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnPaymentVoucher" title="VOUCHER"
+            onclick="$('#formVoucher').submit();return false;" disabled>
+            <table width="58" height="28">
+                <tr>
+                    <td align="center" width="20"><img src="picture/document-sticky-note.png" /> </td>
+                    <td align="left">VOUCHER</td>
+                </tr>
+            </table>
+        </button>
+
+    </div>
+
+    <div class="kotakIframe" style="top:41px;height:495px;">
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td align="center">
+
+                    <table cellpadding="0" cellspacing="0" width="99%">
+                        <tr align="center">
+                            <td height="123" style="font-family:sans-serif;font-weight:bold;font-size:30px;color:#CCC;">
+                                <a href="./paymentAdvanceManulaBook.pdf" target="_blank"
+                                    style="font-size:16px;vertical-align: middle;">
+                                    <img src="picture/btnDown.png" /
+                                        style="width: 25px;vertical-align: middle;padding-right:10px;">MANUAL&nbsp;BOOK
+                                </a>
+                            </td>
+                        </tr>
+                        <tr align="center">
+                            <td height="223" style="font-family:sans-serif;font-weight:bold;font-size:30px;color:#CCC;">
+                                PLEASE SELECT BUTTON ABOVE test</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>

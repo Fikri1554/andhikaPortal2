@@ -1,0 +1,184 @@
+@charset "utf-8";
+/* CSS Document */
+
+.tabelBorderAll
+{
+	border-bottom-width:1px;
+	border-top-width:1px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+
+.tabelBorderAllNull
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopNull
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopNullBottomBold
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomNull
+{
+	border-bottom-width:0;
+	border-top-width:1px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderRightNull
+{
+	border-bottom-width:1px;
+	border-top-width:1px;
+	border-left-width:1px;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderLeftNull
+{
+	border-bottom-width:1px;
+	border-top-width:1px;
+	border-left-width:0;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopJust
+{
+	border-bottom-width:0;
+	border-top-width:1px;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomJust
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderRightJust
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderLeftJust
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:1px;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopRightNull
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:1px;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopLeftNull
+{
+	border-bottom-width:1px;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopBottomNull
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomLeftNull
+{
+	border-bottom-width:0;
+	border-top-width:1px;
+	border-left-width:0;
+	border-right-width:1px;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomRightNull
+{
+	border-bottom-width:0;
+	border-top-width:1px;
+	border-left-width:1px;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderLeftRightNull
+{
+	border-bottom-width:1px;
+	border-top-width:1px;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#333;
+	border-style:solid;
+	letter-spacing:0px;
+}
+
+.classSelect
+{
+	background-color:#93A070;
+}
+
+.classSelect a
+{
+	color:#FFFFFF;
+}

@@ -1,0 +1,120 @@
+<html>
+<script language="javascript">
+function printpr()
+{
+var OLECMDID = 7;
+/* OLECMDID values:
+* 6 - print
+* 7 - print preview
+* 1 - open window
+* 4 - Save As
+*/
+
+var PROMPT = 1; // 2 DONTPROMPTUSER
+var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
+
+WebBrowser1.ExecWB(OLECMDID, PROMPT); 
+WebBrowser1.outerHTML = "";
+} 
+</script>
+
+<link href="../../css/report.css" rel="stylesheet" type="text/css">
+
+<body onLoad="printpr();" onBlur="this.window.close();">
+<center>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+<tr>
+	<td>
+    	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td><span class="style1">DAILY ACTIVITY LOG SHEET</span></td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td height="25">&nbsp;</td>
+</tr>
+
+<tr>
+	<td>
+    	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="40%" valign="top">
+            	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="style2">
+            	<tr>
+            		<td>NAME</td><td>: {subordinateName}</td>
+        		</tr>
+                <tr>
+            		<td>DIV. / DEPT.</td><td>: {subordinateDiv} / {subordinateDept}</td>
+        		</tr>
+                </table>
+            </td>
+            <td width="24%" valign="top">
+            	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="style2">
+            	<tr>
+            		<td>DIRECT SUPERIOR : {subordinateBos}</td>
+        		</tr>
+                </table>
+            </td>
+            <td width="19%" valign="top">
+            	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="style2">
+            	<tr>
+            		<td>STATUS</td><td>: {statusRead}</td>
+        		</tr>
+                <tr>
+            		<td>&nbsp;</td><td>: {statusApprove}</td>
+        		</tr>
+                </table>
+            </td>
+            <td width="17%" valign="top">
+            	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="style2">
+            	<tr>
+            		<td>DATE : {dateActivity}</td>
+        		</tr>
+                <tr>
+                	<td>WEEK : {mingguKe}</td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td height="25">&nbsp;</td>
+</tr>
+
+<tr>
+	<td>
+    	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr align="center" bgcolor="#E9E9E9" class="style3">
+        	<td width="4%" rowspan="2" class="tabelBorderRightNull">No</td>
+            <td width="7%" rowspan="2" class="tabelBorderRightNull" height="20">Date</td>
+            <td width="20%" rowspan="2" class="tabelBorderRightNull">Activities</td>
+            <td width="24%" rowspan="2" class="tabelBorderRightNull">Related Information (eg. Contact Person/ Address/ Message etc.)</td>
+            <td width="7%" rowspan="2" class="tabelBorderRightNull">Status</td>
+            <td width="7%" rowspan="2" class="tabelBorderRightNull">Date Finish</td>
+            <td colspan="2" class="tabelBorderBottomNull">Postpone Status</td>
+        </tr>
+        <tr align="center" bgcolor="#E9E9E9" class="style3">
+        	<td width="15%" class="tabelBorderRightNull">Problem Identification</td>
+            <td width="15%" class="tabelBorderAll">Corrective Action</td>
+        </tr>
+        {isiJobList}
+        </table>
+    </td>
+</tr>
+
+<tr>
+	<td height="30">&nbsp;</td>
+</tr>
+</table>
+
+</center>
+</body>
+</html>

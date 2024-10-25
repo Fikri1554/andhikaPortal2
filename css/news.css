@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+
+.newsContainer2
+{
+	min-width:990px;
+	margin-top:165px;
+	padding-top:10px;
+	padding-bottom:10px;
+	float:none;
+	overflow:auto;
+	text-align:left;
+
+	position:inherit;
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	/*border: solid 1px #CCC;*/
+	z-index:8;
+	
+	background-image:url(../picture/undercon.jpeg);
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:center;
+	
+	font-family:sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+
+.newsContainer
+{
+	width:993px;
+	height:467px;
+	margin-top:111px;
+	
+	/*position:inherit;
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #999;*/
+
+	background:url(../picture/undercon.jpeg) no-repeat 50% 0;overflow:hidden;
+	background-position:center;
+}

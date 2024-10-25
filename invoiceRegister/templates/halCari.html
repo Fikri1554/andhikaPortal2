@@ -1,0 +1,212 @@
+<script type="text/javascript" src="js/invReg.js"></script>
+<script type="text/javascript" src="js/cari.js"></script>
+<script type="text/javascript" src="../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js"></script>
+
+<link href="css/invReg.css" rel="stylesheet" type="text/css" />
+<link href="css/button.css" rel="stylesheet" type="text/css" />
+<link href="css/table.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../calendar/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css" media="screen">
+
+<link href="../css/invReg.css" rel="stylesheet" type="text/css" />
+<link href="../css/button.css" rel="stylesheet" type="text/css" />
+<link href="../css/table.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+window.onload = function()
+{
+	setup();
+	
+	{disBtnIncoming}
+	{disBtnIncoming_New}
+	{disBtnIncoming_Edit}
+	{disBtnIncoming_Delete}
+	{disBtnIncoming_Search}
+	
+	{disBtnInvProcess}
+	{disBtnPayment}
+	{disBtnOutgoing}
+	{disBtnPrint}
+}
+</script>
+
+<a class="thickbox" id="hrefThickbox"></a>
+
+<div class="wrap">
+	<div id="loaderImg" style="visibility:visible;" class="pleaseWait">
+    	<div class="isiPleaseWait tabelBorderAll">&nbsp;Please Wait...&nbsp;<img src="picture/loading (115).gif" height="12"/>&nbsp;</div>
+    </div>
+  	<div class="namaAplikasi"> INVOICE REGISTER </div>
+</div>
+<div style="position:absolute;top:0px; left:0px;">
+	<form method="post" action="index.php" id="formIncoming">
+    <input type="hidden" id="halaman" name="halaman" value="halIncoming" />
+    </form>
+    <form method="post" action="index.php" id="formProcess">
+    <input type="hidden" id="halaman" name="halaman" value="halProcessAck" />
+    </form>
+    <form method="post" action="index.php" id="formPayment">
+    <input type="hidden" id="halaman" name="halaman" value="halPaymentOutstanding"/>
+    </form>
+    <form method="post" action="index.php" id="formOutgoing">
+    <input type="hidden" id="halaman" name="halaman" value="halOutgoing" />
+    </form>
+    <form method="post" action="index.php" id="formCari">
+    <input type="hidden" id="halaman" name="halaman" value="halCari"/>
+	</form>
+	<form method="post" action="index.php" id="formPrintDist">
+    <input type="hidden" id="halaman" name="halaman" value="halPrintDistribution"/>
+    </form>
+	<form method="post" name="formPrintResult" id="formPrintResult" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=no, titlebar=no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no');"></form>
+	<form method="post" name="formPrintDetail" id="formPrintDetail" target="Report" onSubmit="window.open('this.form.action', this.target, 'fullscreen=no, titlebar=no, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no');"></form>
+</div>
+
+<div class="kotakInvReg">
+	
+    <div class="kotakBtnAtas">
+    	<input type="hidden" id="idMailInv" />	
+        <button class="btnStandar" id="btnIncoming" title="INCOMING MAIL / DATA INVOICE" onclick="$('#formIncoming').submit();return false;">
+            <table width="79" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/documents-stack.png"/></td>
+                <td align="left">INCOMING</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnInvProcess" title="MAIL / DATA PROCESS" onclick="$('#formProcess').submit();return false;">
+            <table width="77" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/wand.png"/></td>
+                <td align="left">INVOICE PROCESS</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnPayment" title="PAYMENT TRANSACTION" onclick="$('#formPayment').submit();return false;">
+            <table width="77" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/credit-cards.png"/></td>
+                <td align="left">PAYMENT</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnOutgoing" title="OUTGOING MAIL / DATA INVOICE" onclick="$('#formOutgoing').submit();return false;">
+            <table width="81" height="28">
+            <tr>
+                <td align="center" width="20"><img src="picture/document-export.png"/></td>
+                <td align="left">OUTGOING</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnPrint" title="PRINT MAIL / DATA INVOICE" onclick="$('#formPrintDist').submit();return false;">
+            <table width="58" height="28">
+              <tr>
+                <td align="center" width="20"><img src="picture/printer.png"/> </td>
+                <td align="left">PRINT</td>
+              </tr>
+            </table>
+        </button>
+        <button id="btnCari" class="btnStandarTabPilih" title="SEARCHING DATA">
+            <table width="70" height="29">
+              <tr>
+                <td align="center" width="20"><img src="picture/magnifier.png"/> </td>
+                <td align="left">SEARCH</td>
+              </tr>
+            </table>
+        </button>
+    </div>
+    
+		<div style="position:absolute; top:40px; left:5px; vertical-align:top; text-align:left;border: solid 1px #CCC;">
+        <table width="412px" cellpadding="0" cellspacing="0" style="font:0.7em sans-serif;font-weight:bold;color:#485a88;background-color:#FFF;">
+        <tr><td height="3"></td></tr>
+        <tr>
+            <td height="23" class="">&nbsp;SEARCH BY</td>
+            <td class="elementTeks">
+            	<select id="cariBerdasarkan" name="cariBerdasarkan" class="elementMenu" style="width:135px;" onchange="disableBtnPrint();return false;">
+                    <option value="batchno">BATCHNO</option>
+                    <option value="company">COMPANY / BILIING</option>
+                    <option value="unit">UNIT / DIVISION</option>
+                    <option value="senVen">SENDER / VENDOR</option>
+                    <option value="mailInvDate">MAIL / INV. DATE</option>
+                    <option value="mailInvNo">MAIL / INV. NO</option>
+                    <option value="poNumber">BARCODE</option>
+                    <option value="remark">REMARK</option>
+                </select>
+            </td>
+        </tr>
+        <tr valign="middle">
+            <td width="90" height="41" class="">&nbsp;</td>
+            <td width="383" class="elementTeks" id="">
+                <textarea id="teksCari" name="teksCari" class="elementInput" style="height:35px;width:250px;" onfocus="disableBtnPrint();"></textarea>
+            </td>
+        </tr>
+        <tr valign="middle">
+            <td height="23" class="">&nbsp;START</td>
+            <td class="elementTeks">
+                <input type="text" name="startDate" id="startDate" class="elementInput" style="width:60px;" onfocus="disableBtnPrint();"/>&nbsp;<img src="../../picture/calendar.gif" class="gayaKalender" title="Select Date" onclick="displayCalendar(document.getElementById('startDate'),'dd/mm/yyyy',this, '', '', '193', '183');" id="imgStartDate"/>
+            </td>
+        </tr>
+        <tr valign="middle">
+            <td height="23" class="">&nbsp;END</td>
+            <td class="elementTeks" id="">
+                <input type="text" name="endDate" id="endDate" class="elementInput" style="width:60px;" onfocus="disableBtnPrint();"/>&nbsp;<img src="../../picture/calendar.gif" class="gayaKalender" title="Select Date" onclick="displayCalendar(document.getElementById('endDate'),'dd/mm/yyyy',this, '', '', '193', '183');" id="imgEndDate"/>
+            </td>
+        </tr>
+		<tr><td height="3"></td></tr>
+        <tr valign="middle">
+            <td height="20" valign="bottom" colspan="2" align="center">
+                <div id="idErrorMsg" class="errorMsgInv" style="visibility:hidden;width:400px;"><img src="../picture/exclamation-red.png"/>&nbsp;<span>&nbsp;</span>&nbsp;</div>
+            </td>
+        </tr>
+        <tr><td height="3"></td></tr>
+        </table>
+    </div>
+    
+    <span style="position:inherit;top:37px;left:425px; font:0.7em sans-serif;font-weight:bold;color:#485a88;">RESULT DETIL</span>
+        <img style="position:inherit;top:36px;left:500px;" src="picture/arrow-315-medium.png"/>
+        
+    <div style="position:absolute; border: solid 1px #CCC; width:566px; height:482px; top:53px; right:5px; text-align:center; background-color:#FFF;">
+        <div id="divDetailCari" style="text-align:left;margin:5px;border: solid 0px #CCC; height:471px;overflow-y: scroll;"></div>
+    </div>
+     
+    <div style="position:absolute;width:412px; top:188px; left:5px; vertical-align:top; text-align:left;border: solid 0px #CCC;	">
+        <button class="btnStandar" id="btnDoSearch" title="START SEARCHING" onclick="klikBtnCari();">
+            <table width="88" height="24">
+            <tr>
+              <td align="center" width="20"><img src="picture/magnifier.png"/></td>
+              <td align="left">DO SEARCH</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnRefresh" title="" onclick="$('#formCari').submit();return false;">
+            <table width="76" height="24">
+            <tr>
+                <td align="center" width="20"><img src="picture/arrow-circle-315.png"/></td>
+                <td align="left">REFRESH</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandar" id="btnCariPrintResult" title="" onclick="klikBtnCariPrintResult();return false;" disabled>
+            <table width="100" height="24">
+            <tr>
+                <td align="center" width="20"><img src="picture/printer.png"/></td>
+                <td align="left">PRINT RESULT</td> 
+            </tr>
+            </table>
+        </button>
+        <button class="btnStandarDis" id="btnCariPrintDetail" title="" onclick="klikBtnCariPrintDetail();return false;" disabled>
+            <table width="95" height="24">
+            <tr>
+                <td align="center" width="20"><img src="picture/printer--exclamation.png"/></td>
+                <td align="left">PRINT DETAIL</td> 
+            </tr>
+            </table>
+        </button>
+        <span id="jmlCari" style="position:inherit;top:14px;right:0px; font:0.7em sans-serif;font-weight:bold;color:#485a88;">18</span>
+    </div>
+    
+    <div style="position:absolute; border: solid 1px #CCC; top:219px; left:5px; width:412px; height:316px; text-align:left;">        
+        <iframe width="412" height="100%" src="templates/halCariList.php" target="iframeList" name="iframeList" id="iframeList" frameborder="0" marginwidth="0" marginheight="0" scrolling="yes"></iframe>
+    </div>
+    
+    
+
+</div>

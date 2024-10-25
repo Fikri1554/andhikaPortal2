@@ -1,0 +1,487 @@
+@charset "utf-8";
+/* CSS Document */
+
+.wrap
+{
+	position:relative;
+	width:1000px;
+	margin:0 auto;
+}
+
+.welcome
+{
+	left:-250px;
+	padding-top:7px;
+	padding-bottom:10px;
+	top:0px;
+	text-align:left;
+	width:50%;
+	position:relative;
+	
+	font-size:14px;
+	font-family:"Comic Sans MS";
+}
+
+.spanLogout
+{
+	cursor:pointer;
+	color:#000080;
+	text-align:center;
+}
+
+.spanLogout:hover
+{
+	cursor:pointer;
+	color:#000080;
+	text-align:center;
+	font-weight:bold;
+}
+
+.bgWorld
+{
+	width:100%;
+	height:105px;
+	background:url(../picture/bgworld2.png);
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:left;
+	left: 0px; 
+    top: -5px; 
+    z-index: -1;
+	position:fixed;
+}
+
+.headerLogo
+{
+	min-width:100%;
+	height:70px;
+	top:0px;
+	left:0px;
+	
+	position:fixed;
+	/* background-color:#066; */
+	background-color:#f5f5f5;
+	border: solid 1px #999;
+	
+	-moz-box-shadow: 0px 3px 5px #888888; /* Firefox */
+	-webkit-box-shadow: 0px 3px 5px #888888; /* Safari and Chrome */
+	box-shadow: 0px 3px 5px #888888;
+	z-index:10;
+}
+
+.logo
+{
+	padding-top:10px;
+	padding-left:10px;
+	position:absolute;
+}
+.logo img
+{
+	top:5px;
+	width:60px;
+	height:60px;
+	border-style:none;
+	position:absolute;
+}
+
+.textAndhika
+{
+	top:28px;
+	left:80px;
+	font-family:Rondo;
+	font-size:35px;
+	color:#000080;
+
+	position:absolute;
+}
+
+.menuContainer
+{
+	width:100%;
+	height:30px;
+	top:72px;
+	left:0px;
+	background-color:#f5f5f5;
+	position:fixed;
+	
+	font:12px/1.2 Arial,Verdana,'san serif';
+	
+	border-bottom-width:thin;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#666;
+	border-style:dashed;
+	z-index:10;
+}
+
+.nav{position:absolute;right:0;bottom:0;height:30px;top:0px;list-style:none;}
+.nav li{float:left;height:30px;position:relative;}
+.nav li a{display:block;padding:0 19px;height:30px;color:#666;font-size:16px;line-height:30px;_float:left;font-weight:bold;}
+.nav .last a{background:none;}
+.nav li a:hover{color:#1582f5;}
+.nav li a:active{color:#768898;}
+.nav .on{position:relative;}
+.nav .on .firLink{color:#1582f5;}
+.norTit{color:#000;font-size:30px;padding:20px 0;}
+
+
+
+.headerContainer
+{
+	width:100%;
+	height:400px;
+	top:103px;
+	left:0px;
+	background:url(../picture/header.png) no-repeat 50% 0;overflow:hidden;
+	
+	position:fixed;
+	background-color:#FFF;
+	
+	-moz-box-shadow: 0px 3px 5px #888888; /* Firefox */
+	-webkit-box-shadow: 0px 3px 5px #888888; /* Safari and Chrome */
+	box-shadow: 0px 3px 5px #888888;
+}
+
+.homeContainer
+{
+	width:993px;
+	height:467px;
+	margin-top:111px;
+	
+	position:inherit;
+	background-color: #FFF;
+	box-shadow: 0px 5px 10px #888888;
+	border: solid 1px #999;
+
+	background:url(../picture/kapal-sharmila.png) no-repeat 50% 0;overflow:hidden;
+}
+
+.teksForm1
+{
+	font-family:sans-serif;
+	font-size:14px;
+}
+
+.tabelBorderAll
+{
+	border-bottom-width:1;
+	border-top-width:1;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderAllNull
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopNull
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopNullBottomBold
+{
+	border-bottom-width:2;
+	border-top-width:0;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomNull
+{
+	border-bottom-width:0;
+	border-top-width:1;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderRightNull
+{
+	border-bottom-width:1;
+	border-top-width:1;
+	border-left-width:1;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderLeftNull
+{
+	border-bottom-width:1;
+	border-top-width:1;
+	border-left-width:0;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopJust
+{
+	border-bottom-width:0;
+	border-top-width:1;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomJust
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderRightJust
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderLeftJust
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:1;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopRightNull
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:1;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopLeftNull
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderTopBottomNull
+{
+	border-bottom-width:0;
+	border-top-width:0;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomLeftNull
+{
+	border-bottom-width:0;
+	border-top-width:1;
+	border-left-width:0;
+	border-right-width:1;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderBottomRightNull
+{
+	border-bottom-width:0;
+	border-top-width:1;
+	border-left-width:1;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.tabelBorderLeftRightNull
+{
+	border-bottom-width:1;
+	border-top-width:1;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CCC;
+	border-style:solid;
+	letter-spacing:0px;
+}
+
+.gambarPanah
+{
+	width:10px;
+	height:10px;
+	display:inline-block;
+}
+
+.batasTitik
+{
+	border-bottom-width:thin;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#999;
+	border-style:dashed;
+}
+
+.fontBtnKecil_20131216
+{
+	cursor:pointer;	
+	font-family:"Comic Sans MS";
+	color:#666;
+	font-weight:bold;
+	font-size:11px;
+}
+
+.fontBtnKecilHover_20131216
+{
+	cursor:pointer;	
+	font-family:"Comic Sans MS";
+	color:#FFF;
+	font-weight:bold;
+	font-size:11px;
+}
+
+.fontBtnKecil
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#555;
+	font-weight:bold;
+	font-size:11px;
+}
+
+.fontBtnKecilHover
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#FFF;
+	font-weight:bold;
+	font-size:11px;
+}
+
+
+.fontBtnKecilDis
+{
+	font-family:Arial;
+	cursor:pointer;	
+	color:#CCC;
+	font-weight:bold;
+	font-size:11px;
+}
+
+.btnStandarKecil
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#f5f5f5;
+	cursor:pointer;
+}
+
+.btnStandarKecilDis
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#CCC;
+	cursor:pointer;
+}
+
+
+.btnStandarKecilHover
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#1582f5;
+	cursor:pointer;
+}
+
+.btnStandarKecilPrevNext
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#f5f5f5;
+	opacity:0.5;
+	filter: alpha(opacity=50);
+	cursor:pointer;
+}
+
+.btnStandarKecilPrevNextHover
+{
+	vertical-align:middle;
+	border:#DDD 1px solid;
+	border-radius:8px;
+
+	background-color:#1582f5;
+	opacity:0.5;
+	filter: alpha(opacity=50);
+	cursor:pointer;
+}
+
+.borderTopNull
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:1;
+	border-right-width:1;
+	border-color:#CC0000;
+	border-style:solid;
+	letter-spacing:0px;
+}
+.borderBottomJust
+{
+	border-bottom-width:1;
+	border-top-width:0;
+	border-left-width:0;
+	border-right-width:0;
+	border-color:#CC0000;
+	border-style:solid;
+	letter-spacing:0px;
+}
+
+.barMonthly
+{
+	font-family: Arial,sans-serif;
+	font-size: 1.1em;
+	background-color: #CC0000;
+	border: 1px solid #E3A1A1;
+	border-radius: 6px 6px 6px 6px;
+	color: #FFFFFF;
+	font-weight: bold;
+	line-height: 1.8em;
+	text-align: center;
+}
